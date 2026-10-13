@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ProductCategory, ProductSize } from '../../types';
 import { Search, Sparkles, SlidersHorizontal, ArrowUpDown, Mic, MicOff, Volume2, X, Camera } from 'lucide-react';
 import { useVoiceSearch } from '../../hooks/useVoiceSearch';
@@ -73,6 +73,9 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
   ];
 
   const sizes: (ProductSize | 'todos')[] = ['todos', 'P', 'M', 'G', 'GG'];
+
+  // No celular, tamanho e ordenacao ficam recolhidos para liberar espaco para os produtos
+  const [filtrosAbertos, setFiltrosAbertos] = useState(false);
 
   return (
     <div className="space-y-5">
@@ -280,7 +283,19 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
       </div>
 
       {/* Sub-Filters: Sizes and Sorting Bar */}
-      <div className="p-3 bg-[#131620] border border-zinc-800/80 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+      <button
+        type="button"
+        onClick={() => setFiltrosAbertos((v) => !v)}
+        aria-expanded={filtrosAbertos}
+        className="sm:hidden w-full flex items-center justify-between px-3.5 py-2.5 bg-[#131620] border border-zinc-800/80 rounded-2xl text-xs font-bold text-zinc-200"
+      >
+        <span className="flex items-center gap-2">
+          <SlidersHorizontal className="w-3.5 h-3.5 text-amber-400" />
+          Tamanho e ordenação
+        </span>
+        <span className="text-zinc-400">{filtrosAbertos ? 'Fechar' : 'Abrir'}</span>
+      </button>
+      <div className={`${filtrosAbertos ? 'flex' : 'hidden'} sm:flex p-3 bg-[#131620] border border-zinc-800/80 rounded-2xl flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs`}>
         {/* Size Filters */}
         <div className="flex items-center gap-2 overflow-x-auto">
           <span className="text-[11px] font-bold text-zinc-400 flex items-center gap-1 shrink-0 uppercase tracking-wider">
