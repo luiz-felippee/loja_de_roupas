@@ -43,14 +43,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <div>
         {/* Product Image 4:3 */}
         <div className="relative aspect-[4/3] rounded-lg sm:rounded-xl overflow-hidden bg-zinc-950 mb-2.5 sm:mb-3.5">
-          <img
-            src={product.image}
-            alt={product.name}
-            referrerPolicy="no-referrer"
-            className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ${
-              isOutOfStock ? 'grayscale opacity-60' : ''
-            }`}
-          />
+          {product.image ? (
+            <img
+              src={product.image}
+              alt={product.name}
+              referrerPolicy="no-referrer"
+              className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ${
+                isOutOfStock ? 'grayscale opacity-60' : ''
+              }`}
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center text-[10px] font-bold uppercase tracking-wider text-zinc-600">
+              Sem foto
+            </div>
+          )}
 
           {/* Quick status overlays */}
           <div className="absolute top-2 left-2 flex flex-col gap-1">

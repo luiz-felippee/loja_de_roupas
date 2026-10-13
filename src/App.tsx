@@ -5,7 +5,7 @@ import { SidebarDrawer } from './components/layout/SidebarDrawer';
 import { CustomerProfileModal } from './components/compra/CustomerProfileModal';
 import { HeroBanner } from './components/home/HeroBanner';
 import { PromoSlider } from './components/home/PromoSlider';
-import { CategoryFilter, SortOption } from './components/home/CategoryFilter';
+import { CatalogFilters, SortOption } from './components/home/CatalogFilters';
 import { ProductCard } from './components/catalogo/ProductCard';
 import { ProductDetailModal } from './components/catalogo/ProductDetailModal';
 import { CartDrawer } from './components/compra/CartDrawer';
@@ -136,7 +136,11 @@ const MainContent: React.FC = () => {
 
             {/* Catalog Section */}
             <section id="catalogo-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-              <CategoryFilter
+              <div className="mb-6">
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Catálogo</h2>
+                <p className="text-sm text-zinc-400 mt-1">Escolha a categoria, filtre por tamanho ou pesquise por nome.</p>
+              </div>
+              <CatalogFilters
                 selectedCategory={selectedCategory}
                 onSelectCategory={setSelectedCategory}
                 searchQuery={searchQuery}
