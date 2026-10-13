@@ -1,273 +1,282 @@
-import { Plus, Trash2, Edit } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
+import { Plus, Pencil, EyeOff, Minus, Search } from 'lucide-react';
 import type { AdminState } from './useAdminPanel';
+import type { Product } from '../../types';
+import { CATEGORIES_LABEL } from './categorias';
 
+type Situacao = 'todos' | 'esgotados' | 'baixo' | 'em_dia';
+
+const reais = (v: number) => `R$ ${v.toFixed(2).replace('.', ',')}`;
+
+function statusEstoque(estoque: number): { rotulo: string; classe: string; situacao: Situacao } {
+  if (estoque <= 0) return { rotulo: 'Esgotado', classe: 'bg-rose-500/15 text-rose-300 border-rose-500/30', situacao: 'esgotados' };
+  if (estoque <= 5) return { rotulo: 'Estoque baixo', classe: 'bg-amber-400/15 text-amber-300 border-amber-400/30', situacao: 'baixo' };
+  return { rotulo: 'Em dia', classe: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30', situacao: 'em_dia' };
+}
+
+/** Catalogo e estoque: indicadores, busca, filtro por situacao e ajuste direto da quantidade. */
 export function ProductsTab({ a }: { a: AdminState }) {
   const { deleteProduct, handleOpenEditProduct, handleOpenNewProduct, products, updateProduct, updateStock } = a;
+  const [busca, setBusca] = useState('');
+  const [situacao, setSituacao] = useState<Situacao>('todos');
+
+  const indicadores = useMemo(() => {
+    const ativos = products.filter((p) => (p as Product & { active?: boolean }).active !== false);
+    return {
+      ativos: ativos.length,
+      unidades: ativos.reduce((s, p) => s + p.stock, 0),
+      esgotados: ativos.filter((p) => p.stock <= 0).length,
+      baixos: ativos.filter((p) => p.stock > 0 && p.stock <= 5).length,
+    };
+  }, [products]);
+
+  const filtrados = useMemo(() => {
+    const termo = busca.trim().toLowerCase();
+    return products
+      .filter((p) => !termo || p.name.toLowerCase().includes(termo))
+      .filter((p) => situacao === 'todos' || statusEstoque(p.stock).situacao === situacao)
+      .sort((x, y) => x.name.localeCompare(y.name));
+  }, [products, busca, situacao]);
+
+  const abas: { id: Situacao; rotulo: string; total: number }[] = [
+    { id: 'todos', rotulo: 'Todos', total: products.length },
+    { id: 'esgotados', rotulo: 'Esgotados', total: indicadores.esgotados },
+    { id: 'baixo', rotulo: 'Estoque baixo', total: indicadores.baixos },
+    { id: 'em_dia', rotulo: 'Em dia', total: products.length - indicadores.esgotados - indicadores.baixos },
+  ];
+
+  const kpis = [
+    { rotulo: 'Produtos ativos', valor: indicadores.ativos },
+    { rotulo: 'Unidades em estoque', valor: indicadores.unidades },
+    { rotulo: 'Esgotados', valor: indicadores.esgotados, alerta: indicadores.esgotados > 0 ? 'rose' : undefined },
+    { rotulo: 'Estoque baixo', valor: indicadores.baixos, alerta: indicadores.baixos > 0 ? 'amber' : undefined },
+  ];
+
+  const ajustarEstoque = (produto: Product, novo: number) => {
+    if (!Number.isInteger(novo) || novo < 0 || novo === produto.stock) return;
+    updateProduct(produto.id, { stock: novo });
+  };
+
   return (
-    <>
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h3 className="text-base font-bold text-white">Catálogo de Roupas & Estoque</h3>
-            <p className="text-xs text-zinc-400">
-              Cadastre novas peças, ajuste estoque instantaneamente ou crie promoções.
+    <div className="space-y-6">
+      {/* Cabecalho */}
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h2 className="text-xl font-extrabold text-white tracking-tight">Catálogo e estoque</h2>
+          <p className="text-sm text-zinc-400 mt-1">Cadastre peças, ajuste quantidades e acompanhe o que precisa de reposição.</p>
+        </div>
+        <button
+          onClick={handleOpenNewProduct}
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-black text-sm font-bold transition-colors"
+        >
+          <Plus className="w-4 h-4" />
+          Novo produto
+        </button>
+      </div>
+
+      {/* Indicadores */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        {kpis.map((k) => (
+          <div key={k.rotulo} className="rounded-2xl border border-zinc-800 bg-[#0f1d3b] p-4">
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">{k.rotulo}</p>
+            <p
+              className={`mt-2 text-2xl font-black tabular-nums ${
+                k.alerta === 'rose' ? 'text-rose-300' : k.alerta === 'amber' ? 'text-amber-300' : 'text-white'
+              }`}
+            >
+              {k.valor}
             </p>
           </div>
+        ))}
+      </div>
 
-          <button
-            onClick={handleOpenNewProduct}
-            className="px-4 py-2.5 bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-md shadow-amber-500/20 transition-all"
-          >
-            <Plus className="w-4 h-4" />
-            Cadastrar Novo Produto
-          </button>
+      {/* Filtros */}
+      <div className="rounded-2xl border border-zinc-800 bg-[#0f1d3b] p-3 space-y-3">
+        <div className="flex flex-wrap items-center gap-2">
+          {abas.map((aba) => (
+            <button
+              key={aba.id}
+              onClick={() => setSituacao(aba.id)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold border transition-colors ${
+                situacao === aba.id
+                  ? 'bg-white text-black border-white'
+                  : 'border-zinc-700 text-zinc-300 hover:border-zinc-500'
+              }`}
+            >
+              {aba.rotulo} <span className="tabular-nums opacity-70">{aba.total}</span>
+            </button>
+          ))}
         </div>
-
-        {/* Table / List Container */}
-        <div className="bg-[#0f1d3b] border border-zinc-800 rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl">
-          {/* Desktop Table View (hidden on mobile) */}
-          <div className="hidden md:block overflow-x-auto">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-[#142a52] border-b border-zinc-800 text-zinc-400 font-bold uppercase tracking-wider text-[10px]">
-                <tr>
-                  <th className="py-3.5 px-4">Produto</th>
-                  <th className="py-3.5 px-4">Categoria</th>
-                  <th className="py-3.5 px-4">Preço Normal</th>
-                  <th className="py-3.5 px-4">Promoção</th>
-                  <th className="py-3.5 px-4 text-center">Estoque</th>
-                  <th className="py-3.5 px-4 text-right">Ações</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-zinc-800/80">
-                {products.map((prod) => (
-                  <tr key={prod.id} className="hover:bg-zinc-850/50 transition-colors">
-                    <td className="py-3 px-4">
-                      <div className="flex items-center gap-3">
-                        <img
-                          src={prod.image}
-                          alt={prod.name}
-                          referrerPolicy="no-referrer"
-                          className="w-12 h-12 rounded-lg object-cover bg-[#0a1528] shrink-0"
-                        />
-                        <div>
-                          <span className="font-bold text-white block text-sm">{prod.name}</span>
-                          <div className="flex items-center gap-1 text-[11px] text-zinc-400 mt-0.5">
-                            <span>{prod.colors.map((c) => c.name).join(', ')}</span>
-                            <span>·</span>
-                            <span>{prod.sizes.join(', ')}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-
-                    <td className="py-3 px-4 text-zinc-300">
-                      <span className="capitalize font-semibold">
-                        {prod.category === 'times' ? 'Camisas de Times' : prod.category === 'polo' ? 'Polo' : prod.category === 'bermuda' ? 'Bermuda' : 'Regata'}
-                      </span>
-                    </td>
-
-                    <td className="py-3 px-4 font-mono font-bold text-zinc-200 tabular-nums">
-                      R$ {prod.price.toFixed(2).replace('.', ',')}
-                    </td>
-
-                    <td className="py-3 px-4">
-                      {prod.isPromo ? (
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-amber-400 font-mono font-extrabold tabular-nums">
-                            R$ {(prod.promoPrice ?? prod.price).toFixed(2).replace('.', ',')}
-                          </span>
-                          <button
-                            onClick={() => updateProduct(prod.id, { isPromo: false })}
-                            className="text-[10px] bg-amber-500/10 text-amber-300 px-1.5 py-0.5 rounded border border-amber-500/20 hover:bg-amber-500/20"
-                            title="Desativar promoção"
-                          >
-                            Ativa
-                          </button>
-                        </div>
-                      ) : (
-                        <button
-                          onClick={() =>
-                            updateProduct(prod.id, {
-                              isPromo: true,
-                              promoPrice: Math.round(prod.price * 0.85)
-                            })
-                          }
-                          className="text-[11px] text-zinc-500 hover:text-amber-400 font-semibold"
-                        >
-                          + Criar Promo
-                        </button>
-                      )}
-                    </td>
-
-                    {/* Stock Quick Stepper */}
-                    <td className="py-3 px-4">
-                      <div className="flex items-center justify-center gap-1.5">
-                        <button
-                          onClick={() => updateStock(prod.id, -1)}
-                          className="w-6 h-6 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-bold flex items-center justify-center"
-                        >
-                          -
-                        </button>
-                        <span
-                          className={`w-10 text-center font-mono font-extrabold tabular-nums ${
-                            prod.stock === 0
-                              ? 'text-rose-400'
-                              : prod.stock <= 5
-                              ? 'text-amber-400'
-                              : 'text-emerald-400'
-                          }`}
-                        >
-                          {prod.stock}
-                        </span>
-                        <button
-                          onClick={() => updateStock(prod.id, 1)}
-                          className="w-6 h-6 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-bold flex items-center justify-center"
-                        >
-                          +
-                        </button>
-                      </div>
-                    </td>
-
-                    <td className="py-3 px-4 text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <button
-                          onClick={() => handleOpenEditProduct(prod)}
-                          className="p-1.5 text-zinc-400 hover:text-amber-400 transition-colors"
-                          title="Editar produto"
-                        >
-                          <Edit className="w-4 h-4" />
-                        </button>
-                        <button
-                          onClick={() => deleteProduct(prod.id)}
-                          className="p-1.5 text-zinc-500 hover:text-rose-400 transition-colors"
-                          title="Excluir produto"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Mobile Touch Cards View (visible strictly on mobile) */}
-          <div className="md:hidden divide-y divide-zinc-800/80 p-3 space-y-3">
-            {products.map((prod) => (
-              <div key={prod.id} className="pt-3 first:pt-0 space-y-3">
-                <div className="flex items-start gap-3">
-                  <img
-                    src={prod.image}
-                    alt={prod.name}
-                    referrerPolicy="no-referrer"
-                    className="w-16 h-16 rounded-xl object-cover bg-[#0a1528] shrink-0 border border-zinc-800"
-                  />
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-1">
-                      <span className="font-bold text-white text-sm line-clamp-1">
-                        {prod.name}
-                      </span>
-                      <div className="flex items-center gap-1 shrink-0">
-                        <button
-                          onClick={() => handleOpenEditProduct(prod)}
-                          className="p-1.5 text-zinc-400 hover:text-amber-400 bg-[#0f1d3b] border border-zinc-800 rounded-lg active:scale-95"
-                          title="Editar produto"
-                        >
-                          <Edit className="w-3.5 h-3.5" />
-                        </button>
-                        <button
-                          onClick={() => deleteProduct(prod.id)}
-                          className="p-1.5 text-zinc-500 hover:text-rose-400 bg-[#0f1d3b] border border-zinc-800 rounded-lg active:scale-95"
-                          title="Excluir produto"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="text-[11px] text-zinc-400 flex items-center gap-1.5 mt-0.5">
-                      <span className="capitalize text-zinc-300 font-medium">
-                        {prod.category === 'times' ? 'Times' : prod.category === 'polo' ? 'Polo' : prod.category === 'bermuda' ? 'Bermuda' : 'Regata'}
-                      </span>
-                      <span>·</span>
-                      <span className="truncate">{prod.sizes.join(', ')}</span>
-                    </div>
-
-                    <div className="flex items-center gap-2 mt-1.5 flex-wrap">
-                      <span className="font-mono font-bold text-white text-xs tabular-nums">
-                        R$ {prod.price.toFixed(2).replace('.', ',')}
-                      </span>
-                      {prod.isPromo && prod.promoPrice && (
-                        <span className="text-[10px] text-amber-400 font-mono font-bold bg-amber-400/10 px-1.5 py-0.5 rounded border border-amber-400/20">
-                          Promo: R$ {prod.promoPrice.toFixed(2).replace('.', ',')}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Mobile Stock Stepper & Quick Promo Toggle */}
-                <div className="flex items-center justify-between gap-2 pt-2 border-t border-zinc-800/60 bg-[#161a27] p-2.5 rounded-xl">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[11px] text-zinc-400 font-medium">Estoque:</span>
-                    <div className="flex items-center gap-1">
-                      <button
-                        onClick={() => updateStock(prod.id, -1)}
-                        className="w-8 h-8 rounded-lg bg-zinc-800 hover:bg-zinc-700 active:scale-90 text-white font-bold flex items-center justify-center text-sm"
-                        aria-label="Diminuir estoque"
-                      >
-                        -
-                      </button>
-                      <span
-                        className={`w-8 text-center font-mono font-black text-xs tabular-nums ${
-                          prod.stock === 0
-                            ? 'text-rose-400'
-                            : prod.stock <= 5
-                            ? 'text-amber-400'
-                            : 'text-emerald-400'
-                        }`}
-                      >
-                        {prod.stock}
-                      </span>
-                      <button
-                        onClick={() => updateStock(prod.id, 1)}
-                        className="w-8 h-8 rounded-lg bg-zinc-800 hover:bg-zinc-700 active:scale-90 text-white font-bold flex items-center justify-center text-sm"
-                        aria-label="Aumentar estoque"
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-
-                  <div>
-                    {prod.isPromo ? (
-                      <button
-                        onClick={() => updateProduct(prod.id, { isPromo: false })}
-                        className="text-[10px] bg-amber-500/15 text-amber-300 font-bold px-2 py-1 rounded-lg border border-amber-500/30 active:scale-95"
-                      >
-                        Promoção Ativa ✓
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() =>
-                          updateProduct(prod.id, {
-                            isPromo: true,
-                            promoPrice: Math.round(prod.price * 0.85)
-                          })
-                        }
-                        className="text-[10px] text-zinc-400 hover:text-amber-300 font-semibold px-2 py-1 bg-zinc-800/80 rounded-lg border border-zinc-700 active:scale-95"
-                      >
-                        + Ativar Promo
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+          <input
+            value={busca}
+            onChange={(e) => setBusca(e.target.value)}
+            placeholder="Buscar produto pelo nome"
+            className="w-full bg-[#0a1528] border border-zinc-800 focus:border-amber-400/60 rounded-xl pl-9 pr-3 py-2.5 text-sm text-white placeholder:text-zinc-500 focus:outline-none"
+          />
         </div>
       </div>
-    </>
+
+      {/* Tabela (desktop e tablet) */}
+      <div className="hidden md:block overflow-hidden rounded-2xl border border-zinc-800 bg-[#0f1d3b]">
+        <table className="w-full text-sm">
+          <thead className="bg-[#0a1528] text-left text-[11px] uppercase tracking-wider text-zinc-500">
+            <tr>
+              <th className="px-4 py-3 font-semibold">Produto</th>
+              <th className="px-4 py-3 font-semibold">Preço</th>
+              <th className="px-4 py-3 font-semibold">Estoque</th>
+              <th className="px-4 py-3 font-semibold">Situação</th>
+              <th className="px-4 py-3 text-right font-semibold">Ações</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-zinc-800">
+            {filtrados.map((p) => {
+              const st = statusEstoque(p.stock);
+              const inativo = (p as Product & { active?: boolean }).active === false;
+              return (
+                <tr key={p.id} className={inativo ? 'opacity-50' : 'hover:bg-[#142a52]/40'}>
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-3">
+                      <div className="h-12 w-10 shrink-0 overflow-hidden rounded-lg bg-[#0a1528]">
+                        {p.image && <img src={p.image} alt="" className="h-full w-full object-cover" loading="lazy" />}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="font-semibold text-white truncate">{p.name}</p>
+                        <p className="text-xs text-zinc-500">
+                          {CATEGORIES_LABEL[p.category] ?? p.category} · {p.colors.length} cor(es) · {p.sizes.join(', ')}
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-4 py-3 tabular-nums">
+                    {p.isPromo && p.promoPrice ? (
+                      <div>
+                        <span className="font-bold text-amber-300">{reais(p.promoPrice)}</span>
+                        <span className="ml-2 text-xs text-zinc-500 line-through">{reais(p.price)}</span>
+                      </div>
+                    ) : (
+                      <span className="text-white">{reais(p.price)}</span>
+                    )}
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="inline-flex items-center rounded-lg border border-zinc-700 bg-[#0a1528]">
+                      <button
+                        onClick={() => updateStock(p.id, -1)}
+                        disabled={p.stock <= 0}
+                        className="px-2 py-1.5 text-zinc-300 hover:text-white disabled:opacity-30"
+                        aria-label={`Diminuir estoque de ${p.name}`}
+                      >
+                        <Minus className="w-3.5 h-3.5" />
+                      </button>
+                      <input
+                        key={`${p.id}-${p.stock}`}
+                        defaultValue={p.stock}
+                        inputMode="numeric"
+                        onBlur={(e) => ajustarEstoque(p, Number(e.target.value))}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') (e.target as HTMLInputElement).blur();
+                        }}
+                        className="w-14 bg-transparent text-center font-bold tabular-nums text-white focus:outline-none"
+                        aria-label={`Quantidade de ${p.name}`}
+                      />
+                      <button
+                        onClick={() => updateStock(p.id, 1)}
+                        className="px-2 py-1.5 text-zinc-300 hover:text-white"
+                        aria-label={`Aumentar estoque de ${p.name}`}
+                      >
+                        <Plus className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </td>
+                  <td className="px-4 py-3">
+                    {inativo ? (
+                      <span className="rounded-md border border-zinc-700 px-2 py-1 text-[11px] font-bold text-zinc-400">Desativado</span>
+                    ) : (
+                      <span className={`rounded-md border px-2 py-1 text-[11px] font-bold ${st.classe}`}>{st.rotulo}</span>
+                    )}
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="flex items-center justify-end gap-1">
+                      <button
+                        onClick={() => handleOpenEditProduct(p)}
+                        className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-zinc-300 hover:bg-[#142a52] hover:text-white"
+                      >
+                        <Pencil className="w-3.5 h-3.5" />
+                        Editar
+                      </button>
+                      {!inativo && (
+                        <button
+                          onClick={() => {
+                            if (window.confirm(`Desativar "${p.name}"? Ele some da vitrine, mas o histórico de pedidos continua.`)) deleteProduct(p.id);
+                          }}
+                          className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-zinc-400 hover:bg-[#142a52] hover:text-rose-300"
+                        >
+                          <EyeOff className="w-3.5 h-3.5" />
+                          Desativar
+                        </button>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        {filtrados.length === 0 && (
+          <p className="px-4 py-10 text-center text-sm text-zinc-500">Nenhum produto encontrado com esses filtros.</p>
+        )}
+      </div>
+
+      {/* Lista (celular) */}
+      <div className="md:hidden space-y-3">
+        {filtrados.map((p) => {
+          const st = statusEstoque(p.stock);
+          const inativo = (p as Product & { active?: boolean }).active === false;
+          return (
+            <div key={p.id} className={`rounded-2xl border border-zinc-800 bg-[#0f1d3b] p-4 space-y-3 ${inativo ? 'opacity-50' : ''}`}>
+              <div className="flex gap-3">
+                <div className="h-16 w-12 shrink-0 overflow-hidden rounded-lg bg-[#0a1528]">
+                  {p.image && <img src={p.image} alt="" className="h-full w-full object-cover" loading="lazy" />}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="font-semibold text-white leading-snug">{p.name}</p>
+                  <p className="text-xs text-zinc-500">{CATEGORIES_LABEL[p.category] ?? p.category}</p>
+                  <p className="mt-1 text-sm font-bold text-white tabular-nums">{reais(p.isPromo && p.promoPrice ? p.promoPrice : p.price)}</p>
+                </div>
+                {!inativo && (
+                  <span className={`h-fit shrink-0 rounded-md border px-2 py-1 text-[10px] font-bold ${st.classe}`}>{st.rotulo}</span>
+                )}
+              </div>
+              <div className="flex items-center justify-between gap-2">
+                <div className="inline-flex items-center rounded-lg border border-zinc-700 bg-[#0a1528]">
+                  <button onClick={() => updateStock(p.id, -1)} disabled={p.stock <= 0} className="px-3 py-2 text-zinc-300 disabled:opacity-30" aria-label="Diminuir estoque">
+                    <Minus className="w-4 h-4" />
+                  </button>
+                  <span className="min-w-10 text-center font-bold tabular-nums text-white">{p.stock}</span>
+                  <button onClick={() => updateStock(p.id, 1)} className="px-3 py-2 text-zinc-300" aria-label="Aumentar estoque">
+                    <Plus className="w-4 h-4" />
+                  </button>
+                </div>
+                <div className="flex gap-1">
+                  <button onClick={() => handleOpenEditProduct(p)} className="rounded-lg px-3 py-2 text-xs font-semibold text-zinc-300 hover:bg-[#142a52]">Editar</button>
+                  {!inativo && (
+                    <button
+                      onClick={() => {
+                        if (window.confirm(`Desativar "${p.name}"?`)) deleteProduct(p.id);
+                      }}
+                      className="rounded-lg px-3 py-2 text-xs font-semibold text-zinc-400 hover:bg-[#142a52] hover:text-rose-300"
+                    >
+                      Desativar
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+        {filtrados.length === 0 && <p className="py-10 text-center text-sm text-zinc-500">Nenhum produto encontrado com esses filtros.</p>}
+      </div>
+    </div>
   );
 }
