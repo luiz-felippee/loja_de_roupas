@@ -30,7 +30,7 @@ export const RecentlyViewedSection: React.FC = () => {
 
         <button
           onClick={clearRecentlyViewed}
-          className="text-[11px] text-zinc-500 hover:text-zinc-300 flex items-center gap-1 transition-colors"
+          className="text-[11px] text-zinc-500 hover:text-zinc-300 flex items-center gap-1 transition-colors whitespace-nowrap shrink-0"
         >
           <X className="w-3 h-3" />
           Limpar histórico
@@ -63,7 +63,7 @@ export const RecentlyViewedSection: React.FC = () => {
                   )}
                 </div>
 
-                <h4 className="text-xs font-bold text-white group-hover:text-amber-400 transition-colors line-clamp-1">
+                <h4 className="text-xs font-bold text-white group-hover:text-amber-400 transition-colors line-clamp-2 leading-snug">
                   {product.name}
                 </h4>
               </div>

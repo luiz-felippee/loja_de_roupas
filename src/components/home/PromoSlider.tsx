@@ -74,7 +74,7 @@ export const PromoSlider: React.FC = () => {
                     {product.category === 'times' ? 'Camisa de Time' : product.category === 'polo' ? 'Polo Premium' : product.category === 'bermuda' ? 'Bermuda' : 'Regata'}
                   </div>
 
-                  <h3 className="text-sm font-bold text-white group-hover:text-amber-300 transition-colors line-clamp-1">
+                  <h3 className="text-sm font-bold text-white group-hover:text-amber-300 transition-colors line-clamp-2 leading-snug min-h-[2.5rem]">
                     {product.name}
                   </h3>
 

@@ -141,11 +141,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
 
         {/* Unboxed Metadata with · separator & Star rating */}
-        <div className="flex items-center justify-between text-[11px] sm:text-[11px] text-zinc-400 font-medium uppercase tracking-wider mb-1">
-          <div className="flex items-center gap-1 truncate">
-            <span>{categoryLabels[product.category] || product.category}</span>
-            <span aria-hidden="true">·</span>
-            <span>{product.stock} un.</span>
+        <div className="flex flex-wrap items-center justify-between gap-x-2 text-[11px] sm:text-[11px] text-zinc-400 font-medium uppercase tracking-wider mb-1">
+          <div className="flex items-center gap-1 min-w-0 max-w-full">
+            <span className="truncate min-w-0">{categoryLabels[product.category] || product.category}</span>
+            <span aria-hidden="true" className="shrink-0">·</span>
+            <span className="shrink-0 whitespace-nowrap">{product.stock} un.</span>
           </div>
 
           {/* Rating */}
