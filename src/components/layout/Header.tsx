@@ -113,15 +113,6 @@ export const Header: React.FC<HeaderProps> = ({ onOpenPromo }) => {
             </button>
 
             <button
-              onClick={() => setIsVisualSearchOpen(true)}
-              className="hover:text-amber-400 transition-colors whitespace-nowrap shrink-0 flex items-center gap-1.5 text-zinc-300"
-              title="Buscar por Foto ou Câmera (IA Color & Shape)"
-            >
-              <Camera className="w-4 h-4 text-amber-400" />
-              <span>Buscar por Foto</span>
-            </button>
-
-            <button
               onClick={() => openVirtualFitting()}
               className="hover:text-amber-400 transition-colors whitespace-nowrap shrink-0 flex items-center gap-1.5 text-zinc-300"
               title="Provador Virtual Inteligente"
@@ -144,19 +135,6 @@ export const Header: React.FC<HeaderProps> = ({ onOpenPromo }) => {
               )}
             </button>
 
-            <button
-              onClick={() => setIsWishlistOpen(true)}
-              className="hover:text-rose-400 transition-colors whitespace-nowrap shrink-0 flex items-center gap-1.5 text-zinc-300 relative"
-              title="Lista de Desejos / Favoritos"
-            >
-              <Heart className={`w-4 h-4 ${wishlistProducts.length > 0 ? 'fill-rose-500 text-rose-500' : 'text-zinc-400'}`} />
-              <span>Favoritos</span>
-              {wishlistProducts.length > 0 && (
-                <span className="px-1.5 py-0.2 text-[10px] font-extrabold bg-rose-500 text-white rounded-full tabular-nums shadow-sm">
-                  {wishlistProducts.length}
-                </span>
-              )}
-            </button>
           </nav>
 
           {/* Zone 3: Primary Actions (Camera search, Customer profile, Wishlist button, Compare button, Admin button, Cart) */}

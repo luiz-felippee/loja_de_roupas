@@ -354,7 +354,7 @@ export const ProductDetailModal: React.FC = () => {
               <div className="flex border-b border-zinc-800 text-xs gap-4 pb-1">
                 <button
                   onClick={() => setActiveTab('specs')}
-                  className={`pb-1.5 font-bold transition-colors border-b-2 flex items-center gap-1.5 ${
+                  className={`pb-1.5 font-bold text-[11px] sm:text-xs whitespace-nowrap transition-colors border-b-2 flex items-center gap-1.5 ${
                     activeTab === 'specs'
                       ? 'border-amber-400 text-amber-400'
                       : 'border-transparent text-zinc-400 hover:text-white'
@@ -366,7 +366,7 @@ export const ProductDetailModal: React.FC = () => {
 
                 <button
                   onClick={() => setActiveTab('reviews')}
-                  className={`pb-1.5 font-bold transition-colors border-b-2 flex items-center gap-1.5 ${
+                  className={`pb-1.5 font-bold text-[11px] sm:text-xs whitespace-nowrap transition-colors border-b-2 flex items-center gap-1.5 ${
                     activeTab === 'reviews'
                       ? 'border-amber-400 text-amber-400'
                       : 'border-transparent text-zinc-400 hover:text-white'
@@ -378,7 +378,7 @@ export const ProductDetailModal: React.FC = () => {
 
                 <button
                   onClick={() => setActiveTab('shipping')}
-                  className={`pb-1.5 font-bold transition-colors border-b-2 flex items-center gap-1.5 ${
+                  className={`pb-1.5 font-bold text-[11px] sm:text-xs whitespace-nowrap transition-colors border-b-2 flex items-center gap-1.5 ${
                     activeTab === 'shipping'
                       ? 'border-amber-400 text-amber-400'
                       : 'border-transparent text-zinc-400 hover:text-white'
@@ -480,7 +480,7 @@ export const ProductDetailModal: React.FC = () => {
                 ) : (
                   <>
                     <ShoppingBag className="w-4 h-4" />
-                    Adicionar ao Carrinho
+                    <span className="whitespace-nowrap">Adicionar ao Carrinho</span>
                   </>
                 )}
               </button>

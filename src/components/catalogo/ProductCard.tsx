@@ -55,16 +55,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           {/* Quick status overlays */}
           <div className="absolute top-2 left-2 flex flex-col gap-1">
             {product.isPromo && (
-              <span className="bg-amber-400 text-black text-[9px] sm:text-[11px] font-extrabold px-1.5 sm:px-2 py-0.5 rounded shadow">
+              <span className="bg-amber-400 text-black text-[10px] sm:text-[11px] font-extrabold px-1.5 sm:px-2 py-0.5 rounded shadow">
                 PROMO
               </span>
             )}
             {isOutOfStock ? (
-              <span className="bg-rose-500 text-white text-[9px] sm:text-[11px] font-bold px-1.5 sm:px-2 py-0.5 rounded shadow">
+              <span className="bg-rose-500 text-white text-[10px] sm:text-[11px] font-bold px-1.5 sm:px-2 py-0.5 rounded shadow">
                 ESGOTADO
               </span>
             ) : isLowStock ? (
-              <span className="bg-amber-500/90 text-black text-[9px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded shadow">
+              <span className="bg-amber-500/90 text-black text-[10px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded shadow">
                 Últimas {product.stock}
               </span>
             ) : null}
@@ -99,7 +99,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 e.stopPropagation();
                 toggleProductComparison(product);
               }}
-              className={`px-2 py-1 rounded-lg text-[10px] sm:text-[11px] font-bold border transition-all flex items-center gap-1 shadow-md ${
+              className={`px-2 py-1 rounded-lg text-[11px] sm:text-[11px] font-bold border transition-all flex items-center gap-1 shadow-md ${
                 isInComparison
                   ? 'bg-amber-400 text-black border-amber-300 ring-2 ring-amber-400/50 scale-105'
                   : 'bg-black/75 hover:bg-black text-zinc-300 hover:text-white border-zinc-700/80 hover:border-amber-400/60'
@@ -141,11 +141,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
 
         {/* Unboxed Metadata with · separator & Star rating */}
-        <div className="flex items-center justify-between text-[10px] sm:text-[11px] text-zinc-400 font-medium uppercase tracking-wider mb-1">
-          <div className="flex items-center gap-1 truncate">
-            <span>{categoryLabels[product.category] || product.category}</span>
-            <span aria-hidden="true">·</span>
-            <span>{product.stock} un.</span>
+        <div className="flex flex-wrap items-center justify-between gap-x-2 text-[11px] sm:text-[11px] text-zinc-400 font-medium uppercase tracking-wider mb-1">
+          <div className="flex items-center gap-1 min-w-0 max-w-full">
+            <span className="truncate min-w-0">{categoryLabels[product.category] || product.category}</span>
+            <span aria-hidden="true" className="shrink-0">·</span>
+            <span className="shrink-0 whitespace-nowrap">{product.stock} un.</span>
           </div>
 
           {/* Rating */}
@@ -161,7 +161,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
 
         {/* Title */}
-        <h3 className="text-xs sm:text-base font-bold text-white group-hover:text-amber-300 transition-colors leading-snug line-clamp-2">
+        <h3 className="text-sm sm:text-base font-bold text-white group-hover:text-amber-300 transition-colors leading-snug line-clamp-2">
           {product.name}
         </h3>
 
@@ -175,18 +175,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               title={color.name}
             />
           ))}
-          <span className="text-[10px] sm:text-[11px] text-zinc-500 ml-0.5 truncate">
+          <span className="text-[11px] sm:text-[11px] text-zinc-500 ml-0.5 truncate">
             {product.colors.length} {product.colors.length > 1 ? 'cores' : 'cor'}
           </span>
         </div>
 
         {/* Sizes indicators */}
         <div className="flex items-center gap-1 mt-1.5 flex-wrap">
-          <span className="text-[9px] sm:text-[10px] text-zinc-500 mr-0.5 uppercase">Tam:</span>
+          <span className="text-[10px] sm:text-[10px] text-zinc-500 mr-0.5 uppercase">Tam:</span>
           {product.sizes.map((sz) => (
             <span
               key={sz}
-              className="text-[9px] sm:text-[10px] font-semibold text-zinc-300 bg-zinc-900 border border-zinc-800 px-1 sm:px-1.5 py-0.2 rounded"
+              className="text-[10px] sm:text-[10px] font-semibold text-zinc-300 bg-zinc-900 border border-zinc-800 px-1 sm:px-1.5 py-0.2 rounded"
             >
               {sz}
             </span>
@@ -198,11 +198,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <div className="mt-3 sm:mt-4 pt-2.5 sm:pt-3 border-t border-zinc-800/80 flex items-center justify-between gap-1">
         <div className="min-w-0">
           {product.isPromo && product.promoPrice && (
-            <span className="text-[10px] sm:text-[11px] text-zinc-500 line-through tabular-nums block truncate">
+            <span className="text-[11px] sm:text-[11px] text-zinc-500 line-through tabular-nums block truncate">
               R$ {product.price.toFixed(2).replace('.', ',')}
             </span>
           )}
-          <span className="text-sm sm:text-lg font-black text-amber-400 tabular-nums truncate block">
+          <span className="text-base sm:text-lg font-black text-amber-400 tabular-nums truncate block">
             R$ {effectivePrice.toFixed(2).replace('.', ',')}
           </span>
         </div>

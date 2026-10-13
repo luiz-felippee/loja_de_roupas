@@ -89,7 +89,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onOpenCheckout }) => {
                   {/* Info */}
                   <div className="flex-1 min-w-0 flex flex-col justify-between">
                     <div>
-                      <h4 className="text-xs font-bold text-white truncate leading-tight">
+                      <h4 className="text-xs font-bold text-white line-clamp-2 leading-tight">
                         {item.name}
                       </h4>
                       <div className="flex items-center gap-2 mt-1 text-[11px] text-zinc-400">
