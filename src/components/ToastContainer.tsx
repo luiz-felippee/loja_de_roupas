@@ -12,7 +12,7 @@ export const ToastContainer: React.FC = () => {
       {toasts.map((toast) => {
         const isOrderUpdate = toast.type === 'order_update';
         const isSuccess = toast.type === 'success';
-        const isAlert = toast.type === 'alert';
+        const isAlert = toast.type === 'alert' || toast.type === 'error';
 
         if (isOrderUpdate) {
           return (

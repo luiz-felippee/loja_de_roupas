@@ -30,7 +30,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenPromo }) => {
         <div className="flex items-center justify-between h-18 gap-6 md:gap-8">
           
           {/* Zone 1: Sidebar Toggle + Brand Wordmark */}
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0 shrink sm:shrink-0">
             {/* Sidebar Drawer trigger button */}
             <button
               onClick={() => setIsSidebarOpen(true)}
@@ -48,16 +48,16 @@ export const Header: React.FC<HeaderProps> = ({ onOpenPromo }) => {
                 setCurrentView('shop');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className="flex items-center gap-2.5 text-left group whitespace-nowrap shrink-0 focus:outline-none"
+              className="flex items-center gap-2 sm:gap-2.5 text-left group sm:whitespace-nowrap shrink min-w-0 sm:shrink-0 focus:outline-none"
             >
               <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center font-extrabold text-[#0c0e12] text-lg shadow-md shadow-amber-500/10 group-hover:scale-105 transition-transform">
                 H
               </div>
               <div className="flex flex-col">
-                <span className="text-base sm:text-lg font-bold tracking-tight text-white group-hover:text-amber-400 transition-colors uppercase">
+                <span className="text-sm leading-tight sm:text-lg font-bold tracking-tight text-white group-hover:text-amber-400 transition-colors uppercase">
                   Henrique <span className="text-amber-400">Multimarcas</span>
                 </span>
-                <span className="text-[10px] text-zinc-400 tracking-wider uppercase font-medium">
+                <span className="hidden sm:block text-[10px] text-zinc-400 tracking-wider uppercase font-medium">
                   Moda Esportiva & Casual
                 </span>
               </div>
@@ -65,7 +65,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenPromo }) => {
           </div>
 
           {/* Zone 2: Navigation Links (single-line, concise) */}
-          <nav className="hidden lg:flex items-center gap-7 text-sm font-medium text-zinc-300">
+          <nav className="hidden lg:flex flex-1 min-w-0 overflow-x-auto items-center gap-7 text-sm font-medium text-zinc-300 [scrollbar-width:none]">
             <button
               onClick={() => {
                 setCurrentView('shop');
@@ -175,7 +175,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenPromo }) => {
             {/* Wishlist button */}
             <button
               onClick={() => setIsWishlistOpen(true)}
-              className="relative p-2 text-xs font-semibold text-zinc-300 hover:text-rose-400 bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 hover:border-rose-500/50 rounded-lg shadow-sm flex items-center gap-1"
+              className="hidden sm:block relative p-2 text-xs font-semibold text-zinc-300 hover:text-rose-400 bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 hover:border-rose-500/50 rounded-lg shadow-sm flex items-center gap-1"
               title="Abrir Favoritos"
               aria-label="Abrir Favoritos"
             >
