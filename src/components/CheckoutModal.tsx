@@ -59,8 +59,6 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
   const [showRawKeyOption, setShowRawKeyOption] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  if (!isOpen) return null;
-
   const deliveryFee = deliveryType === 'entrega_loja' ? settings.deliveryFee : 0;
   const total = cartSubtotal + deliveryFee;
 
@@ -185,6 +183,9 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
     setTrackingOrderId(newOrder.id);
     setCurrentView('tracking');
   };
+
+  // Retorno antecipado so depois de todos os hooks (regra dos hooks do React)
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-4 bg-black/80 backdrop-blur-md overflow-y-auto">

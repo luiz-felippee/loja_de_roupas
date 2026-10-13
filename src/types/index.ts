@@ -90,7 +90,7 @@ export interface ToastMessage {
   id: string;
   title: string;
   description?: string;
-  type?: 'success' | 'info' | 'warning' | 'alert' | 'order_update';
+  type?: 'success' | 'info' | 'warning' | 'alert' | 'order_update' | 'error';
   orderId?: string;
   action?: {
     label: string;
