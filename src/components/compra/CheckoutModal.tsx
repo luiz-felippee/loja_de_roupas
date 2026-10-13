@@ -1,4 +1,4 @@
-import { validarCupom } from '../../utils/coupons';
+import { api } from '../../lib/api';
 import React, { useState, useEffect } from 'react';
 import { useStore } from '../../context/StoreContext';
 import { DeliveryType, PaymentMethod, Customer } from '../../types';
@@ -34,7 +34,6 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
     settings,
     customer,
     createOrder,
-    coupons,
     setCurrentView,
     setTrackingOrderId,
     addToast
@@ -62,24 +61,50 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [couponInput, setCouponInput] = useState('');
   const [appliedCouponCode, setAppliedCouponCode] = useState<string | null>(null);
+  const [appliedDiscount, setAppliedDiscount] = useState(0);
   const [couponError, setCouponError] = useState<string | null>(null);
 
   const deliveryFee = deliveryType === 'entrega_loja' ? settings.deliveryFee : 0;
-  // Cupom: aplicado so se ainda valer para o subtotal atual
-  const cupomAplicado = appliedCouponCode ? validarCupom(coupons, appliedCouponCode, cartSubtotal) : null;
-  const discount = cupomAplicado?.ok ? cupomAplicado.discount : 0;
+  // O desconto vem do servidor, que valida o cupom e recalcula o total
+  const discount = appliedCouponCode ? appliedDiscount : 0;
   const total = Math.round((cartSubtotal - discount + deliveryFee) * 100) / 100;
 
-  const aplicarCupom = () => {
-    const r = validarCupom(coupons, couponInput, cartSubtotal);
-    if (!r.ok) {
-      setCouponError(r.motivo);
-      setAppliedCouponCode(null);
-      return;
+  const aplicarCupom = async () => {
+    try {
+      const r = await api<{ ok: boolean; code?: string; discount?: number; motivo?: string }>('/coupons/validate', {
+        body: { code: couponInput, subtotal: cartSubtotal },
+      });
+      if (!r.ok || !r.code) {
+        setCouponError(r.motivo ?? 'Cupom inválido.');
+        setAppliedCouponCode(null);
+        setAppliedDiscount(0);
+        return;
+      }
+      setCouponError(null);
+      setAppliedCouponCode(r.code);
+      setAppliedDiscount(r.discount ?? 0);
+    } catch {
+      setCouponError('Não foi possível validar o cupom agora. Tente de novo.');
     }
-    setCouponError(null);
-    setAppliedCouponCode(r.coupon.code);
   };
+
+  // Se o subtotal mudar, o desconto e validado de novo no servidor
+  useEffect(() => {
+    if (!appliedCouponCode) return;
+    api<{ ok: boolean; discount?: number; motivo?: string }>('/coupons/validate', {
+      body: { code: appliedCouponCode, subtotal: cartSubtotal },
+    })
+      .then((r) => {
+        if (r.ok) {
+          setAppliedDiscount(r.discount ?? 0);
+        } else {
+          setAppliedCouponCode(null);
+          setAppliedDiscount(0);
+          setCouponError(r.motivo ?? 'Este cupom deixou de valer.');
+        }
+      })
+      .catch(() => undefined);
+  }, [cartSubtotal, appliedCouponCode]);
 
   // Gera automaticamente o código Pix Copia e Cola EMV e o QR Code dinâmico com o valor final exato
   useEffect(() => {
@@ -155,7 +180,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
     }
   };
 
-  const handleConfirmOrder = () => {
+  const handleConfirmOrder = async () => {
     if (!name.trim() || !phone.trim()) {
       addToast('Atenção', 'Preencha seus dados de contato.', 'alert');
       setStep(1);
@@ -178,13 +203,20 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
       reference: reference.trim() || undefined
     };
 
-    const newOrder = createOrder({
-      customer: customerData,
-      paymentMethod,
-      cashChangeFor: needChange && cashChangeFor ? parseFloat(cashChangeFor) : undefined,
-      deliveryType,
-      couponCode: cupomAplicado?.ok ? cupomAplicado.coupon.code : undefined
-    });
+    let pedido: { id: string; total: number };
+    try {
+      pedido = await createOrder({
+        customer: customerData,
+        paymentMethod,
+        cashChangeFor: needChange && cashChangeFor ? parseFloat(cashChangeFor) : undefined,
+        deliveryType,
+        couponCode: appliedCouponCode ?? undefined
+      });
+    } catch (e) {
+      setIsSubmitting(false);
+      addToast('Não foi possível concluir o pedido', e instanceof Error ? e.message : 'Erro inesperado.', 'error');
+      return;
+    }
 
     // Fire joyful celebratory confetti
     try {
@@ -200,7 +232,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
 
     setIsSubmitting(false);
     onClose();
-    setTrackingOrderId(newOrder.id);
+    setTrackingOrderId(pedido.id);
     setCurrentView('tracking');
   };
 
@@ -662,9 +694,6 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                     </button>
                   </div>
                   {couponError && <p className="text-[11px] text-rose-400">{couponError}</p>}
-                  {appliedCouponCode && !cupomAplicado?.ok && (
-                    <p className="text-[11px] text-rose-400">O cupom deixou de valer e foi removido.</p>
-                  )}
                 </div>
 
                 <div className="pt-2 border-t border-zinc-800/80 space-y-1">
@@ -674,7 +703,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                   </div>
                   {discount > 0 && (
                     <div className="flex justify-between text-emerald-400">
-                      <span>Cupom {cupomAplicado?.ok ? cupomAplicado.coupon.code : ''}:</span>
+                      <span>Cupom {appliedCouponCode ?? ''}:</span>
                       <span className="tabular-nums">- R$ {discount.toFixed(2).replace('.', ',')}</span>
                     </div>
                   )}

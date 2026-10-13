@@ -5,11 +5,11 @@ import type { CouponType } from '../../types';
 const vazio = { code: '', type: 'percent' as CouponType, value: '', minOrder: '', validFrom: '', validUntil: '', maxUses: '' };
 
 export const CouponsTab: React.FC = () => {
-  const { coupons, addCoupon, updateCoupon, removeCoupon } = useStore();
+  const { coupons, addCoupon, updateCoupon } = useStore();
   const [form, setForm] = useState(vazio);
   const [erro, setErro] = useState<string | null>(null);
 
-  const salvar = (e: React.FormEvent) => {
+  const salvar = async (e: React.FormEvent) => {
     e.preventDefault();
     const valor = Number(form.value.replace(',', '.'));
     if (!(valor > 0)) return setErro('Informe um valor de desconto maior que zero.');
@@ -19,7 +19,7 @@ export const CouponsTab: React.FC = () => {
       return setErro('Limite de usos deve ser um número inteiro maior que zero.');
     }
     setErro(null);
-    const criado = addCoupon({
+    const criado = await addCoupon({
       code: form.code,
       type: form.type,
       value: valor,
@@ -69,14 +69,6 @@ export const CouponsTab: React.FC = () => {
             <div className="flex items-center gap-2">
               <button onClick={() => updateCoupon(c.id, { active: !c.active })} className={`px-3 py-1.5 text-[11px] font-bold rounded-lg ${c.active ? 'bg-emerald-500/20 text-emerald-300' : 'bg-zinc-800 text-zinc-400'}`}>
                 {c.active ? 'Ativo' : 'Inativo'}
-              </button>
-              <button
-                onClick={() => {
-                  if (window.confirm(`Apagar o cupom ${c.code}?`)) removeCoupon(c.id);
-                }}
-                className="px-3 py-1.5 text-[11px] font-bold rounded-lg bg-zinc-800 text-rose-300"
-              >
-                Apagar
               </button>
             </div>
           </div>

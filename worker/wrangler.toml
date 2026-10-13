@@ -1,0 +1,18 @@
+name = "henrique-multimarcas-api"
+main = "src/index.ts"
+compatibility_date = "2026-10-01"
+
+# Ambiente de teste. Producao sera configurada depois de revisao.
+[[d1_databases]]
+binding = "DB"
+database_name = "henrique-multimarcas-staging"
+database_id = "ab934ac5-ac00-4bb5-ba21-4def2b43f6e4"
+
+# Producao: banco separado do de teste.
+[env.production]
+name = "henrique-multimarcas-api"
+
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "henrique-multimarcas-prod"
+database_id = "2d1e0160-98ce-42d2-a193-ebea96ebac7b"

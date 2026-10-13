@@ -1,45 +1,56 @@
 import { useEffect, useState } from 'react';
 import type { Coupon } from '../../types';
-import { readStorage, writeStorage } from '../../utils/storage';
+import { api } from '../../lib/api';
 import type { AddToast } from './types';
 
 export type NewCoupon = Omit<Coupon, 'id' | 'uses'>;
 
-/** Cupons de desconto: cadastro pela loja e contagem de usos. */
-export function useCoupons(addToast: AddToast) {
-  const [coupons, setCoupons] = useState<Coupon[]>(() => readStorage<Coupon[]>('hm_coupons', []));
+/**
+ * Cupons: a lista completa so existe para a equipe (vem da API).
+ * A validacao no checkout e feita pelo servidor, sem expor os codigos ao publico.
+ */
+export function useCoupons(addToast: AddToast, isStaffLoggedIn: boolean) {
+  const [coupons, setCoupons] = useState<Coupon[]>([]);
+
+  const refresh = async () => {
+    try {
+      setCoupons(await api<Coupon[]>('/admin/coupons'));
+    } catch {
+      // Sem conexao: mantem a lista atual
+    }
+  };
 
   useEffect(() => {
-    writeStorage('hm_coupons', coupons);
-  }, [coupons]);
+    if (isStaffLoggedIn) refresh();
+    else setCoupons([]);
+    // refresh so depende de isStaffLoggedIn
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isStaffLoggedIn]);
 
-  const addCoupon = (data: NewCoupon): boolean => {
+  const addCoupon = async (data: NewCoupon): Promise<boolean> => {
     const code = data.code.trim().toUpperCase();
-    if (!code) {
-      addToast('Código obrigatório', 'Informe o código do cupom.', 'error');
+    try {
+      await api('/admin/coupons', { body: { ...data, code } });
+      await refresh();
+      addToast('Cupom criado', `${code} já pode ser usado no checkout.`, 'success');
+      return true;
+    } catch (e) {
+      addToast('Não foi possível criar o cupom', e instanceof Error ? e.message : 'Erro inesperado.', 'error');
       return false;
     }
-    if (coupons.some((c) => c.code === code)) {
-      addToast('Código já existe', `Já existe um cupom com o código ${code}.`, 'error');
-      return false;
+  };
+
+  const updateCoupon = async (id: string, data: Partial<NewCoupon>) => {
+    try {
+      await api(`/admin/coupons/${id}`, { method: 'PATCH', body: data });
+      await refresh();
+    } catch (e) {
+      addToast('Não foi possível atualizar o cupom', e instanceof Error ? e.message : 'Erro inesperado.', 'error');
     }
-    setCoupons((prev) => [...prev, { ...data, code, id: crypto.randomUUID(), uses: 0 }]);
-    addToast('Cupom criado', `${code} já pode ser usado no checkout.`, 'success');
-    return true;
   };
 
-  const updateCoupon = (id: string, data: Partial<NewCoupon>) => {
-    setCoupons((prev) => prev.map((c) => (c.id === id ? { ...c, ...data } : c)));
-  };
+  // Sem rota de exclusao: desativar tira o cupom de uso e mantem o historico
+  const removeCoupon = (id: string) => updateCoupon(id, { active: false });
 
-  const removeCoupon = (id: string) => {
-    setCoupons((prev) => prev.filter((c) => c.id !== id));
-  };
-
-  const registerCouponUse = (code: string) => {
-    const alvo = code.trim().toUpperCase();
-    setCoupons((prev) => prev.map((c) => (c.code === alvo ? { ...c, uses: c.uses + 1 } : c)));
-  };
-
-  return { coupons, addCoupon, updateCoupon, removeCoupon, registerCouponUse };
+  return { coupons, addCoupon, updateCoupon, removeCoupon };
 }

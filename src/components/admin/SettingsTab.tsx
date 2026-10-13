@@ -198,17 +198,6 @@ export function SettingsTab({ a }: { a: AdminState }) {
             />
           </div>
 
-          <div>
-            <label className="block text-xs font-semibold text-zinc-300 mb-1">
-              Senha de Acesso da Equipe (Dono e Funcionários)
-            </label>
-            <input
-              type="text"
-              value={newStaffPasswordInput}
-              onChange={(e) => setNewStaffPasswordInput(e.target.value)}
-              className="w-full bg-[#1b1f2e] border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs text-white"
-            />
-          </div>
 
           <div className="pt-4 border-t border-zinc-800 flex items-center justify-between">
             <button
