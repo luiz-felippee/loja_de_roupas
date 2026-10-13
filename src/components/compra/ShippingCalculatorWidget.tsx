@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { calculateShippingByCep, CepLookupResult } from '../utils/shippingCalculator';
+import { calculateShippingByCep, CepLookupResult } from '../../utils/shippingCalculator';
 import { Truck, MapPin, Check, Loader2, AlertCircle } from 'lucide-react';
-import { ShippingOption } from '../types';
+import { ShippingOption } from '../../types';
 
 interface ShippingCalculatorWidgetProps {
   subtotal?: number;

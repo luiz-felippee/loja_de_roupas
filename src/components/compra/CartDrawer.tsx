@@ -1,5 +1,5 @@
 import React from 'react';
-import { useStore } from '../context/StoreContext';
+import { useStore } from '../../context/StoreContext';
 import { X, Trash2, ShoppingBag, ArrowRight } from 'lucide-react';
 import { ShippingCalculatorWidget } from './ShippingCalculatorWidget';
 

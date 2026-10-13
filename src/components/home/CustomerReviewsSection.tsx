@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useStore } from '../context/StoreContext';
-import { Product, ProductSize } from '../types';
+import { useStore } from '../../context/StoreContext';
+import { Product, ProductSize } from '../../types';
 import { Star, CheckCircle, ThumbsUp, MessageSquarePlus, X, Send } from 'lucide-react';
 
 interface CustomerReviewsSectionProps {

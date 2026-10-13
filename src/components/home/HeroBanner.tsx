@@ -1,5 +1,5 @@
 import React from 'react';
-import { HERO_BANNER_IMAGE } from '../data/initialProducts';
+import { HERO_BANNER_IMAGE } from '../../data/initialProducts';
 import { Truck, Store, CreditCard, ArrowDown, Mic } from 'lucide-react';
 
 export const HeroBanner: React.FC = () => {

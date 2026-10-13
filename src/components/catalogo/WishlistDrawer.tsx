@@ -1,5 +1,5 @@
 import React from 'react';
-import { useStore } from '../context/StoreContext';
+import { useStore } from '../../context/StoreContext';
 import { Heart, X, Trash2, ShoppingBag, ArrowRight, Share2, Eye } from 'lucide-react';
 
 export const WishlistDrawer: React.FC = () => {

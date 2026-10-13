@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useStore } from '../context/StoreContext';
-import { DeliveryType, PaymentMethod, Customer } from '../types';
+import { useStore } from '../../context/StoreContext';
+import { DeliveryType, PaymentMethod, Customer } from '../../types';
 import {
   X,
   Store,
@@ -19,7 +19,7 @@ import {
   RefreshCw
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { generatePixPayload, generatePixQRCode } from '../utils/pix';
+import { generatePixPayload, generatePixQRCode } from '../../utils/pix';
 
 interface CheckoutModalProps {
   isOpen: boolean;

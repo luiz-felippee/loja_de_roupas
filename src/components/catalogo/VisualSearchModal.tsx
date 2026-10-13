@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { useStore } from '../context/StoreContext';
+import { useStore } from '../../context/StoreContext';
 import {
   analyzeCanvasImage,
   findSimilarProducts,
   VisualAnalysisResult,
   VisualMatchResult
-} from '../utils/visualSearch';
-import { ProductCategory, Product } from '../types';
+} from '../../utils/visualSearch';
+import { ProductCategory, Product } from '../../types';
 import {
   Camera,
   X,

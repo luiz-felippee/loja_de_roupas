@@ -15,7 +15,7 @@ import {
 import { INITIAL_PRODUCTS, INITIAL_STORE_SETTINGS } from '../data/initialProducts';
 import { INITIAL_REVIEWS } from '../data/initialReviews';
 import { soundEffects } from '../utils/audio';
-import { readStorage, writeStorage } from '../lib/storage';
+import { readStorage, writeStorage } from '../utils/storage';
 import { loadOrders } from '../data/sampleOrders';
 
 interface CartItem extends OrderItem {

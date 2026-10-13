@@ -1,9 +1,9 @@
 import React from 'react';
-import { ProductCategory, ProductSize } from '../types';
+import { ProductCategory, ProductSize } from '../../types';
 import { Search, Sparkles, SlidersHorizontal, ArrowUpDown, Mic, MicOff, Volume2, X, Camera } from 'lucide-react';
-import { useVoiceSearch } from '../hooks/useVoiceSearch';
-import { VoiceSearchResult } from '../utils/speechRecognition';
-import { useStore } from '../context/StoreContext';
+import { useVoiceSearch } from '../../hooks/useVoiceSearch';
+import { VoiceSearchResult } from '../../utils/speechRecognition';
+import { useStore } from '../../context/StoreContext';
 
 export type SortOption = 'recentes' | 'menor_preco' | 'maior_preco' | 'promocoes';
 

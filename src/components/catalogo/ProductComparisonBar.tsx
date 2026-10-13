@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useStore } from '../context/StoreContext';
+import { useStore } from '../../context/StoreContext';
 import { Scale, X, ArrowRight, Trash2, Plus, ChevronDown, ChevronUp } from 'lucide-react';
 
 export const ProductComparisonBar: React.FC = () => {

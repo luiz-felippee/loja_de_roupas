@@ -1,5 +1,5 @@
 import React from 'react';
-import { useStore } from '../context/StoreContext';
+import { useStore } from '../../context/StoreContext';
 import {
   X,
   Package,
@@ -18,7 +18,7 @@ import {
   Ruler,
   Camera
 } from 'lucide-react';
-import { ProductCategory } from '../types';
+import { ProductCategory } from '../../types';
 
 interface SidebarDrawerProps {
   onSelectCategory: (cat: ProductCategory | 'todas') => void;

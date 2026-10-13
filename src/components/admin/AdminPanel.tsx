@@ -1,12 +1,12 @@
 import React from 'react';
-import { useAdminPanel } from './admin/useAdminPanel';
-import { AdminLogin } from './admin/AdminLogin';
-import { OrdersTab } from './admin/OrdersTab';
-import { ProductsTab } from './admin/ProductsTab';
-import { SettingsTab } from './admin/SettingsTab';
-import { ProductModal } from './admin/ProductModal';
+import { useAdminPanel } from './useAdminPanel';
+import { AdminLogin } from './AdminLogin';
+import { OrdersTab } from './OrdersTab';
+import { ProductsTab } from './ProductsTab';
+import { SettingsTab } from './SettingsTab';
+import { ProductModal } from './ProductModal';
 import { DailyRevenueChart } from './DailyRevenueChart';
-import { audioManager } from '../utils/audio';
+import { audioManager } from '../../utils/audio';
 import { Package, ShoppingBag, Settings, Volume2, LogOut, Sparkles, FileSpreadsheet } from 'lucide-react';
 
 export const AdminPanel: React.FC = () => {
