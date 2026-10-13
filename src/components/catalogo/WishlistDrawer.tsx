@@ -68,7 +68,7 @@ export const WishlistDrawer: React.FC = () => {
       <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
         <div className="w-screen max-w-md bg-[#12151e] border-l border-zinc-800 text-white flex flex-col shadow-2xl animate-in slide-in-from-right duration-200">
           {/* Header */}
-          <div className="p-5 border-b border-zinc-800/80 flex items-center justify-between bg-[#151924]">
+          <div className="p-5 border-b border-zinc-800/80 flex items-center justify-between bg-[#0f1d3b]">
             <div className="flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-xl bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-400">
                 <Heart className="w-5 h-5 fill-rose-500 text-rose-500" />
@@ -147,7 +147,7 @@ export const WishlistDrawer: React.FC = () => {
                         setSelectedProduct(product);
                         setIsWishlistOpen(false);
                       }}
-                      className="w-20 h-20 rounded-xl overflow-hidden bg-zinc-950 shrink-0 border border-zinc-800 cursor-pointer relative"
+                      className="w-20 h-20 rounded-xl overflow-hidden bg-[#0a1528] shrink-0 border border-zinc-800 cursor-pointer relative"
                     >
                       <img
                         src={product.image}
@@ -258,7 +258,7 @@ export const WishlistDrawer: React.FC = () => {
 
           {/* Footer Action */}
           {wishlistProducts.length > 0 && (
-            <div className="p-5 border-t border-zinc-800/80 bg-[#151924] space-y-2">
+            <div className="p-5 border-t border-zinc-800/80 bg-[#0f1d3b] space-y-2">
               <button
                 onClick={handleAddAllToCart}
                 className="w-full py-3 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-black font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 active:scale-98 transition-all"

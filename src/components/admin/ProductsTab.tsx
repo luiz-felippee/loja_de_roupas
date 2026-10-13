@@ -24,11 +24,11 @@ export function ProductsTab({ a }: { a: AdminState }) {
         </div>
 
         {/* Table / List Container */}
-        <div className="bg-[#141724] border border-zinc-800 rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl">
+        <div className="bg-[#0f1d3b] border border-zinc-800 rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl">
           {/* Desktop Table View (hidden on mobile) */}
           <div className="hidden md:block overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-[#191d2c] border-b border-zinc-800 text-zinc-400 font-bold uppercase tracking-wider text-[10px]">
+              <thead className="bg-[#142a52] border-b border-zinc-800 text-zinc-400 font-bold uppercase tracking-wider text-[10px]">
                 <tr>
                   <th className="py-3.5 px-4">Produto</th>
                   <th className="py-3.5 px-4">Categoria</th>
@@ -47,7 +47,7 @@ export function ProductsTab({ a }: { a: AdminState }) {
                           src={prod.image}
                           alt={prod.name}
                           referrerPolicy="no-referrer"
-                          className="w-12 h-12 rounded-lg object-cover bg-zinc-950 shrink-0"
+                          className="w-12 h-12 rounded-lg object-cover bg-[#0a1528] shrink-0"
                         />
                         <div>
                           <span className="font-bold text-white block text-sm">{prod.name}</span>
@@ -161,7 +161,7 @@ export function ProductsTab({ a }: { a: AdminState }) {
                     src={prod.image}
                     alt={prod.name}
                     referrerPolicy="no-referrer"
-                    className="w-16 h-16 rounded-xl object-cover bg-zinc-950 shrink-0 border border-zinc-800"
+                    className="w-16 h-16 rounded-xl object-cover bg-[#0a1528] shrink-0 border border-zinc-800"
                   />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-1">
@@ -171,14 +171,14 @@ export function ProductsTab({ a }: { a: AdminState }) {
                       <div className="flex items-center gap-1 shrink-0">
                         <button
                           onClick={() => handleOpenEditProduct(prod)}
-                          className="p-1.5 text-zinc-400 hover:text-amber-400 bg-zinc-900 border border-zinc-800 rounded-lg active:scale-95"
+                          className="p-1.5 text-zinc-400 hover:text-amber-400 bg-[#0f1d3b] border border-zinc-800 rounded-lg active:scale-95"
                           title="Editar produto"
                         >
                           <Edit className="w-3.5 h-3.5" />
                         </button>
                         <button
                           onClick={() => deleteProduct(prod.id)}
-                          className="p-1.5 text-zinc-500 hover:text-rose-400 bg-zinc-900 border border-zinc-800 rounded-lg active:scale-95"
+                          className="p-1.5 text-zinc-500 hover:text-rose-400 bg-[#0f1d3b] border border-zinc-800 rounded-lg active:scale-95"
                           title="Excluir produto"
                         >
                           <Trash2 className="w-3.5 h-3.5" />

@@ -122,7 +122,7 @@ const MainContent: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0c0e12] text-zinc-100">
+    <div className="min-h-screen flex flex-col bg-[#0a1528] text-zinc-100">
       <Header onOpenPromo={handleOpenPromo} />
 
       <main className="flex-1 pb-16 md:pb-0">
@@ -178,7 +178,7 @@ const MainContent: React.FC = () => {
               {/* Product Grid */}
               <div className="mt-6">
                 {filteredProducts.length === 0 ? (
-                  <div className="bg-[#141620] border border-zinc-800 rounded-3xl p-12 text-center text-zinc-400 space-y-3">
+                  <div className="bg-[#0f1d3b] border border-zinc-800 rounded-3xl p-12 text-center text-zinc-400 space-y-3">
                     <PackageSearch className="w-12 h-12 mx-auto text-zinc-600 mb-2" />
                     <h3 className="text-base font-bold text-white">Nenhum produto encontrado com estes filtros</h3>
                     <p className="text-xs max-w-sm mx-auto">

@@ -107,9 +107,9 @@ export const ProductComparisonBar: React.FC = () => {
                   return (
                     <div
                       key={prod.id}
-                      className="group relative flex items-center gap-2 bg-[#171b28] hover:bg-[#1d2233] border border-zinc-700/80 hover:border-amber-400/40 rounded-xl p-1.5 pr-2.5 transition-all max-w-[170px] sm:max-w-[185px] shrink-0"
+                      className="group relative flex items-center gap-2 bg-[#0f1d3b] hover:bg-[#1d2233] border border-zinc-700/80 hover:border-amber-400/40 rounded-xl p-1.5 pr-2.5 transition-all max-w-[170px] sm:max-w-[185px] shrink-0"
                     >
-                      <div className="w-10 h-10 rounded-lg overflow-hidden bg-zinc-950 shrink-0 relative">
+                      <div className="w-10 h-10 rounded-lg overflow-hidden bg-[#0a1528] shrink-0 relative">
                         <img
                           src={prod.image}
                           alt={prod.name}

@@ -27,7 +27,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     colors: [
       { name: 'Rosa Choque & Branco', hex: '#ec4899' },
       { name: 'Branco Neve', hex: '#f8fafc' },
-      { name: 'Preto Carbono', hex: '#18181b' }
+      { name: 'Preto Carbono', hex: '#0f1d3b' }
     ],
     sizes: ['P', 'M', 'G', 'GG']
   },
@@ -53,7 +53,7 @@ export const INITIAL_PRODUCTS: Product[] = [
       warranty: '30 dias contra defeitos de fabricação'
     },
     colors: [
-      { name: 'Preto com Ouro', hex: '#18181b' },
+      { name: 'Preto com Ouro', hex: '#0f1d3b' },
       { name: 'Branca Clássica', hex: '#f1f5f9' },
       { name: 'Azul Marinho', hex: '#1e3a8a' }
     ],
@@ -81,7 +81,7 @@ export const INITIAL_PRODUCTS: Product[] = [
       warranty: '30 dias contra defeitos de fabricação'
     },
     colors: [
-      { name: 'Preto Ônix', hex: '#18181b' },
+      { name: 'Preto Ônix', hex: '#0f1d3b' },
       { name: 'Chumbo Grafite', hex: '#334155' },
       { name: 'Azul Petróleo', hex: '#0f766e' }
     ],
@@ -109,7 +109,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     },
     colors: [
       { name: 'Cinza Chumbo', hex: '#475569' },
-      { name: 'Preto Sólido', hex: '#18181b' },
+      { name: 'Preto Sólido', hex: '#0f1d3b' },
       { name: 'Branco Neve', hex: '#ffffff' }
     ],
     sizes: ['P', 'M', 'G', 'GG']
@@ -142,7 +142,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Modelagem padrão elegante com botões personalizados e caimento alinhado aos ombros. Visual limpo e sofisticado.',
     colors: [
       { name: 'Verde Militar', hex: '#3f6212' },
-      { name: 'Preto Noite', hex: '#18181b' },
+      { name: 'Preto Noite', hex: '#0f1d3b' },
       { name: 'Vinho Bordô', hex: '#881337' }
     ],
     sizes: ['P', 'M', 'G', 'GG']
@@ -157,7 +157,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     stock: 15,
     description: 'Moletom leve 100% algodão com elástico confortável e cordão rústico. Conforto térmico perfeito.',
     colors: [
-      { name: 'Preto', hex: '#18181b' },
+      { name: 'Preto', hex: '#0f1d3b' },
       { name: 'Cinza Mescla', hex: '#64748b' },
       { name: 'Bege Areia', hex: '#d6d3d1' }
     ],
@@ -175,7 +175,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Estilo regata machão com ombros largos e gola reforçada, caimento solto que combina perfeitamente com bermuda e tênis.',
     colors: [
       { name: 'Grafite Escuro', hex: '#334155' },
-      { name: 'Preto Básico', hex: '#18181b' },
+      { name: 'Preto Básico', hex: '#0f1d3b' },
       { name: 'Verde Musgo', hex: '#166534' }
     ],
     sizes: ['P', 'M', 'G', 'GG']

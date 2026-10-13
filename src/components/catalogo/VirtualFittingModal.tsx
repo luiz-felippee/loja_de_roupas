@@ -40,11 +40,11 @@ export const VirtualFittingModal: React.FC = () => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
       <div
-        className="relative w-full max-w-xl bg-[#131622] border border-zinc-800 rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 my-6"
+        className="relative w-full max-w-xl bg-[#0f1d3b] border border-zinc-800 rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 my-6"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Header */}
-        <div className="p-5 sm:p-6 border-b border-zinc-800/80 bg-[#161a29] flex items-center justify-between">
+        <div className="p-5 sm:p-6 border-b border-zinc-800/80 bg-[#0f1d3b] flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-amber-400/15 border border-amber-400/30 flex items-center justify-center text-amber-400">
               <Sparkles className="w-5 h-5" />

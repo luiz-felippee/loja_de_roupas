@@ -51,7 +51,7 @@ export const AdminPanel: React.FC = () => {
 
           <button
             onClick={() => setCurrentView('shop')}
-            className="flex-1 sm:flex-initial px-3 sm:px-3.5 py-2 bg-zinc-900 hover:bg-zinc-850 text-zinc-300 text-xs font-semibold rounded-xl border border-zinc-800 transition-colors flex items-center justify-center min-h-[40px]"
+            className="flex-1 sm:flex-initial px-3 sm:px-3.5 py-2 bg-[#0f1d3b] hover:bg-zinc-850 text-zinc-300 text-xs font-semibold rounded-xl border border-zinc-800 transition-colors flex items-center justify-center min-h-[40px]"
           >
             Ver Loja
           </button>
@@ -68,7 +68,7 @@ export const AdminPanel: React.FC = () => {
 
       {/* 4 Executive KPI Metric Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 my-4 sm:my-6">
-        <div className="bg-[#141724] border border-zinc-800 rounded-xl sm:rounded-2xl p-3 sm:p-4">
+        <div className="bg-[#0f1d3b] border border-zinc-800 rounded-xl sm:rounded-2xl p-3 sm:p-4">
           <span className="text-[10px] sm:text-[11px] font-bold text-zinc-400 uppercase tracking-wider block truncate">
             Faturamento Total
           </span>
@@ -80,7 +80,7 @@ export const AdminPanel: React.FC = () => {
           </span>
         </div>
 
-        <div className="bg-[#141724] border border-zinc-800 rounded-xl sm:rounded-2xl p-3 sm:p-4">
+        <div className="bg-[#0f1d3b] border border-zinc-800 rounded-xl sm:rounded-2xl p-3 sm:p-4">
           <span className="text-[10px] sm:text-[11px] font-bold text-zinc-400 uppercase tracking-wider block truncate">
             Novos Pedidos
           </span>
@@ -95,7 +95,7 @@ export const AdminPanel: React.FC = () => {
           </span>
         </div>
 
-        <div className="bg-[#141724] border border-zinc-800 rounded-xl sm:rounded-2xl p-3 sm:p-4">
+        <div className="bg-[#0f1d3b] border border-zinc-800 rounded-xl sm:rounded-2xl p-3 sm:p-4">
           <span className="text-[10px] sm:text-[11px] font-bold text-zinc-400 uppercase tracking-wider block truncate">
             Em Andamento
           </span>
@@ -107,7 +107,7 @@ export const AdminPanel: React.FC = () => {
           </span>
         </div>
 
-        <div className="bg-[#141724] border border-zinc-800 rounded-xl sm:rounded-2xl p-3 sm:p-4">
+        <div className="bg-[#0f1d3b] border border-zinc-800 rounded-xl sm:rounded-2xl p-3 sm:p-4">
           <span className="text-[10px] sm:text-[11px] font-bold text-zinc-400 uppercase tracking-wider block truncate">
             Alerta Estoque
           </span>
@@ -124,7 +124,7 @@ export const AdminPanel: React.FC = () => {
       <DailyRevenueChart orders={orders} />
 
       {/* Audio Test & Notification Bar */}
-      <div className="my-6 p-4 rounded-2xl bg-[#171b28] border border-amber-500/30 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+      <div className="my-6 p-4 rounded-2xl bg-[#0f1d3b] border border-amber-500/30 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
             <Volume2 className="w-5 h-5" />
@@ -156,7 +156,7 @@ export const AdminPanel: React.FC = () => {
 
           <button
             onClick={() => audioManager.playNewOrderAlert()}
-            className="px-3 py-2 bg-zinc-900 hover:bg-zinc-850 text-amber-300 border border-amber-400/30 text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5"
+            className="px-3 py-2 bg-[#0f1d3b] hover:bg-zinc-850 text-amber-300 border border-amber-400/30 text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5"
             title="Testa o toque de pedido recebido na loja"
           >
             <Volume2 className="w-3.5 h-3.5 text-amber-400" />
@@ -165,7 +165,7 @@ export const AdminPanel: React.FC = () => {
 
           <button
             onClick={() => audioManager.playStatusUpdateAlert()}
-            className="px-3 py-2 bg-zinc-900 hover:bg-zinc-850 text-emerald-300 border border-emerald-400/30 text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5"
+            className="px-3 py-2 bg-[#0f1d3b] hover:bg-zinc-850 text-emerald-300 border border-emerald-400/30 text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5"
             title="Testa o toque de atualização de etapa do cliente"
           >
             <Volume2 className="w-3.5 h-3.5 text-emerald-400" />
@@ -182,14 +182,14 @@ export const AdminPanel: React.FC = () => {
           className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 whitespace-nowrap ${
             activeTab === 'orders'
               ? 'bg-amber-400 text-black shadow-md shadow-amber-500/10'
-              : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+              : 'text-zinc-400 hover:text-white hover:bg-[#0f1d3b]'
           }`}
         >
           <ShoppingBag className="w-4 h-4" />
           <span>Fila de Pedidos</span>
           <span
             className={`px-1.5 py-0.5 rounded-full text-[10px] font-extrabold ${
-              activeTab === 'orders' ? 'bg-black text-amber-300' : 'bg-zinc-800 text-zinc-300'
+              activeTab === 'orders' ? 'bg-[#050b1a] text-amber-300' : 'bg-zinc-800 text-zinc-300'
             }`}
           >
             {orders.length}
@@ -201,14 +201,14 @@ export const AdminPanel: React.FC = () => {
           className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 whitespace-nowrap ${
             activeTab === 'products'
               ? 'bg-amber-400 text-black shadow-md shadow-amber-500/10'
-              : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+              : 'text-zinc-400 hover:text-white hover:bg-[#0f1d3b]'
           }`}
         >
           <Package className="w-4 h-4" />
           <span>Catálogo & Estoque</span>
           <span
             className={`px-1.5 py-0.5 rounded-full text-[10px] font-extrabold ${
-              activeTab === 'products' ? 'bg-black text-amber-300' : 'bg-zinc-800 text-zinc-300'
+              activeTab === 'products' ? 'bg-[#050b1a] text-amber-300' : 'bg-zinc-800 text-zinc-300'
             }`}
           >
             {products.length}
@@ -220,7 +220,7 @@ export const AdminPanel: React.FC = () => {
           className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 whitespace-nowrap ${
             activeTab === 'settings'
               ? 'bg-amber-400 text-black shadow-md shadow-amber-500/10'
-              : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+              : 'text-zinc-400 hover:text-white hover:bg-[#0f1d3b]'
           }`}
         >
           <Settings className="w-4 h-4" />
@@ -229,7 +229,7 @@ export const AdminPanel: React.FC = () => {
         <button
           onClick={() => setActiveTab('coupons')}
           className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 whitespace-nowrap ${
-            activeTab === 'coupons' ? 'bg-amber-400 text-black shadow-md shadow-amber-500/10' : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+            activeTab === 'coupons' ? 'bg-amber-400 text-black shadow-md shadow-amber-500/10' : 'text-zinc-400 hover:text-white hover:bg-[#0f1d3b]'
           }`}
         >
           <Ticket className="w-4 h-4" />
@@ -238,7 +238,7 @@ export const AdminPanel: React.FC = () => {
         <button
           onClick={() => setActiveTab('cash')}
           className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 whitespace-nowrap ${
-            activeTab === 'cash' ? 'bg-amber-400 text-black shadow-md shadow-amber-500/10' : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+            activeTab === 'cash' ? 'bg-amber-400 text-black shadow-md shadow-amber-500/10' : 'text-zinc-400 hover:text-white hover:bg-[#0f1d3b]'
           }`}
         >
           <Wallet className="w-4 h-4" />
@@ -247,7 +247,7 @@ export const AdminPanel: React.FC = () => {
         <button
           onClick={() => setActiveTab('reports')}
           className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 whitespace-nowrap ${
-            activeTab === 'reports' ? 'bg-amber-400 text-black shadow-md shadow-amber-500/10' : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+            activeTab === 'reports' ? 'bg-amber-400 text-black shadow-md shadow-amber-500/10' : 'text-zinc-400 hover:text-white hover:bg-[#0f1d3b]'
           }`}
         >
           <BarChart3 className="w-4 h-4" />

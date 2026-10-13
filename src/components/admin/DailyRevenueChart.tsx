@@ -136,7 +136,7 @@ export const DailyRevenueChart: React.FC<DailyRevenueChartProps> = ({ orders }) 
     if (active && payload && payload.length) {
       const data: DailyData = payload[0].payload;
       return (
-        <div className="bg-[#181c2b] border border-amber-500/40 rounded-xl p-3.5 shadow-xl text-xs space-y-1.5 min-w-[190px]">
+        <div className="bg-[#0f1d3b] border border-amber-500/40 rounded-xl p-3.5 shadow-xl text-xs space-y-1.5 min-w-[190px]">
           <div className="flex items-center justify-between border-b border-zinc-800 pb-1.5">
             <span className="font-bold text-white flex items-center gap-1.5">
               <Calendar className="w-3.5 h-3.5 text-amber-400" />
@@ -176,7 +176,7 @@ export const DailyRevenueChart: React.FC<DailyRevenueChartProps> = ({ orders }) 
   };
 
   return (
-    <div className="bg-[#141724] border border-zinc-800 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl mb-6 space-y-4 sm:space-y-5">
+    <div className="bg-[#0f1d3b] border border-zinc-800 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl mb-6 space-y-4 sm:space-y-5">
       {/* Header with Title and Mode Switcher */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 pb-3 sm:pb-4 border-b border-zinc-800/80">
         <div>
@@ -199,7 +199,7 @@ export const DailyRevenueChart: React.FC<DailyRevenueChartProps> = ({ orders }) 
         {/* Controls: View mode toggle & Collapse */}
         <div className="flex items-center gap-2 flex-wrap shrink-0 self-start sm:self-auto w-full sm:w-auto justify-between sm:justify-end">
           {isExpanded && (
-            <div className="flex items-center gap-1 bg-[#1a1e2d] p-1 rounded-xl border border-zinc-800 flex-1 sm:flex-initial justify-center">
+            <div className="flex items-center gap-1 bg-[#0f1d3b] p-1 rounded-xl border border-zinc-800 flex-1 sm:flex-initial justify-center">
               <button
                 onClick={() => setMetricView('revenue')}
                 className={`flex-1 sm:flex-initial px-2.5 sm:px-3 py-1.5 text-[11px] sm:text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
@@ -233,7 +233,7 @@ export const DailyRevenueChart: React.FC<DailyRevenueChartProps> = ({ orders }) 
 
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="p-2 text-zinc-400 hover:text-white bg-[#1a1e2d] hover:bg-zinc-800 rounded-xl border border-zinc-800 transition-colors shrink-0"
+            className="p-2 text-zinc-400 hover:text-white bg-[#0f1d3b] hover:bg-zinc-800 rounded-xl border border-zinc-800 transition-colors shrink-0"
             title={isExpanded ? 'Recolher gráfico' : 'Expandir gráfico'}
           >
             {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
@@ -245,7 +245,7 @@ export const DailyRevenueChart: React.FC<DailyRevenueChartProps> = ({ orders }) 
         <>
           {/* KPI Highlight Strip for 7-Day Window */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
-            <div className="bg-[#191d2c] border border-zinc-800/80 rounded-xl sm:rounded-2xl p-3 sm:p-3.5">
+            <div className="bg-[#142a52] border border-zinc-800/80 rounded-xl sm:rounded-2xl p-3 sm:p-3.5">
               <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block truncate">
                 Receita (7 Dias)
               </span>
@@ -257,7 +257,7 @@ export const DailyRevenueChart: React.FC<DailyRevenueChartProps> = ({ orders }) 
               </span>
             </div>
 
-            <div className="bg-[#191d2c] border border-zinc-800/80 rounded-xl sm:rounded-2xl p-3 sm:p-3.5">
+            <div className="bg-[#142a52] border border-zinc-800/80 rounded-xl sm:rounded-2xl p-3 sm:p-3.5">
               <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block truncate">
                 Média Diária
               </span>
@@ -269,7 +269,7 @@ export const DailyRevenueChart: React.FC<DailyRevenueChartProps> = ({ orders }) 
               </span>
             </div>
 
-            <div className="bg-[#191d2c] border border-zinc-800/80 rounded-xl sm:rounded-2xl p-3 sm:p-3.5">
+            <div className="bg-[#142a52] border border-zinc-800/80 rounded-xl sm:rounded-2xl p-3 sm:p-3.5">
               <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block truncate">
                 Melhor Dia
               </span>
@@ -282,7 +282,7 @@ export const DailyRevenueChart: React.FC<DailyRevenueChartProps> = ({ orders }) 
               </span>
             </div>
 
-            <div className="bg-[#191d2c] border border-zinc-800/80 rounded-xl sm:rounded-2xl p-3 sm:p-3.5">
+            <div className="bg-[#142a52] border border-zinc-800/80 rounded-xl sm:rounded-2xl p-3 sm:p-3.5">
               <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block truncate">
                 Faturamento Hoje
               </span>

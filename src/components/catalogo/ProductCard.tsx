@@ -42,7 +42,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     >
       <div>
         {/* Product Image 4:3 */}
-        <div className="relative aspect-[4/3] rounded-lg sm:rounded-xl overflow-hidden bg-zinc-950 mb-2.5 sm:mb-3.5">
+        <div className="relative aspect-[4/3] rounded-lg sm:rounded-xl overflow-hidden bg-[#0a1528] mb-2.5 sm:mb-3.5">
           {product.image ? (
             <img
               src={product.image}
@@ -87,7 +87,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               className={`p-1.5 rounded-lg border transition-all flex items-center justify-center shadow-md ${
                 isFavorited
                   ? 'bg-rose-500/90 text-white border-rose-400 scale-105 shadow-rose-500/20'
-                  : 'bg-black/75 hover:bg-black text-zinc-300 hover:text-rose-400 border-zinc-700/80 hover:border-rose-400/60'
+                  : 'bg-black/75 hover:bg-[#050b1a] text-zinc-300 hover:text-rose-400 border-zinc-700/80 hover:border-rose-400/60'
               }`}
               title={isFavorited ? 'Remover dos favoritos' : 'Salvar na lista de desejos'}
               aria-label={`Favoritar ${product.name}`}
@@ -108,7 +108,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               className={`px-2 py-1 rounded-lg text-[11px] sm:text-[11px] font-bold border transition-all flex items-center gap-1 shadow-md ${
                 isInComparison
                   ? 'bg-amber-400 text-black border-amber-300 ring-2 ring-amber-400/50 scale-105'
-                  : 'bg-black/75 hover:bg-black text-zinc-300 hover:text-white border-zinc-700/80 hover:border-amber-400/60'
+                  : 'bg-black/75 hover:bg-[#050b1a] text-zinc-300 hover:text-white border-zinc-700/80 hover:border-amber-400/60'
               }`}
               title={
                 isInComparison
@@ -138,7 +138,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 e.stopPropagation();
                 setSelectedProduct(product);
               }}
-              className="bg-zinc-900/90 text-amber-300 border border-amber-400/40 px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-lg transform translate-y-2 group-hover:translate-y-0 transition-all hover:bg-black"
+              className="bg-zinc-900/90 text-amber-300 border border-amber-400/40 px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-lg transform translate-y-2 group-hover:translate-y-0 transition-all hover:bg-[#050b1a]"
             >
               <Eye className="w-4 h-4 text-amber-400" />
               Ver Opções
@@ -192,7 +192,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           {product.sizes.map((sz) => (
             <span
               key={sz}
-              className="text-[10px] sm:text-[10px] font-semibold text-zinc-300 bg-zinc-900 border border-zinc-800 px-1 sm:px-1.5 py-0.2 rounded"
+              className="text-[10px] sm:text-[10px] font-semibold text-zinc-300 bg-[#0f1d3b] border border-zinc-800 px-1 sm:px-1.5 py-0.2 rounded"
             >
               {sz}
             </span>
@@ -222,7 +222,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           className={`p-2 sm:p-2.5 rounded-xl border transition-all flex items-center justify-center shrink-0 min-h-[36px] min-w-[36px] ${
             isOutOfStock
               ? 'bg-zinc-800 text-zinc-600 border-zinc-800 cursor-not-allowed'
-              : 'bg-zinc-900 text-amber-400 border-zinc-700 hover:border-amber-400 hover:bg-amber-400 hover:text-black shadow-sm'
+              : 'bg-[#0f1d3b] text-amber-400 border-zinc-700 hover:border-amber-400 hover:bg-amber-400 hover:text-black shadow-sm'
           }`}
           aria-label="Escolher opções e comprar"
         >

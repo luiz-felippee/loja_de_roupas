@@ -97,7 +97,7 @@ export const ProductComparisonModal: React.FC = () => {
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Top Header */}
-        <div className="p-4 sm:p-6 border-b border-zinc-800 bg-[#121622] flex items-center justify-between gap-4 shrink-0">
+        <div className="p-4 sm:p-6 border-b border-zinc-800 bg-[#0f1d3b] flex items-center justify-between gap-4 shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-black font-black shadow-md shadow-amber-500/20">
               <Scale className="w-5 h-5" />
@@ -198,7 +198,7 @@ export const ProductComparisonModal: React.FC = () => {
           {comparedProducts.length === 0 ? (
             /* Empty State */
             <div className="py-16 text-center space-y-4">
-              <div className="w-16 h-16 rounded-3xl bg-zinc-900 border border-zinc-800 flex items-center justify-center mx-auto text-amber-400 shadow-xl">
+              <div className="w-16 h-16 rounded-3xl bg-[#0f1d3b] border border-zinc-800 flex items-center justify-center mx-auto text-amber-400 shadow-xl">
                 <Scale className="w-8 h-8" />
               </div>
               <div className="max-w-md mx-auto space-y-2">
@@ -241,7 +241,7 @@ export const ProductComparisonModal: React.FC = () => {
                     return (
                       <div
                         key={product.id}
-                        className="bg-[#141724] border border-zinc-800 rounded-2xl p-4 flex flex-col justify-between relative group hover:border-amber-400/40 transition-all shadow-lg"
+                        className="bg-[#0f1d3b] border border-zinc-800 rounded-2xl p-4 flex flex-col justify-between relative group hover:border-amber-400/40 transition-all shadow-lg"
                       >
                         {/* Top Slot Badge & Remove */}
                         <div className="flex items-center justify-between mb-2">
@@ -263,7 +263,7 @@ export const ProductComparisonModal: React.FC = () => {
                           onClick={() => {
                             setSelectedProduct(product);
                           }}
-                          className="relative aspect-[4/3] rounded-xl overflow-hidden bg-zinc-950 mb-3 cursor-pointer group/img"
+                          className="relative aspect-[4/3] rounded-xl overflow-hidden bg-[#0a1528] mb-3 cursor-pointer group/img"
                         >
                           <img
                             src={product.image}
@@ -583,7 +583,7 @@ export const ProductComparisonModal: React.FC = () => {
         </div>
 
         {/* Modal Bottom Footer Actions */}
-        <div className="p-4 sm:p-5 border-t border-zinc-800 bg-[#121622] flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
+        <div className="p-4 sm:p-5 border-t border-zinc-800 bg-[#0f1d3b] flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
           <div className="text-xs text-zinc-400 text-center sm:text-left">
             <span>Dúvidas sobre caimento ou medidas? Chame no WhatsApp da loja: </span>
             <strong className="text-amber-400"> (11) 98765-4321</strong>
@@ -620,7 +620,7 @@ export const ProductComparisonModal: React.FC = () => {
             onClick={() => setIsProductPickerOpen(false)}
           >
             <div
-              className="bg-[#141724] border border-zinc-700 rounded-2xl w-full max-w-lg p-5 shadow-2xl space-y-4 max-h-[85vh] flex flex-col"
+              className="bg-[#0f1d3b] border border-zinc-700 rounded-2xl w-full max-w-lg p-5 shadow-2xl space-y-4 max-h-[85vh] flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between pb-3 border-b border-zinc-800">
@@ -661,7 +661,7 @@ export const ProductComparisonModal: React.FC = () => {
                           <img
                             src={product.image}
                             alt={product.name}
-                            className="w-12 h-12 object-cover rounded-lg bg-zinc-950 shrink-0"
+                            className="w-12 h-12 object-cover rounded-lg bg-[#0a1528] shrink-0"
                           />
                           <div className="min-w-0">
                             <h4 className="text-xs font-bold text-white group-hover:text-amber-400 transition-colors truncate">

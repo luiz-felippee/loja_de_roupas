@@ -51,7 +51,7 @@ export const CustomerProfileModal: React.FC = () => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
       <div
-        className="relative w-full max-w-md bg-[#141724] border border-zinc-800 rounded-3xl p-6 shadow-2xl space-y-5 animate-in fade-in"
+        className="relative w-full max-w-md bg-[#0f1d3b] border border-zinc-800 rounded-3xl p-6 shadow-2xl space-y-5 animate-in fade-in"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -86,7 +86,7 @@ export const CustomerProfileModal: React.FC = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Ex: João da Silva"
-                className="w-full bg-[#1b1f2e] border border-zinc-800 focus:border-amber-500 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none"
+                className="w-full bg-[#142a52] border border-zinc-800 focus:border-amber-500 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none"
                 required
               />
             </div>
@@ -103,7 +103,7 @@ export const CustomerProfileModal: React.FC = () => {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="Ex: (11) 98765-4321"
-                className="w-full bg-[#1b1f2e] border border-zinc-800 focus:border-amber-500 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none"
+                className="w-full bg-[#142a52] border border-zinc-800 focus:border-amber-500 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none"
                 required
               />
             </div>
@@ -120,7 +120,7 @@ export const CustomerProfileModal: React.FC = () => {
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 placeholder="Ex: Rua São Paulo, 250 - Casa"
-                className="w-full bg-[#1b1f2e] border border-zinc-800 focus:border-amber-500 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none"
+                className="w-full bg-[#142a52] border border-zinc-800 focus:border-amber-500 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none"
               />
             </div>
           </div>
@@ -135,7 +135,7 @@ export const CustomerProfileModal: React.FC = () => {
                 value={neighborhood}
                 onChange={(e) => setNeighborhood(e.target.value)}
                 placeholder="Centro"
-                className="w-full bg-[#1b1f2e] border border-zinc-800 focus:border-amber-500 rounded-xl px-3 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none"
+                className="w-full bg-[#142a52] border border-zinc-800 focus:border-amber-500 rounded-xl px-3 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none"
               />
             </div>
 
@@ -148,7 +148,7 @@ export const CustomerProfileModal: React.FC = () => {
                 value={reference}
                 onChange={(e) => setReference(e.target.value)}
                 placeholder="Perto da praça"
-                className="w-full bg-[#1b1f2e] border border-zinc-800 focus:border-amber-500 rounded-xl px-3 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none"
+                className="w-full bg-[#142a52] border border-zinc-800 focus:border-amber-500 rounded-xl px-3 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none"
               />
             </div>
           </div>
@@ -164,7 +164,7 @@ export const CustomerProfileModal: React.FC = () => {
             <button
               type="button"
               onClick={() => setIsProfileModalOpen(false)}
-              className="px-4 py-2 bg-zinc-900 text-zinc-400 text-xs font-semibold rounded-xl hover:text-white"
+              className="px-4 py-2 bg-[#0f1d3b] text-zinc-400 text-xs font-semibold rounded-xl hover:text-white"
             >
               Cancelar
             </button>

@@ -5,7 +5,7 @@ export function SettingsTab({ a }: { a: AdminState }) {
   const { addToast, copiedTestPix, deliveryFeeInput, handleSaveSettings, newStaffPasswordInput, pixCityInput, pixKeyInput, pixKeyTypeInput, pixNameInput, resetToDefaults, setCopiedTestPix, setDeliveryFeeInput, setNewStaffPasswordInput, setPixCityInput, setPixKeyInput, setPixKeyTypeInput, setPixNameInput, setStoreAddressInput, setWhatsappInput, storeAddressInput, testPixCode, testPixQR, whatsappInput } = a;
   return (
     <>
-      <div className="max-w-2xl bg-[#141724] border border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
+      <div className="max-w-2xl bg-[#0f1d3b] border border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
         <div>
           <h3 className="text-base font-bold text-white">Configurações da Henrique Multimarcas</h3>
           <p className="text-xs text-zinc-400">
@@ -23,7 +23,7 @@ export function SettingsTab({ a }: { a: AdminState }) {
               step="0.5"
               value={deliveryFeeInput}
               onChange={(e) => setDeliveryFeeInput(e.target.value)}
-              className="w-full bg-[#1b1f2e] border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs text-white"
+              className="w-full bg-[#142a52] border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs text-white"
             />
             <span className="text-[10px] text-zinc-500 mt-1 block">
               Valor cobrado caso o cliente selecione Entrega da Loja.
@@ -31,7 +31,7 @@ export function SettingsTab({ a }: { a: AdminState }) {
           </div>
 
           {/* Bloco Dedicado de Configuração do Pix */}
-          <div className="p-5 rounded-2xl bg-[#191d2c] border border-amber-500/30 space-y-4">
+          <div className="p-5 rounded-2xl bg-[#142a52] border border-amber-500/30 space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-xl bg-amber-400/10 border border-amber-400/30 text-amber-400 flex items-center justify-center">
@@ -67,7 +67,7 @@ export function SettingsTab({ a }: { a: AdminState }) {
                   onChange={(e) =>
                     setPixKeyTypeInput(e.target.value as 'celular' | 'cpf_cnpj' | 'email' | 'aleatoria')
                   }
-                  className="w-full bg-[#141622] border border-zinc-800 focus:border-amber-500 rounded-xl px-3 py-2 text-xs text-white"
+                  className="w-full bg-[#0f1d3b] border border-zinc-800 focus:border-amber-500 rounded-xl px-3 py-2 text-xs text-white"
                 >
                   <option value="celular">Celular (com DDD)</option>
                   <option value="cpf_cnpj">CPF ou CNPJ</option>
@@ -93,7 +93,7 @@ export function SettingsTab({ a }: { a: AdminState }) {
                       ? 'Ex: pix@henriquemultimarcas.com.br'
                       : 'Ex: 123e4567-e89b-12d3-a456-426614174000'
                   }
-                  className="w-full bg-[#141622] border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2 text-xs text-white font-mono"
+                  className="w-full bg-[#0f1d3b] border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2 text-xs text-white font-mono"
                   required
                 />
               </div>
@@ -109,7 +109,7 @@ export function SettingsTab({ a }: { a: AdminState }) {
                   value={pixNameInput}
                   onChange={(e) => setPixNameInput(e.target.value)}
                   placeholder="Ex: Henrique Multimarcas ME"
-                  className="w-full bg-[#141622] border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2 text-xs text-white"
+                  className="w-full bg-[#0f1d3b] border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2 text-xs text-white"
                   required
                 />
               </div>
@@ -123,14 +123,14 @@ export function SettingsTab({ a }: { a: AdminState }) {
                   value={pixCityInput}
                   onChange={(e) => setPixCityInput(e.target.value)}
                   placeholder="Ex: SAO PAULO"
-                  className="w-full bg-[#141622] border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2 text-xs text-white"
+                  className="w-full bg-[#0f1d3b] border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2 text-xs text-white"
                 />
               </div>
             </div>
 
             {/* Prévia em Tempo Real do Pix da Loja */}
             {testPixQR ? (
-              <div className="mt-2 pt-3 border-t border-zinc-800/80 flex flex-col sm:flex-row items-center gap-4 bg-[#11131c] p-3.5 rounded-xl border border-zinc-800">
+              <div className="mt-2 pt-3 border-t border-zinc-800/80 flex flex-col sm:flex-row items-center gap-4 bg-[#0a1528] p-3.5 rounded-xl border border-zinc-800">
                 <div className="bg-white p-2 rounded-xl shrink-0 shadow-md">
                   <img
                     src={testPixQR}
@@ -182,7 +182,7 @@ export function SettingsTab({ a }: { a: AdminState }) {
               type="text"
               value={whatsappInput}
               onChange={(e) => setWhatsappInput(e.target.value)}
-              className="w-full bg-[#1b1f2e] border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs text-white"
+              className="w-full bg-[#142a52] border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs text-white"
             />
           </div>
 
@@ -194,7 +194,7 @@ export function SettingsTab({ a }: { a: AdminState }) {
               type="text"
               value={storeAddressInput}
               onChange={(e) => setStoreAddressInput(e.target.value)}
-              className="w-full bg-[#1b1f2e] border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs text-white"
+              className="w-full bg-[#142a52] border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs text-white"
             />
           </div>
 

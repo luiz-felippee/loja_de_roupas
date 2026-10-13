@@ -67,7 +67,7 @@ export const ReportsTab: React.FC = () => {
     URL.revokeObjectURL(url);
   };
 
-  const card = 'bg-[#131622] border border-zinc-800 rounded-2xl p-5';
+  const card = 'bg-[#0f1d3b] border border-zinc-800 rounded-2xl p-5';
 
   return (
     <div className="space-y-6">
@@ -104,7 +104,7 @@ export const ReportsTab: React.FC = () => {
             {resumo.porDia.map((d) => (
               <div key={d.data} className="flex items-center gap-3 text-xs">
                 <span className="w-20 text-zinc-400 tabular-nums">{d.data.slice(5).split('-').reverse().join('/')}</span>
-                <div className="flex-1 h-4 bg-zinc-900 rounded">
+                <div className="flex-1 h-4 bg-[#0f1d3b] rounded">
                   <div className="h-4 rounded bg-amber-400" style={{ width: `${(d.total / maxDia) * 100}%` }} />
                 </div>
                 <span className="w-28 text-right text-zinc-200 tabular-nums">{brl(d.total)}</span>

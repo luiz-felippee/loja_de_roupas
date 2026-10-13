@@ -22,7 +22,7 @@ export const HeroBanner: React.FC = () => {
 
   return (
     <>
-      <section className="relative h-[68svh] min-h-[440px] max-h-[720px] overflow-hidden bg-gradient-to-br from-[#0f4c5c] via-[#0b2a36] to-[#0c0e13]">
+      <section className="relative h-[68svh] min-h-[440px] max-h-[720px] overflow-hidden bg-gradient-to-br from-[#0f4c5c] via-[#0b2a36] to-[#0a1528]">
         {temVideo && (
           <video
             className="absolute inset-0 w-full h-full object-cover"
@@ -39,8 +39,8 @@ export const HeroBanner: React.FC = () => {
         )}
 
         {/* Escurece a esquerda para o texto ler bem */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0c0e13] via-[#0c0e13]/70 to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#0c0e13] to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a1528] via-[#0a1528]/70 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#0a1528] to-transparent" />
 
         <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center">
           <div className="max-w-xl">
@@ -73,7 +73,7 @@ export const HeroBanner: React.FC = () => {
       <ul className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-1 sm:grid-cols-3 gap-5 border-b border-zinc-800/80">
         {BENEFICIOS.map(({ icone: Icone, titulo, texto }) => (
           <li key={titulo} className="flex items-start gap-3">
-            <span className="shrink-0 w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center">
+            <span className="shrink-0 w-10 h-10 rounded-xl bg-[#0f1d3b] border border-zinc-800 flex items-center justify-center">
               <Icone className="w-4 h-4 text-amber-400" />
             </span>
             <span>

@@ -66,10 +66,10 @@ export const SidebarDrawer: React.FC<SidebarDrawerProps> = ({
       />
 
       <div className="fixed inset-y-0 left-0 max-w-full flex pr-10">
-        <div className="w-screen max-w-sm bg-[#11131c] border-r border-zinc-800 shadow-2xl flex flex-col justify-between animate-in slide-in-from-left duration-300">
+        <div className="w-screen max-w-sm bg-[#0a1528] border-r border-zinc-800 shadow-2xl flex flex-col justify-between animate-in slide-in-from-left duration-300">
           
           {/* Header */}
-          <div className="p-5 border-b border-zinc-800 flex items-center justify-between bg-[#141724]">
+          <div className="p-5 border-b border-zinc-800 flex items-center justify-between bg-[#0f1d3b]">
             <div className="flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center font-extrabold text-black text-base shadow-md shadow-amber-500/20">
                 H
@@ -97,7 +97,7 @@ export const SidebarDrawer: React.FC<SidebarDrawerProps> = ({
           <div className="flex-1 overflow-y-auto p-5 space-y-6">
             
             {/* 1. Customer Identification Card */}
-            <div className="bg-[#181c2b] border border-zinc-800/90 rounded-2xl p-4 space-y-2.5">
+            <div className="bg-[#0f1d3b] border border-zinc-800/90 rounded-2xl p-4 space-y-2.5">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">
                   <User className="w-3.5 h-3.5 text-amber-400" />
@@ -321,7 +321,7 @@ export const SidebarDrawer: React.FC<SidebarDrawerProps> = ({
                 Loja Física & Entrega
               </span>
 
-              <div className="bg-[#151824] rounded-2xl p-3.5 space-y-2 text-xs border border-zinc-800">
+              <div className="bg-[#0f1d3b] rounded-2xl p-3.5 space-y-2 text-xs border border-zinc-800">
                 <div className="flex items-start gap-2 text-zinc-300">
                   <MapPin className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
                   <div>
@@ -352,13 +352,13 @@ export const SidebarDrawer: React.FC<SidebarDrawerProps> = ({
           </div>
 
           {/* Footer of Sidebar: Staff Login Shortcut */}
-          <div className="p-4 border-t border-zinc-800 bg-[#141724]">
+          <div className="p-4 border-t border-zinc-800 bg-[#0f1d3b]">
             <button
               onClick={() => {
                 setCurrentView('admin');
                 setIsSidebarOpen(false);
               }}
-              className="w-full py-2.5 px-3 bg-zinc-900 hover:bg-zinc-850 text-amber-300 border border-amber-500/30 rounded-xl text-xs font-bold transition-colors flex items-center justify-between"
+              className="w-full py-2.5 px-3 bg-[#0f1d3b] hover:bg-zinc-850 text-amber-300 border border-amber-500/30 rounded-xl text-xs font-bold transition-colors flex items-center justify-between"
             >
               <div className="flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-amber-400" />

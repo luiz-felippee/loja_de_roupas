@@ -72,7 +72,7 @@ export function useAdminPanel() {
   const [pStock, setPStock] = useState('10');
   const [pDescription, setPDescription] = useState('');
   const [pColors, setPColors] = useState<{ name: string; hex: string }[]>([
-    { name: 'Preto', hex: '#18181b' },
+    { name: 'Preto', hex: '#0f1d3b' },
     { name: 'Branco', hex: '#f8fafc' }
   ]);
   const [newColorName, setNewColorName] = useState('');
@@ -133,7 +133,7 @@ export function useAdminPanel() {
     setPStock('12');
     setPDescription('');
     setPColors([
-      { name: 'Preto', hex: '#18181b' },
+      { name: 'Preto', hex: '#0f1d3b' },
       { name: 'Branco', hex: '#f8fafc' }
     ]);
     setPSizes(['P', 'M', 'G', 'GG']);
