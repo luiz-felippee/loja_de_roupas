@@ -140,6 +140,7 @@ const MainContent: React.FC = () => {
                 <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Catálogo</h2>
                 <p className="text-sm text-zinc-400 mt-1">Escolha a categoria, filtre por tamanho ou pesquise por nome.</p>
               </div>
+              <div className="lg:sticky lg:top-[72px] z-20 -mx-4 px-4 sm:mx-0 sm:px-0 py-3 lg:py-4 bg-[#0a1528]/95 backdrop-blur-md">
               <CatalogFilters
                 selectedCategory={selectedCategory}
                 onSelectCategory={setSelectedCategory}
@@ -152,6 +153,7 @@ const MainContent: React.FC = () => {
                 onSortChange={setSortBy}
                 onVoiceSearch={handleVoiceSearch}
               />
+              </div>
 
               {/* Active Filter Summary Bar */}
               <div className="mt-6 flex items-center justify-between text-xs text-zinc-400 border-b border-zinc-800/80 pb-3">
