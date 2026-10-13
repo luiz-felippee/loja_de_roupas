@@ -24,6 +24,9 @@ export interface ProductRow {
   sizes_json: string;
   active: number;
   photo: string | null;
+  description: string | null;
+  specs_json: string | null;
+  category: string;
 }
 
 export const centavos = (v: number): number => Math.round(v * 100) / 100;
