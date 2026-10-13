@@ -17,12 +17,11 @@ import {
 } from '../types';
 import { useCoupons } from './slices/coupons';
 import { useCash } from './slices/cash';
-import { validarCupom } from '../utils/coupons';
 import { INITIAL_PRODUCTS, INITIAL_STORE_SETTINGS } from '../data/initialProducts';
 import { INITIAL_REVIEWS } from '../data/initialReviews';
 import { soundEffects } from '../utils/audio';
 import { readStorage, writeStorage } from '../utils/storage';
-import { loadOrders } from '../data/sampleOrders';
+import { api } from '../lib/api';
 import { useComparison } from './slices/comparison';
 import { useWishlist } from './slices/wishlist';
 import { useReviews } from './slices/reviews';
@@ -63,13 +62,13 @@ interface StoreContextType {
     cashChangeFor?: number;
     deliveryType: DeliveryType;
     couponCode?: string;
-  }) => Order;
+  }) => Promise<{ id: string; total: number }>;
   updateOrderStatus: (orderId: string, status: OrderStatus) => void;
   deleteOrder: (orderId: string) => void;
 
   // Cupons
   coupons: Coupon[];
-  addCoupon: (data: Omit<Coupon, 'id' | 'uses'>) => boolean;
+  addCoupon: (data: Omit<Coupon, 'id' | 'uses'>) => Promise<boolean>;
   updateCoupon: (id: string, data: Partial<Omit<Coupon, 'id' | 'uses'>>) => void;
   removeCoupon: (id: string) => void;
 
@@ -140,7 +139,7 @@ interface StoreContextType {
   settings: StoreSettings;
   updateSettings: (newSettings: Partial<StoreSettings>) => void;
   isStaffLoggedIn: boolean;
-  staffLogin: (password: string) => boolean;
+  staffLogin: (password: string) => Promise<boolean>;
   staffLogout: () => void;
   resetToDefaults: () => void;
 
@@ -160,10 +159,10 @@ const StoreContext = createContext<StoreContextType | null>(null);
 
 export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Products
-  const [products, setProducts] = useState<Product[]>(() => readStorage('hm_products', INITIAL_PRODUCTS));
+  const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
 
   // Settings
-  const [settings, setSettings] = useState<StoreSettings>(() => readStorage('hm_settings', INITIAL_STORE_SETTINGS));
+  const [settings, setSettings] = useState<StoreSettings>(INITIAL_STORE_SETTINGS);
 
   // Customer
   const [customer, setCustomer] = useState<Customer | null>(() => readStorage('hm_customer', null));
@@ -172,7 +171,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [cart, setCart] = useState<CartItem[]>(() => readStorage('hm_cart', []));
 
   // Orders
-  const [orders, setOrders] = useState<Order[]>(loadOrders);
+  const [orders, setOrders] = useState<Order[]>([]);
 
   // Navigation & Modals
   const [currentView, setCurrentView] = useState<'shop' | 'tracking' | 'admin'>('shop');
@@ -206,30 +205,12 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   // Staff Authentication
-  const [isStaffLoggedIn, setIsStaffLoggedIn] = useState<boolean>(() => {
-    try {
-      return localStorage.getItem('hm_staff_auth') === 'true';
-    } catch {
-      return false;
-    }
-  });
+  const [isStaffLoggedIn, setIsStaffLoggedIn] = useState<boolean>(false);
 
   // Toasts
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
   // LocalStorage sync
-  useEffect(() => {
-    writeStorage('hm_products', products);
-  }, [products]);
-
-  useEffect(() => {
-    writeStorage('hm_settings', settings);
-  }, [settings]);
-
-  useEffect(() => {
-    writeStorage('hm_orders', orders);
-  }, [orders]);
-
   useEffect(() => {
     writeStorage('hm_cart', cart);
   }, [cart]);
@@ -239,10 +220,6 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       writeStorage('hm_customer', customer);
     }
   }, [customer]);
-
-  useEffect(() => {
-    localStorage.setItem('hm_staff_auth', isStaffLoggedIn ? 'true' : 'false');
-  }, [isStaffLoggedIn]);
 
   // Toast Helpers
   const addToast = (
@@ -270,7 +247,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const { addToRecentlyViewed, clearRecentlyViewed, recentlyViewedIds, recentlyViewedProducts, setRecentlyViewedIds } = useRecentlyViewed(products);
 
   // Cupons e caixa (fatias em src/context/slices)
-  const { coupons, addCoupon, updateCoupon, removeCoupon, registerCouponUse } = useCoupons(addToast);
+  const { coupons, addCoupon, updateCoupon, removeCoupon } = useCoupons(addToast, isStaffLoggedIn);
   const { cashSessions, currentCashSession, openCash, addCashMovement, closeCash } = useCash(addToast);
 
   // Cross-Tab & Device Event Listener for Real-Time Client/Staff Notifications
@@ -284,8 +261,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }) => {
       if (eventData?.type === 'ORDER_STATUS_CHANGED' && eventData.orderId && eventData.title) {
         // Refresh local orders from localStorage
-        const storedOrders = readStorage<Order[] | null>('hm_orders', null);
-          if (storedOrders) setOrders(storedOrders);
+        refreshOrders();
 
         // Toca o som de atualização no dispositivo/aba do cliente
         soundEffects.playStatusUpdateAlert();
@@ -308,8 +284,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           8000
         );
       } else if (eventData?.type === 'NEW_ORDER_CREATED') {
-        const storedOrders = readStorage<Order[] | null>('hm_orders', null);
-          if (storedOrders) setOrders(storedOrders);
+        refreshOrders();
         soundEffects.playNewOrderAlert();
       }
     };
@@ -341,38 +316,66 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
   }, []);
 
-  // Products actions
-  const addProduct = (prodData: Omit<Product, 'id'>) => {
-    const newProduct: Product = {
-      ...prodData,
-      id: `prod-${Date.now()}`
-    };
-    setProducts((prev) => [newProduct, ...prev]);
-    addToast('Produto cadastrado com sucesso!', newProduct.name, 'success');
+  // Products actions (o catalogo vem do servidor; a equipe altera pela API)
+  const refreshProducts = async () => {
+    try {
+      const lista = await api<Product[]>(isStaffLoggedIn ? '/admin/products' : '/products');
+      setProducts(lista);
+    } catch {
+      // Sem conexao: a tela mantem o catalogo que ja esta carregado
+    }
   };
 
-  const updateProduct = (id: string, updated: Partial<Product>) => {
-    setProducts((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, ...updated } : p))
-    );
-    addToast('Produto atualizado', 'As alterações foram salvas.', 'success');
+  const corpoProduto = (dados: Partial<Product>) => {
+    const corpo: Record<string, unknown> = {};
+    for (const campo of ['name', 'category', 'description', 'image', 'price', 'colors', 'sizes', 'stock', 'specs'] as const) {
+      if (dados[campo] !== undefined) corpo[campo] = dados[campo];
+    }
+    if ('promoPrice' in dados) corpo.promoPrice = dados.promoPrice ?? null;
+    return corpo;
   };
 
-  const deleteProduct = (id: string) => {
-    setProducts((prev) => prev.filter((p) => p.id !== id));
-    addToast('Produto removido', 'Item excluído do catálogo.', 'info');
+  const addProduct = async (prodData: Omit<Product, 'id'>) => {
+    try {
+      await api('/admin/products', { body: corpoProduto(prodData) });
+      await refreshProducts();
+      addToast('Produto cadastrado com sucesso!', prodData.name, 'success');
+    } catch (e) {
+      addToast('Não foi possível salvar o produto', e instanceof Error ? e.message : 'Erro inesperado.', 'error');
+    }
   };
 
-  const updateStock = (id: string, delta: number) => {
-    setProducts((prev) =>
-      prev.map((p) => {
-        if (p.id === id) {
-          const newStock = Math.max(0, p.stock + delta);
-          return { ...p, stock: newStock };
-        }
-        return p;
-      })
-    );
+  const updateProduct = async (id: string, updated: Partial<Product>) => {
+    try {
+      await api(`/admin/products/${id}`, { method: 'PATCH', body: corpoProduto(updated) });
+      await refreshProducts();
+      addToast('Produto atualizado', 'As alterações foram salvas.', 'success');
+    } catch (e) {
+      addToast('Não foi possível atualizar', e instanceof Error ? e.message : 'Erro inesperado.', 'error');
+    }
+  };
+
+  // Remover e desativar: o produto some da vitrine e continua no historico
+  const deleteProduct = async (id: string) => {
+    try {
+      await api(`/admin/products/${id}`, { method: 'PATCH', body: { active: false } });
+      await refreshProducts();
+      addToast('Produto removido', 'Item excluído do catálogo.', 'info');
+    } catch (e) {
+      addToast('Não foi possível remover', e instanceof Error ? e.message : 'Erro inesperado.', 'error');
+    }
+  };
+
+  const updateStock = async (id: string, delta: number) => {
+    const produto = products.find((p) => p.id === id);
+    if (!produto) return;
+    const novoEstoque = Math.max(0, produto.stock + delta);
+    try {
+      await api(`/admin/products/${id}`, { method: 'PATCH', body: { stock: novoEstoque } });
+      await refreshProducts();
+    } catch (e) {
+      addToast('Não foi possível atualizar o estoque', e instanceof Error ? e.message : 'Erro inesperado.', 'error');
+    }
   };
 
   // Cart actions
@@ -431,201 +434,127 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setCustomer(c);
   };
 
-  // Order actions
-  const createOrder = (orderData: {
+  // Order actions (os pedidos ficam no servidor)
+  const refreshOrders = async () => {
+    if (!isStaffLoggedIn) return;
+    try {
+      setOrders(await api<Order[]>('/admin/orders'));
+    } catch {
+      // Sem conexao: a lista atual continua na tela
+    }
+  };
+
+  const createOrder = async (orderData: {
     customer: Customer;
     paymentMethod: PaymentMethod;
     cashChangeFor?: number;
     deliveryType: DeliveryType;
     couponCode?: string;
-  }): Order => {
+  }): Promise<{ id: string; total: number }> => {
     saveCustomer(orderData.customer);
 
-    const deliveryFee = orderData.deliveryType === 'entrega_loja' ? settings.deliveryFee : 0;
-    const subtotal = cartSubtotal;
-    // Cupom e revalidado aqui para o total gravado bater com o que o cliente viu
-    const cupom = orderData.couponCode ? validarCupom(coupons, orderData.couponCode, subtotal) : null;
-    const discount = cupom?.ok ? cupom.discount : 0;
-    const total = Math.round((subtotal - discount + deliveryFee) * 100) / 100;
-
-    // Gera código sequencial amigável
-    const randomSuffix = Math.floor(1000 + Math.random() * 9000);
-    const orderId = `HM-${randomSuffix}`;
-
-    const newOrder: Order = {
-      id: orderId,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      customer: orderData.customer,
-      items: cart.map(({ id: _id, ...item }) => ({ ...item })),
-      paymentMethod: orderData.paymentMethod,
-      cashChangeFor: orderData.cashChangeFor,
-      deliveryType: orderData.deliveryType,
-      deliveryFee,
-      subtotal,
-      couponCode: cupom?.ok ? cupom.coupon.code : undefined,
-      discount: discount || undefined,
-      total,
-      status: 'novo'
-    };
-
-    if (cupom?.ok) registerCouponUse(cupom.coupon.code);
-
-    // Decrement stock for ordered products
-    newOrder.items.forEach((item) => {
-      updateStock(item.productId, -item.quantity);
+    // O servidor recalcula preco, promocao, cupom e frete, e confere o estoque
+    const pedido = await api<{ id: string; total: number }>('/orders', {
+      body: {
+        customer: orderData.customer,
+        paymentMethod: orderData.paymentMethod,
+        cashChangeFor: orderData.cashChangeFor,
+        deliveryType: orderData.deliveryType,
+        couponCode: orderData.couponCode,
+        items: cart.map(({ productId, color, size, quantity }) => ({ productId, color, size, quantity })),
+      },
     });
 
-    setOrders((prev) => [newOrder, ...prev]);
     clearCart();
-
-    // Toca som de novo pedido da loja!
-    soundEffects.playNewOrderAlert();
-
-    // Broadcast across tabs/devices
-    try {
-      if (typeof window !== 'undefined') {
-        const payload = {
-          type: 'NEW_ORDER_CREATED',
-          orderId
-        };
-        if ('BroadcastChannel' in window) {
-          const bc = new BroadcastChannel('hm_store_events');
-          bc.postMessage(payload);
-          bc.close();
-        }
-        writeStorage('hm_last_order_status_event', payload);
-      }
-    } catch {
-      // ignore
-    }
-
-    addToast(`Pedido ${orderId} realizado com sucesso!`, 'A loja já foi notificada para separação.', 'success');
-
-    return newOrder;
+    await refreshProducts();
+    addToast(`Pedido ${pedido.id} realizado com sucesso!`, 'A loja já foi notificada para separação.', 'success');
+    return { id: pedido.id, total: pedido.total };
   };
 
-  const updateOrderStatus = (orderId: string, status: OrderStatus) => {
-    let targetOrder: Order | undefined;
-
-    setOrders((prev) =>
-      prev.map((ord) => {
-        if (ord.id === orderId) {
-          const updated = {
-            ...ord,
-            status,
-            updatedAt: new Date().toISOString()
-          };
-          targetOrder = updated;
-          return updated;
-        }
-        return ord;
-      })
-    );
-
-    // Toca som suave de atualização de etapa do cliente!
-    soundEffects.playStatusUpdateAlert();
-
-    const statusTitleMap: Record<OrderStatus, string> = {
-      novo: 'Novo Pedido Recebido',
-      separacao: 'Em Separação no Estoque',
-      pronto: 'Pronto para Retirada / Entrega',
-      finalizado: 'Pedido Finalizado'
-    };
-
-    const currentOrder = targetOrder || orders.find((o) => o.id === orderId);
-
-    const getStatusDescription = () => {
-      if (status === 'separacao') {
-        return 'A equipe da Henrique Multimarcas já está separando suas peças (cores e tamanhos conferidos)!';
-      }
-      if (status === 'pronto') {
-        if (currentOrder?.deliveryType === 'retirada') {
-          return 'Suas peças já estão prontas no balcão da loja! Você já pode passar para retirar.';
-        }
-        if (currentOrder?.deliveryType === 'motoqueiro_cliente') {
-          return 'Seu pedido está embalado e pronto! Você já pode solicitar seu motoqueiro para buscar no balcão.';
-        }
-        return 'Seu pedido está pronto e saiu com o entregador da loja para o seu endereço!';
-      }
-      if (status === 'finalizado') {
-        return 'Pedido concluído e entregue com sucesso! Muito obrigado pela preferência.';
-      }
-      return 'Pedido registrado na fila de atendimento da loja.';
-    };
-
-    const title = `Pedido #${orderId}: ${statusTitleMap[status]}`;
-    const desc = getStatusDescription();
-
-    // 1. Notificação Toast Visual no dispositivo do cliente
-    addToast(
-      title,
-      desc,
-      'order_update',
-      {
-        label: 'Acompanhar Pedido',
-        onClick: () => {
-          setTrackingOrderId(orderId);
-          setCurrentView('tracking');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      },
-      8000
-    );
-
-    // 2. Broadcast para abas/dispositivos do cliente
+  const updateOrderStatus = async (orderId: string, status: OrderStatus) => {
     try {
-      if (typeof window !== 'undefined') {
-        const payload = {
-          type: 'ORDER_STATUS_CHANGED',
-          orderId,
-          status,
-          title,
-          description: desc,
-          timestamp: Date.now()
-        };
-        if ('BroadcastChannel' in window) {
-          const bc = new BroadcastChannel('hm_store_events');
-          bc.postMessage(payload);
-          bc.close();
-        }
-        writeStorage('hm_last_order_status_event', payload);
-      }
-    } catch {
-      // ignore
+      await api(`/admin/orders/${orderId}`, { method: 'PATCH', body: { status } });
+      setOrders((prev) => prev.map((o) => (o.id === orderId ? { ...o, status, updatedAt: new Date().toISOString() } : o)));
+    } catch (e) {
+      addToast('Não foi possível atualizar a etapa', e instanceof Error ? e.message : 'Erro inesperado.', 'error');
     }
   };
 
-  const deleteOrder = (orderId: string) => {
-    setOrders((prev) => prev.filter((o) => o.id !== orderId));
-    addToast('Pedido removido', `O pedido ${orderId} foi excluído.`, 'info');
+  const deleteOrder = async (orderId: string) => {
+    try {
+      await api(`/admin/orders/${orderId}`, { method: 'DELETE' });
+      setOrders((prev) => prev.filter((o) => o.id !== orderId));
+      addToast('Pedido removido', `O pedido ${orderId} foi excluído.`, 'info');
+    } catch (e) {
+      addToast('Não foi possível excluir', e instanceof Error ? e.message : 'Erro inesperado.', 'error');
+    }
   };
 
-  // Settings
-  const updateSettings = (newSettings: Partial<StoreSettings>) => {
-    setSettings((prev) => ({ ...prev, ...newSettings }));
-    addToast('Configurações salvas', 'Parâmetros da loja atualizados.', 'success');
+  // Settings e equipe (fonte: servidor)
+  const updateSettings = async (novos: Partial<StoreSettings>) => {
+    // A senha da equipe nao e alterada pelo site
+    const { staffPassword: _ignorada, ...semSenha } = novos;
+    try {
+      const salvo = await api<Omit<StoreSettings, 'staffPassword'>>('/admin/settings', { method: 'PATCH', body: semSenha });
+      setSettings((prev) => ({ ...prev, ...salvo }));
+      addToast('Configurações salvas', 'Parâmetros da loja atualizados.', 'success');
+    } catch (e) {
+      addToast('Não foi possível salvar', e instanceof Error ? e.message : 'Erro inesperado.', 'error');
+    }
   };
 
   const resetToDefaults = () => {
-    setProducts(INITIAL_PRODUCTS);
-    setSettings(INITIAL_STORE_SETTINGS);
-    addToast('Dados restaurados', 'Catálogo inicial carregado.', 'info');
+    refreshProducts();
+    api<Omit<StoreSettings, 'staffPassword'>>('/settings')
+      .then((s) => setSettings((prev) => ({ ...prev, ...s })))
+      .catch(() => undefined);
+    addToast('Dados atualizados', 'Catálogo e configurações recarregados do servidor.', 'info');
   };
 
+  // Ao abrir o site: catalogo e configuracoes vem do servidor
+  useEffect(() => {
+    api<Omit<StoreSettings, 'staffPassword'>>('/settings')
+      .then((s) => setSettings((prev) => ({ ...prev, ...s })))
+      .catch(() => undefined);
+    refreshProducts();
+    // refreshProducts muda de comportamento quando a equipe entra; a carga inicial e sempre a publica
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Ao abrir: verifica se a equipe ja esta logada (cookie de sessao)
+  useEffect(() => {
+    api<{ ok: boolean }>('/staff/session')
+      .then((r) => setIsStaffLoggedIn(r.ok))
+      .catch(() => setIsStaffLoggedIn(false));
+  }, []);
+
+  // Quando a equipe entra: pedidos e catalogo completo, atualizados a cada 10 s
+  useEffect(() => {
+    if (!isStaffLoggedIn) return;
+    refreshOrders();
+    refreshProducts();
+    const intervalo = setInterval(refreshOrders, 10000);
+    return () => clearInterval(intervalo);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isStaffLoggedIn]);
+
   // Staff Auth
-  const staffLogin = (password: string): boolean => {
-    if (password === settings.staffPassword) {
+  const staffLogin = async (password: string): Promise<boolean> => {
+    try {
+      await api('/staff/login', { body: { password } });
       setIsStaffLoggedIn(true);
       addToast('Login realizado!', 'Bem-vindo ao Painel da Loja Henrique Multimarcas.', 'success');
       return true;
+    } catch (e) {
+      addToast('Acesso negado', e instanceof Error ? e.message : 'Verifique a senha informada.', 'alert');
+      return false;
     }
-    addToast('Senha incorreta', 'Verifique a senha informada.', 'alert');
-    return false;
   };
 
-  const staffLogout = () => {
+  const staffLogout = async () => {
+    await api('/staff/logout', { method: 'POST' }).catch(() => undefined);
     setIsStaffLoggedIn(false);
+    setOrders([]);
     addToast('Sessão encerrada', 'Você saiu do Painel da Loja.', 'info');
   };
 

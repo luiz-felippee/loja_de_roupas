@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useStore } from '../../context/StoreContext';
-import { OrderStatus } from '../../types';
+import { Order, OrderStatus } from '../../types';
+import { api } from '../../lib/api';
+import { soundEffects } from '../../utils/audio';
 import {
   Search,
   Package,
@@ -33,16 +35,64 @@ export const OrderTrackingView: React.FC = () => {
 
   const [searchInput, setSearchInput] = useState(trackingOrderId || '');
 
-  // Find currently selected order
-  const currentOrder = orders.find(
-    (o) => o.id.toLowerCase() === (trackingOrderId || searchInput).trim().toLowerCase()
-  );
+  // O pedido vem do servidor, pelo codigo informado. Atualiza a cada 15 s.
+  const codigo = (trackingOrderId || searchInput).trim().toUpperCase();
+  const [currentOrder, setCurrentOrder] = useState<Order | null>(null);
+  const statusAnterior = useRef<string | null>(null);
 
-  // Recent orders for the user
-  const recentOrders = orders.filter((o) => {
-    if (!customer?.phone) return true;
-    return o.customer.phone === customer.phone || o.id === trackingOrderId;
-  });
+  useEffect(() => {
+    statusAnterior.current = null;
+    if (!codigo) {
+      setCurrentOrder(null);
+      return;
+    }
+    let ativo = true;
+    const buscar = () =>
+      api<{
+        id: string;
+        status: Order['status'];
+        createdAt: string;
+        updatedAt: string;
+        deliveryType: Order['deliveryType'];
+        paymentMethod: Order['paymentMethod'];
+        subtotal: number;
+        discount: number;
+        deliveryFee: number;
+        total: number;
+        items: Order['items'];
+      }>(`/orders/${codigo}`)
+        .then((p) => {
+          if (!ativo) return;
+          const pedido: Order = {
+            id: p.id,
+            createdAt: p.createdAt,
+            updatedAt: p.updatedAt,
+            customer: { name: '', phone: '', address: '' },
+            items: p.items,
+            paymentMethod: p.paymentMethod,
+            deliveryType: p.deliveryType,
+            deliveryFee: p.deliveryFee,
+            subtotal: p.subtotal,
+            discount: p.discount || undefined,
+            total: p.total,
+            status: p.status,
+          };
+          if (statusAnterior.current && statusAnterior.current !== pedido.status) {
+            soundEffects.playStatusUpdateAlert();
+          }
+          statusAnterior.current = pedido.status;
+          setCurrentOrder(pedido);
+        })
+        .catch(() => {
+          if (ativo) setCurrentOrder(null);
+        });
+    buscar();
+    const intervalo = setInterval(buscar, 15000);
+    return () => {
+      ativo = false;
+      clearInterval(intervalo);
+    };
+  }, [codigo]);
 
   const [showPixDetails, setShowPixDetails] = useState(false);
   const [trackingPixQR, setTrackingPixQR] = useState('');
@@ -159,27 +209,6 @@ export const OrderTrackingView: React.FC = () => {
         </form>
 
         {/* Quick Recent Order Chips */}
-        {recentOrders.length > 0 && (
-          <div className="mt-4 pt-3 border-t border-zinc-800/80 flex items-center gap-2 flex-wrap">
-            <span className="text-[11px] text-zinc-500">Seus pedidos recentes:</span>
-            {recentOrders.slice(0, 4).map((o) => (
-              <button
-                key={o.id}
-                onClick={() => {
-                  setSearchInput(o.id);
-                  setTrackingOrderId(o.id);
-                }}
-                className={`text-[11px] font-mono px-2.5 py-1 rounded-lg border transition-all ${
-                  currentOrder?.id === o.id
-                    ? 'bg-amber-400 text-black border-amber-300 font-bold'
-                    : 'bg-zinc-900 text-zinc-300 border-zinc-800 hover:border-zinc-700'
-                }`}
-              >
-                #{o.id}
-              </button>
-            ))}
-          </div>
-        )}
       </div>
 
       {/* Order Status Display */}

@@ -17,9 +17,9 @@ export function AdminLogin({ a }: { a: AdminState }) {
           </div>
 
           <form
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
-              staffLogin(passwordInput);
+              await staffLogin(passwordInput);
             }}
             className="space-y-4"
           >

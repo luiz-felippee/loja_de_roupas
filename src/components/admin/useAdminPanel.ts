@@ -245,7 +245,7 @@ export function useAdminPanel() {
       },
       paymentMethod: 'pix',
       deliveryType: 'entrega_loja'
-    });
+    }).catch((e) => addToast('Não foi possível simular o pedido', e instanceof Error ? e.message : 'Erro inesperado.', 'error'));
   };
 
   // Export CSV function for today's orders (código, valor total e forma de pagamento)
