@@ -21,7 +21,7 @@ export const HeroBanner: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-[#0c0e12] via-[#0c0e12]/70 to-[#0c0e12]/40" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-24">
         <div className="max-w-3xl">
           {/* Natural human editorial kicker (Anti-slop compliant) */}
           <div className="flex items-center gap-2 text-xs text-amber-400 font-semibold tracking-wider uppercase mb-3">
@@ -67,7 +67,7 @@ export const HeroBanner: React.FC = () => {
           </div>
 
           {/* 3 Core Assurance Pillars */}
-          <div className="mt-12 pt-8 border-t border-zinc-800/80 grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-zinc-800/80 grid grid-cols-1 sm:grid-cols-3 gap-6">
             <div className="flex items-start gap-3">
               <div className="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 shrink-0">
                 <Store className="w-5 h-5" />
