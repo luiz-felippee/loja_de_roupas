@@ -1,0 +1,8 @@
+{
+  "name": "Henrique Multimarcas",
+  "description": "Catálogo digital de roupas e acessórios com compra rápida, opções de entrega e retirada, e painel completo para gestão de pedidos e estoque.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
