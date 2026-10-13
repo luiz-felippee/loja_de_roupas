@@ -52,7 +52,7 @@ export function useAdminPanel() {
 
   // Login form state
   const [passwordInput, setPasswordInput] = useState('');
-  const [activeTab, setActiveTab] = useState<'orders' | 'products' | 'settings' | 'coupons' | 'cash' | 'reports'>('orders');
+  const [activeTab, setActiveTab] = useState<'visao' | 'orders' | 'products' | 'settings' | 'coupons' | 'cash' | 'reports'>('visao');
 
   // Order filters & search
   const [orderStatusFilter, setOrderStatusFilter] = useState<OrderStatus | 'all'>('all');

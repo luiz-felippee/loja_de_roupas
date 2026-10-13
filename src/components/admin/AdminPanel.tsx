@@ -7,7 +7,7 @@ import { SettingsTab } from './SettingsTab';
 import { ProductModal } from './ProductModal';
 import { DailyRevenueChart } from './DailyRevenueChart';
 import { audioManager } from '../../utils/audio';
-import { Package, ShoppingBag, Settings, Volume2, LogOut, Sparkles, FileSpreadsheet, Ticket, Wallet, BarChart3 } from 'lucide-react';
+import { LayoutDashboard, Package, ShoppingBag, Settings, Volume2, LogOut, Sparkles, FileSpreadsheet, Ticket, Wallet, BarChart3 } from 'lucide-react';
 import { CouponsTab } from './CouponsTab';
 import { CashTab } from './CashTab';
 import { ReportsTab } from './ReportsTab';
@@ -66,6 +66,99 @@ export const AdminPanel: React.FC = () => {
         </div>
       </div>
 
+      {/* Tabs */}
+      <div className="flex items-center gap-2 border-b border-zinc-800 pb-3 mb-6 overflow-x-auto">
+        <button
+          onClick={() => setActiveTab('visao')}
+          className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 whitespace-nowrap ${
+            activeTab === 'visao'
+              ? 'bg-amber-400 text-black shadow-md shadow-amber-500/10'
+              : 'text-zinc-400 hover:text-white hover:bg-[#0f1d3b]'
+          }`}
+        >
+          <LayoutDashboard className="w-4 h-4" />
+          <span>Visão geral</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('orders')}
+          className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 whitespace-nowrap ${
+            activeTab === 'orders'
+              ? 'bg-amber-400 text-black shadow-md shadow-amber-500/10'
+              : 'text-zinc-400 hover:text-white hover:bg-[#0f1d3b]'
+          }`}
+        >
+          <ShoppingBag className="w-4 h-4" />
+          <span>Fila de Pedidos</span>
+          <span
+            className={`px-1.5 py-0.5 rounded-full text-[10px] font-extrabold ${
+              activeTab === 'orders' ? 'bg-[#050b1a] text-amber-300' : 'bg-zinc-800 text-zinc-300'
+            }`}
+          >
+            {orders.length}
+          </span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('products')}
+          className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 whitespace-nowrap ${
+            activeTab === 'products'
+              ? 'bg-amber-400 text-black shadow-md shadow-amber-500/10'
+              : 'text-zinc-400 hover:text-white hover:bg-[#0f1d3b]'
+          }`}
+        >
+          <Package className="w-4 h-4" />
+          <span>Catálogo & Estoque</span>
+          <span
+            className={`px-1.5 py-0.5 rounded-full text-[10px] font-extrabold ${
+              activeTab === 'products' ? 'bg-[#050b1a] text-amber-300' : 'bg-zinc-800 text-zinc-300'
+            }`}
+          >
+            {products.length}
+          </span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('settings')}
+          className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 whitespace-nowrap ${
+            activeTab === 'settings'
+              ? 'bg-amber-400 text-black shadow-md shadow-amber-500/10'
+              : 'text-zinc-400 hover:text-white hover:bg-[#0f1d3b]'
+          }`}
+        >
+          <Settings className="w-4 h-4" />
+          <span>Configurações da Loja</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('coupons')}
+          className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 whitespace-nowrap ${
+            activeTab === 'coupons' ? 'bg-amber-400 text-black shadow-md shadow-amber-500/10' : 'text-zinc-400 hover:text-white hover:bg-[#0f1d3b]'
+          }`}
+        >
+          <Ticket className="w-4 h-4" />
+          <span>Cupons</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('cash')}
+          className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 whitespace-nowrap ${
+            activeTab === 'cash' ? 'bg-amber-400 text-black shadow-md shadow-amber-500/10' : 'text-zinc-400 hover:text-white hover:bg-[#0f1d3b]'
+          }`}
+        >
+          <Wallet className="w-4 h-4" />
+          <span>Caixa</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('reports')}
+          className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 whitespace-nowrap ${
+            activeTab === 'reports' ? 'bg-amber-400 text-black shadow-md shadow-amber-500/10' : 'text-zinc-400 hover:text-white hover:bg-[#0f1d3b]'
+          }`}
+        >
+          <BarChart3 className="w-4 h-4" />
+          <span>Relatórios</span>
+        </button>
+      </div>
+
+      {activeTab === 'visao' && (
+        <div className="space-y-2">
       {/* 4 Executive KPI Metric Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 my-4 sm:my-6">
         <div className="bg-[#0f1d3b] border border-zinc-800 rounded-xl sm:rounded-2xl p-3 sm:p-4">
@@ -175,86 +268,8 @@ export const AdminPanel: React.FC = () => {
       </div>
 
 
-      {/* Tabs */}
-      <div className="flex items-center gap-2 border-b border-zinc-800 pb-3 mb-6 overflow-x-auto">
-        <button
-          onClick={() => setActiveTab('orders')}
-          className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 whitespace-nowrap ${
-            activeTab === 'orders'
-              ? 'bg-amber-400 text-black shadow-md shadow-amber-500/10'
-              : 'text-zinc-400 hover:text-white hover:bg-[#0f1d3b]'
-          }`}
-        >
-          <ShoppingBag className="w-4 h-4" />
-          <span>Fila de Pedidos</span>
-          <span
-            className={`px-1.5 py-0.5 rounded-full text-[10px] font-extrabold ${
-              activeTab === 'orders' ? 'bg-[#050b1a] text-amber-300' : 'bg-zinc-800 text-zinc-300'
-            }`}
-          >
-            {orders.length}
-          </span>
-        </button>
-
-        <button
-          onClick={() => setActiveTab('products')}
-          className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 whitespace-nowrap ${
-            activeTab === 'products'
-              ? 'bg-amber-400 text-black shadow-md shadow-amber-500/10'
-              : 'text-zinc-400 hover:text-white hover:bg-[#0f1d3b]'
-          }`}
-        >
-          <Package className="w-4 h-4" />
-          <span>Catálogo & Estoque</span>
-          <span
-            className={`px-1.5 py-0.5 rounded-full text-[10px] font-extrabold ${
-              activeTab === 'products' ? 'bg-[#050b1a] text-amber-300' : 'bg-zinc-800 text-zinc-300'
-            }`}
-          >
-            {products.length}
-          </span>
-        </button>
-
-        <button
-          onClick={() => setActiveTab('settings')}
-          className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 whitespace-nowrap ${
-            activeTab === 'settings'
-              ? 'bg-amber-400 text-black shadow-md shadow-amber-500/10'
-              : 'text-zinc-400 hover:text-white hover:bg-[#0f1d3b]'
-          }`}
-        >
-          <Settings className="w-4 h-4" />
-          <span>Configurações da Loja</span>
-        </button>
-        <button
-          onClick={() => setActiveTab('coupons')}
-          className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 whitespace-nowrap ${
-            activeTab === 'coupons' ? 'bg-amber-400 text-black shadow-md shadow-amber-500/10' : 'text-zinc-400 hover:text-white hover:bg-[#0f1d3b]'
-          }`}
-        >
-          <Ticket className="w-4 h-4" />
-          <span>Cupons</span>
-        </button>
-        <button
-          onClick={() => setActiveTab('cash')}
-          className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 whitespace-nowrap ${
-            activeTab === 'cash' ? 'bg-amber-400 text-black shadow-md shadow-amber-500/10' : 'text-zinc-400 hover:text-white hover:bg-[#0f1d3b]'
-          }`}
-        >
-          <Wallet className="w-4 h-4" />
-          <span>Caixa</span>
-        </button>
-        <button
-          onClick={() => setActiveTab('reports')}
-          className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 whitespace-nowrap ${
-            activeTab === 'reports' ? 'bg-amber-400 text-black shadow-md shadow-amber-500/10' : 'text-zinc-400 hover:text-white hover:bg-[#0f1d3b]'
-          }`}
-        >
-          <BarChart3 className="w-4 h-4" />
-          <span>Relatórios</span>
-        </button>
-      </div>
-
+        </div>
+      )}
       {activeTab === 'orders' && <OrdersTab a={a} />}
       {activeTab === 'products' && <ProductsTab a={a} />}
       {activeTab === 'settings' && <SettingsTab a={a} />}

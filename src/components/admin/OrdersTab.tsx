@@ -91,9 +91,9 @@ export function OrdersTab({ a }: { a: AdminState }) {
               return (
                 <div
                   key={order.id}
-                  className={`bg-[#0f1d3b] rounded-3xl border p-6 transition-all shadow-xl space-y-5 ${
+                  className={`bg-[#0f1d3b] rounded-2xl border p-5 transition-colors shadow-lg space-y-4 ${
                     isNovo
-                      ? 'border-amber-400 ring-2 ring-amber-400/20'
+                      ? 'border-amber-400/50'
                       : isSeparacao
                       ? 'border-blue-500/40'
                       : isPronto
@@ -203,12 +203,19 @@ export function OrdersTab({ a }: { a: AdminState }) {
                           className="flex items-center justify-between bg-zinc-900/60 border border-zinc-800/80 p-2.5 rounded-xl text-xs"
                         >
                           <div className="flex items-center gap-3">
-                            <img
-                              src={item.image}
-                              alt={item.name}
-                              referrerPolicy="no-referrer"
-                              className="w-10 h-10 rounded-lg object-cover bg-[#0a1528] shrink-0"
-                            />
+                            {item.image ? (
+                              <img
+                                src={item.image}
+                                alt={item.name}
+                                loading="lazy"
+                                referrerPolicy="no-referrer"
+                                className="w-10 h-10 rounded-lg object-cover bg-[#0a1528] shrink-0"
+                              />
+                            ) : (
+                              <div className="w-10 h-10 rounded-lg bg-[#0a1528] shrink-0 flex items-center justify-center text-[8px] font-bold uppercase text-zinc-600">
+                                Sem foto
+                              </div>
+                            )}
                             <div>
                               <span className="font-bold text-white block">{item.name}</span>
                               <span className="text-[11px] text-amber-300">
@@ -232,9 +239,9 @@ export function OrdersTab({ a }: { a: AdminState }) {
                         href={linkWhatsappCliente(order)!}
                         target="_blank"
                         rel="noreferrer"
-                        className="w-full py-2 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 text-xs font-bold rounded-xl text-center border border-emerald-500/30"
+                        className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-300 hover:text-emerald-200 hover:underline underline-offset-4"
                       >
-                        Avisar cliente no WhatsApp (etapa atual)
+                        Avisar cliente no WhatsApp
                       </a>
                     )}
                     <div className="flex items-center gap-2">
