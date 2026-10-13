@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useStore } from '../context/StoreContext';
-import { ProductSize, ProductColor } from '../types';
-import { getProductSpecs } from '../utils/productSpecs';
-import { CustomerReviewsSection } from './CustomerReviewsSection';
-import { ShippingCalculatorWidget } from './ShippingCalculatorWidget';
+import { useStore } from '../../context/StoreContext';
+import { ProductSize, ProductColor } from '../../types';
+import { getProductSpecs } from '../../utils/productSpecs';
+import { CustomerReviewsSection } from '../home/CustomerReviewsSection';
+import { ShippingCalculatorWidget } from '../compra/ShippingCalculatorWidget';
 import {
   X,
   Check,

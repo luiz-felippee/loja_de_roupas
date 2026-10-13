@@ -1,5 +1,5 @@
 import React from 'react';
-import { useStore } from '../context/StoreContext';
+import { useStore } from '../../context/StoreContext';
 import { ShoppingBag, ShieldCheck, Menu, Package, Tag, PhoneCall, Sparkles, User, Scale, Heart, Camera } from 'lucide-react';
 
 interface HeaderProps {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useStore } from '../context/StoreContext';
+import { useStore } from '../../context/StoreContext';
 import { Store, Phone, ShieldCheck, MapPin, Clock } from 'lucide-react';
 
 export const Footer: React.FC = () => {

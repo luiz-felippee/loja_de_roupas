@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Order } from '../types';
+import { Order } from '../../types';
 import {
   ResponsiveContainer,
   BarChart,

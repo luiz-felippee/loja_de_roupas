@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useStore } from '../context/StoreContext';
-import { Product, ProductSize } from '../types';
-import { getProductSpecs, getComparisonHighlights } from '../utils/productSpecs';
+import { useStore } from '../../context/StoreContext';
+import { Product, ProductSize } from '../../types';
+import { getProductSpecs, getComparisonHighlights } from '../../utils/productSpecs';
 import {
   Scale,
   X,

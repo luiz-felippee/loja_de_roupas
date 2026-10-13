@@ -1,6 +1,6 @@
 import React from 'react';
-import { Product } from '../types';
-import { useStore } from '../context/StoreContext';
+import { Product } from '../../types';
+import { useStore } from '../../context/StoreContext';
 import { ShoppingBag, Eye, Scale, Check, Heart, Star } from 'lucide-react';
 
 interface ProductCardProps {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useStore } from '../context/StoreContext';
-import { OrderStatus } from '../types';
+import { useStore } from '../../context/StoreContext';
+import { OrderStatus } from '../../types';
 import {
   Search,
   Package,
@@ -18,7 +18,7 @@ import {
   Copy,
   Check
 } from 'lucide-react';
-import { generatePixPayload, generatePixQRCode } from '../utils/pix';
+import { generatePixPayload, generatePixQRCode } from '../../utils/pix';
 
 export const OrderTrackingView: React.FC = () => {
   const {

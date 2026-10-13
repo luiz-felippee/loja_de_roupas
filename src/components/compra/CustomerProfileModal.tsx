@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useStore } from '../context/StoreContext';
+import { useStore } from '../../context/StoreContext';
 import { X, User, Phone, MapPin, Check, ShieldCheck } from 'lucide-react';
-import { Customer } from '../types';
+import { Customer } from '../../types';
 
 export const CustomerProfileModal: React.FC = () => {
   const { customer, saveCustomer, isProfileModalOpen, setIsProfileModalOpen, addToast } = useStore();

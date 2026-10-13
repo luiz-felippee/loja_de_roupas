@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useStore } from '../context/StoreContext';
-import { calculateVirtualFit } from '../utils/fittingAndSizes';
+import { useStore } from '../../context/StoreContext';
+import { calculateVirtualFit } from '../../utils/fittingAndSizes';
 import { Sparkles, X, Check, ArrowRight, Ruler, HelpCircle, Activity } from 'lucide-react';
-import { ProductSize } from '../types';
+import { ProductSize } from '../../types';
 
 export const VirtualFittingModal: React.FC = () => {
   const {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useStore } from '../context/StoreContext';
-import { SIZE_CHARTS } from '../utils/fittingAndSizes';
-import { ProductCategory, ProductSize } from '../types';
+import { useStore } from '../../context/StoreContext';
+import { SIZE_CHARTS } from '../../utils/fittingAndSizes';
+import { ProductCategory, ProductSize } from '../../types';
 import { Ruler, X, Sparkles, CheckCircle2 } from 'lucide-react';
 
 export const SizeGuideModal: React.FC = () => {

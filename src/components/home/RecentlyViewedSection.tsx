@@ -1,5 +1,5 @@
 import React from 'react';
-import { useStore } from '../context/StoreContext';
+import { useStore } from '../../context/StoreContext';
 import { History, X, Eye } from 'lucide-react';
 
 export const RecentlyViewedSection: React.FC = () => {
