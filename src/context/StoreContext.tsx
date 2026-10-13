@@ -10,8 +10,14 @@ import {
   ProductSize,
   PaymentMethod,
   DeliveryType,
-  ProductReview
+  ProductReview,
+  Coupon,
+  CashSession,
+  CashMovementKind
 } from '../types';
+import { useCoupons } from './slices/coupons';
+import { useCash } from './slices/cash';
+import { validarCupom } from '../utils/coupons';
 import { INITIAL_PRODUCTS, INITIAL_STORE_SETTINGS } from '../data/initialProducts';
 import { INITIAL_REVIEWS } from '../data/initialReviews';
 import { soundEffects } from '../utils/audio';
@@ -56,9 +62,23 @@ interface StoreContextType {
     paymentMethod: PaymentMethod;
     cashChangeFor?: number;
     deliveryType: DeliveryType;
+    couponCode?: string;
   }) => Order;
   updateOrderStatus: (orderId: string, status: OrderStatus) => void;
   deleteOrder: (orderId: string) => void;
+
+  // Cupons
+  coupons: Coupon[];
+  addCoupon: (data: Omit<Coupon, 'id' | 'uses'>) => boolean;
+  updateCoupon: (id: string, data: Partial<Omit<Coupon, 'id' | 'uses'>>) => void;
+  removeCoupon: (id: string) => void;
+
+  // Caixa
+  cashSessions: CashSession[];
+  currentCashSession: CashSession | null;
+  openCash: (openingFloat: number) => void;
+  addCashMovement: (kind: CashMovementKind, amount: number, note: string) => void;
+  closeCash: (countedAmount: number) => void;
 
   // View Navigation & Drawers
   currentView: 'shop' | 'tracking' | 'admin';
@@ -249,6 +269,10 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const { addReview, getProductRating, getProductReviews, reviews, setReviews } = useReviews(addToast);
   const { addToRecentlyViewed, clearRecentlyViewed, recentlyViewedIds, recentlyViewedProducts, setRecentlyViewedIds } = useRecentlyViewed(products);
 
+  // Cupons e caixa (fatias em src/context/slices)
+  const { coupons, addCoupon, updateCoupon, removeCoupon, registerCouponUse } = useCoupons(addToast);
+  const { cashSessions, currentCashSession, openCash, addCashMovement, closeCash } = useCash(addToast);
+
   // Cross-Tab & Device Event Listener for Real-Time Client/Staff Notifications
   useEffect(() => {
     const handleRemoteEvent = (eventData: {
@@ -413,12 +437,16 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     paymentMethod: PaymentMethod;
     cashChangeFor?: number;
     deliveryType: DeliveryType;
+    couponCode?: string;
   }): Order => {
     saveCustomer(orderData.customer);
 
     const deliveryFee = orderData.deliveryType === 'entrega_loja' ? settings.deliveryFee : 0;
     const subtotal = cartSubtotal;
-    const total = subtotal + deliveryFee;
+    // Cupom e revalidado aqui para o total gravado bater com o que o cliente viu
+    const cupom = orderData.couponCode ? validarCupom(coupons, orderData.couponCode, subtotal) : null;
+    const discount = cupom?.ok ? cupom.discount : 0;
+    const total = Math.round((subtotal - discount + deliveryFee) * 100) / 100;
 
     // Gera código sequencial amigável
     const randomSuffix = Math.floor(1000 + Math.random() * 9000);
@@ -435,9 +463,13 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       deliveryType: orderData.deliveryType,
       deliveryFee,
       subtotal,
+      couponCode: cupom?.ok ? cupom.coupon.code : undefined,
+      discount: discount || undefined,
       total,
       status: 'novo'
     };
+
+    if (cupom?.ok) registerCouponUse(cupom.coupon.code);
 
     // Decrement stock for ordered products
     newOrder.items.forEach((item) => {
@@ -620,6 +652,15 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         createOrder,
         updateOrderStatus,
         deleteOrder,
+        coupons,
+        addCoupon,
+        updateCoupon,
+        removeCoupon,
+        cashSessions,
+        currentCashSession,
+        openCash,
+        addCashMovement,
+        closeCash,
         currentView,
         setCurrentView,
         trackingOrderId,

@@ -1,3 +1,4 @@
+import { linkWhatsappCliente } from '../../utils/whatsapp';
 import { OrderStatus } from '../../types';
 import { ShoppingBag, Trash2, CheckCircle2, Clock, Truck, Store, ExternalLink, FileSpreadsheet } from 'lucide-react';
 import type { AdminState } from './useAdminPanel';
@@ -226,6 +227,16 @@ export function OrdersTab({ a }: { a: AdminState }) {
 
                   {/* Stage Transition Action Buttons */}
                   <div className="pt-2 border-t border-zinc-800/80 space-y-2">
+                    {linkWhatsappCliente(order) && (
+                      <a
+                        href={linkWhatsappCliente(order)!}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="w-full py-2 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 text-xs font-bold rounded-xl text-center border border-emerald-500/30"
+                      >
+                        Avisar cliente no WhatsApp (etapa atual)
+                      </a>
+                    )}
                     <div className="flex items-center gap-2">
                       {isNovo && (
                         <button

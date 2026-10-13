@@ -288,3 +288,15 @@ export function loadOrders(): Order[] {
     ...SAMPLE_PAST_ORDERS
   ];
 }
+
+/** IDs dos pedidos de exemplo. Relatorios e caixa os ignoram para nao misturar dados falsos. */
+export const SAMPLE_ORDER_IDS: ReadonlySet<string> = new Set([
+  'HM-1062',
+  'HM-1066',
+  'HM-1070',
+  'HM-1073',
+  'HM-1077',
+  'HM-1080',
+  'HM-1082',
+  'HM-1083',
+]);
