@@ -7,7 +7,10 @@ import { SettingsTab } from './SettingsTab';
 import { ProductModal } from './ProductModal';
 import { DailyRevenueChart } from './DailyRevenueChart';
 import { audioManager } from '../../utils/audio';
-import { Package, ShoppingBag, Settings, Volume2, LogOut, Sparkles, FileSpreadsheet } from 'lucide-react';
+import { Package, ShoppingBag, Settings, Volume2, LogOut, Sparkles, FileSpreadsheet, Ticket, Wallet, BarChart3 } from 'lucide-react';
+import { CouponsTab } from './CouponsTab';
+import { CashTab } from './CashTab';
+import { ReportsTab } from './ReportsTab';
 
 export const AdminPanel: React.FC = () => {
   const a = useAdminPanel();
@@ -223,11 +226,41 @@ export const AdminPanel: React.FC = () => {
           <Settings className="w-4 h-4" />
           <span>Configurações da Loja</span>
         </button>
+        <button
+          onClick={() => setActiveTab('coupons')}
+          className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 whitespace-nowrap ${
+            activeTab === 'coupons' ? 'bg-amber-400 text-black shadow-md shadow-amber-500/10' : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+          }`}
+        >
+          <Ticket className="w-4 h-4" />
+          <span>Cupons</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('cash')}
+          className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 whitespace-nowrap ${
+            activeTab === 'cash' ? 'bg-amber-400 text-black shadow-md shadow-amber-500/10' : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+          }`}
+        >
+          <Wallet className="w-4 h-4" />
+          <span>Caixa</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('reports')}
+          className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 whitespace-nowrap ${
+            activeTab === 'reports' ? 'bg-amber-400 text-black shadow-md shadow-amber-500/10' : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+          }`}
+        >
+          <BarChart3 className="w-4 h-4" />
+          <span>Relatórios</span>
+        </button>
       </div>
 
       {activeTab === 'orders' && <OrdersTab a={a} />}
       {activeTab === 'products' && <ProductsTab a={a} />}
       {activeTab === 'settings' && <SettingsTab a={a} />}
+      {activeTab === 'coupons' && <CouponsTab />}
+      {activeTab === 'cash' && <CashTab />}
+      {activeTab === 'reports' && <ReportsTab />}
 
       {isProductModalOpen && <ProductModal a={a} />}
     </div>

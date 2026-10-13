@@ -69,6 +69,9 @@ export interface Order {
   deliveryType: DeliveryType;
   deliveryFee: number;
   subtotal: number;
+  /** Codigo do cupom aplicado e valor descontado. */
+  couponCode?: string;
+  discount?: number;
   total: number;
   status: OrderStatus;
   updatedAt: string;
@@ -129,3 +132,42 @@ export interface VirtualFittingResult {
   tip: string;
 }
 
+
+export type CouponType = 'percent' | 'fixed';
+
+export interface Coupon {
+  id: string;
+  code: string;
+  type: CouponType;
+  /** Percentual (0-100) quando type = 'percent'; valor em reais quando type = 'fixed'. */
+  value: number;
+  /** Valor minimo das pecas para o cupom valer. */
+  minOrder: number;
+  /** Datas no formato AAAA-MM-DD. Vazio = sem limite. */
+  validFrom?: string;
+  validUntil?: string;
+  /** Limite de usos. Vazio = sem limite. */
+  maxUses?: number;
+  uses: number;
+  active: boolean;
+}
+
+export type CashMovementKind = 'reforco' | 'sangria';
+
+export interface CashMovement {
+  id: string;
+  at: string;
+  kind: CashMovementKind;
+  amount: number;
+  note: string;
+}
+
+export interface CashSession {
+  id: string;
+  openedAt: string;
+  openingFloat: number;
+  movements: CashMovement[];
+  closedAt?: string;
+  /** Dinheiro contado no fechamento. */
+  countedAmount?: number;
+}

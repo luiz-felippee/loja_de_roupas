@@ -1,3 +1,4 @@
+import { validarCupom } from '../../utils/coupons';
 import React, { useState, useEffect } from 'react';
 import { useStore } from '../../context/StoreContext';
 import { DeliveryType, PaymentMethod, Customer } from '../../types';
@@ -33,6 +34,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
     settings,
     customer,
     createOrder,
+    coupons,
     setCurrentView,
     setTrackingOrderId,
     addToast
@@ -58,9 +60,26 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
   const [isGeneratingPix, setIsGeneratingPix] = useState(false);
   const [showRawKeyOption, setShowRawKeyOption] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [couponInput, setCouponInput] = useState('');
+  const [appliedCouponCode, setAppliedCouponCode] = useState<string | null>(null);
+  const [couponError, setCouponError] = useState<string | null>(null);
 
   const deliveryFee = deliveryType === 'entrega_loja' ? settings.deliveryFee : 0;
-  const total = cartSubtotal + deliveryFee;
+  // Cupom: aplicado so se ainda valer para o subtotal atual
+  const cupomAplicado = appliedCouponCode ? validarCupom(coupons, appliedCouponCode, cartSubtotal) : null;
+  const discount = cupomAplicado?.ok ? cupomAplicado.discount : 0;
+  const total = Math.round((cartSubtotal - discount + deliveryFee) * 100) / 100;
+
+  const aplicarCupom = () => {
+    const r = validarCupom(coupons, couponInput, cartSubtotal);
+    if (!r.ok) {
+      setCouponError(r.motivo);
+      setAppliedCouponCode(null);
+      return;
+    }
+    setCouponError(null);
+    setAppliedCouponCode(r.coupon.code);
+  };
 
   // Gera automaticamente o código Pix Copia e Cola EMV e o QR Code dinâmico com o valor final exato
   useEffect(() => {
@@ -163,7 +182,8 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
       customer: customerData,
       paymentMethod,
       cashChangeFor: needChange && cashChangeFor ? parseFloat(cashChangeFor) : undefined,
-      deliveryType
+      deliveryType,
+      couponCode: cupomAplicado?.ok ? cupomAplicado.coupon.code : undefined
     });
 
     // Fire joyful celebratory confetti
@@ -623,11 +643,41 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                   ))}
                 </div>
 
+                <div className="space-y-1.5">
+                  <div className="flex gap-2">
+                    <input
+                      value={couponInput}
+                      onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
+                      placeholder="Cupom de desconto"
+                      className="flex-1 bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400/60"
+                      aria-label="Código do cupom"
+                    />
+                    <button
+                      type="button"
+                      onClick={aplicarCupom}
+                      disabled={!couponInput.trim()}
+                      className="px-3 py-2 bg-zinc-800 hover:bg-zinc-700 disabled:opacity-40 text-white text-xs font-bold rounded-xl"
+                    >
+                      Aplicar
+                    </button>
+                  </div>
+                  {couponError && <p className="text-[11px] text-rose-400">{couponError}</p>}
+                  {appliedCouponCode && !cupomAplicado?.ok && (
+                    <p className="text-[11px] text-rose-400">O cupom deixou de valer e foi removido.</p>
+                  )}
+                </div>
+
                 <div className="pt-2 border-t border-zinc-800/80 space-y-1">
                   <div className="flex justify-between text-zinc-400">
                     <span>Subtotal das peças:</span>
                     <span className="tabular-nums">R$ {cartSubtotal.toFixed(2).replace('.', ',')}</span>
                   </div>
+                  {discount > 0 && (
+                    <div className="flex justify-between text-emerald-400">
+                      <span>Cupom {cupomAplicado?.ok ? cupomAplicado.coupon.code : ''}:</span>
+                      <span className="tabular-nums">- R$ {discount.toFixed(2).replace('.', ',')}</span>
+                    </div>
+                  )}
                   <div className="flex justify-between text-zinc-400">
                     <span>Frete / Recebimento:</span>
                     <span className="tabular-nums">
