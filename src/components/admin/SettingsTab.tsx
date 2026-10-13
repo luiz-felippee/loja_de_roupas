@@ -2,10 +2,10 @@ import { CheckCircle2, RefreshCw, QrCode, Copy, Check } from 'lucide-react';
 import type { AdminState } from './useAdminPanel';
 
 export function SettingsTab({ a }: { a: AdminState }) {
-  const { addToast, copiedTestPix, deliveryFeeInput, handleSaveSettings, newStaffPasswordInput, pixCityInput, pixKeyInput, pixKeyTypeInput, pixNameInput, resetToDefaults, setCopiedTestPix, setDeliveryFeeInput, setNewStaffPasswordInput, setPixCityInput, setPixKeyInput, setPixKeyTypeInput, setPixNameInput, setStoreAddressInput, setWhatsappInput, storeAddressInput, testPixCode, testPixQR, whatsappInput } = a;
+  const { addToast, copiedTestPix, deliveryFeeInput, handleSaveSettings, newStaffPasswordInput, pixCityInput, pixKeyInput, pixKeyTypeInput, pixNameInput, setCopiedTestPix, setDeliveryFeeInput, setNewStaffPasswordInput, setPixCityInput, setPixKeyInput, setPixKeyTypeInput, setPixNameInput, setStoreAddressInput, setWhatsappInput, storeAddressInput, testPixCode, testPixQR, whatsappInput } = a;
   return (
     <>
-      <div className="max-w-2xl bg-[#0f1d3b] border border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
+      <div className="max-w-4xl bg-[#0f1d3b] border border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
         <div>
           <h3 className="text-base font-bold text-white">Configurações da Henrique Multimarcas</h3>
           <p className="text-xs text-zinc-400">
@@ -199,16 +199,7 @@ export function SettingsTab({ a }: { a: AdminState }) {
           </div>
 
 
-          <div className="pt-4 border-t border-zinc-800 flex items-center justify-between">
-            <button
-              type="button"
-              onClick={resetToDefaults}
-              className="text-xs text-zinc-500 hover:text-zinc-300 flex items-center gap-1.5"
-            >
-              <RefreshCw className="w-3.5 h-3.5" />
-              Restaurar Dados Padrão
-            </button>
-
+          <div className="pt-4 border-t border-zinc-800 flex items-center justify-end">
             <button
               type="submit"
               className="px-5 py-2.5 bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold rounded-xl transition-colors shadow-md"
