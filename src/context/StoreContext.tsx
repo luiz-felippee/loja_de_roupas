@@ -17,6 +17,10 @@ import { INITIAL_REVIEWS } from '../data/initialReviews';
 import { soundEffects } from '../utils/audio';
 import { readStorage, writeStorage } from '../utils/storage';
 import { loadOrders } from '../data/sampleOrders';
+import { useComparison } from './slices/comparison';
+import { useWishlist } from './slices/wishlist';
+import { useReviews } from './slices/reviews';
+import { useRecentlyViewed } from './slices/recentlyViewed';
 
 interface CartItem extends OrderItem {
   id: string; // unique item key composed of productId + color + size
@@ -158,153 +162,8 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
-  // Product Comparison (Até 3 peças lado a lado)
-  const [comparedProductIds, setComparedProductIds] = useState<string[]>(() => {
-    try {
-      const stored = localStorage.getItem('hm_compared_product_ids');
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed)) return parsed.slice(0, 3);
-      }
-    } catch {
-      // fallback
-    }
-    return [];
-  });
-  const [isComparisonModalOpen, setIsComparisonModalOpen] = useState(false);
 
-  useEffect(() => {
-    writeStorage('hm_compared_product_ids', comparedProductIds);
-  }, [comparedProductIds]);
 
-  const comparedProducts = React.useMemo(() => {
-    return comparedProductIds
-      .map((id) => products.find((p) => p.id === id))
-      .filter((p): p is Product => Boolean(p));
-  }, [comparedProductIds, products]);
-
-  const isProductInComparison = (productId: string) => {
-    return comparedProductIds.includes(productId);
-  };
-
-  const addToComparison = (product: Product): boolean => {
-    if (comparedProductIds.includes(product.id)) {
-      return true;
-    }
-    if (comparedProductIds.length >= 3) {
-      addToast(
-        'Limite de comparação atingido',
-        'Você já selecionou o limite máximo de 3 peças para comparação. Remova uma para adicionar outra.',
-        'warning'
-      );
-      return false;
-    }
-    setComparedProductIds((prev) => [...prev, product.id]);
-    addToast(
-      'Peça adicionada ao comparador',
-      `"${product.name}" pronta para comparação (${comparedProductIds.length + 1} de 3 peças).`,
-      'info',
-      {
-        label: 'Ver Comparativo',
-        onClick: () => setIsComparisonModalOpen(true)
-      }
-    );
-    return true;
-  };
-
-  const removeFromComparison = (productId: string) => {
-    setComparedProductIds((prev) => prev.filter((id) => id !== productId));
-  };
-
-  const toggleProductComparison = (product: Product) => {
-    if (comparedProductIds.includes(product.id)) {
-      removeFromComparison(product.id);
-      addToast('Peça removida', `"${product.name}" removida da comparação.`, 'info');
-    } else {
-      addToComparison(product);
-    }
-  };
-
-  const clearComparison = () => {
-    setComparedProductIds([]);
-    addToast('Comparador limpo', 'Todas as peças foram removidas da lista de comparação.', 'info');
-  };
-
-  // Lista de Desejos / Favoritos (Wishlist)
-  const [wishlistProductIds, setWishlistProductIds] = useState<string[]>(() => readStorage('hm_wishlist_ids', []));
-  const [isWishlistOpen, setIsWishlistOpen] = useState(false);
-
-  useEffect(() => {
-    writeStorage('hm_wishlist_ids', wishlistProductIds);
-  }, [wishlistProductIds]);
-
-  const wishlistProducts = React.useMemo(() => {
-    return wishlistProductIds
-      .map((id) => products.find((p) => p.id === id))
-      .filter((p): p is Product => Boolean(p));
-  }, [wishlistProductIds, products]);
-
-  const isInWishlist = (productId: string) => wishlistProductIds.includes(productId);
-
-  const toggleWishlist = (product: Product) => {
-    if (wishlistProductIds.includes(product.id)) {
-      setWishlistProductIds((prev) => prev.filter((id) => id !== product.id));
-      addToast('Removido dos favoritos', `"${product.name}" foi removido da sua lista de desejos.`, 'info');
-    } else {
-      setWishlistProductIds((prev) => [...prev, product.id]);
-      soundEffects.playCash();
-      addToast(
-        '❤️ Salvo nos favoritos!',
-        `"${product.name}" adicionado à sua lista de desejos.`,
-        'success',
-        {
-          label: 'Ver Favoritos',
-          onClick: () => setIsWishlistOpen(true)
-        }
-      );
-    }
-  };
-
-  const clearWishlist = () => {
-    setWishlistProductIds([]);
-    addToast('Favoritos limpos', 'Todos os itens foram removidos da sua lista.', 'info');
-  };
-
-  // Avaliações de Clientes (Reviews & Ratings)
-  const [reviews, setReviews] = useState<ProductReview[]>(() => readStorage('hm_product_reviews', INITIAL_REVIEWS));
-
-  useEffect(() => {
-    writeStorage('hm_product_reviews', reviews);
-  }, [reviews]);
-
-  const addReview = (newReview: Omit<ProductReview, 'id' | 'createdAt'>) => {
-    const created: ProductReview = {
-      ...newReview,
-      id: `rev-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
-      createdAt: new Date().toISOString()
-    };
-    setReviews((prev) => [created, ...prev]);
-    soundEffects.playSuccess();
-    addToast(
-      '⭐ Avaliação publicada!',
-      'Obrigado pelo seu feedback! Sua avaliação ajuda outros clientes na escolha das peças.',
-      'success'
-    );
-  };
-
-  const getProductReviews = (productId: string) => {
-    return reviews.filter((r) => r.productId === productId);
-  };
-
-  const getProductRating = (productId: string) => {
-    const list = reviews.filter((r) => r.productId === productId);
-    if (list.length === 0) return { average: 5.0, count: 0 };
-    const sum = list.reduce((acc, r) => acc + r.rating, 0);
-    return {
-      average: Number((sum / list.length).toFixed(1)),
-      count: list.length
-    };
-  };
 
   // Provador Virtual & Guia de Medidas
   const [isVirtualFittingOpen, setIsVirtualFittingOpen] = useState(false);
@@ -317,29 +176,6 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setIsVirtualFittingOpen(true);
   };
 
-  // Produtos Vistos Recentemente
-  const [recentlyViewedIds, setRecentlyViewedIds] = useState<string[]>(() => readStorage('hm_recently_viewed_ids', []));
-
-  useEffect(() => {
-    writeStorage('hm_recently_viewed_ids', recentlyViewedIds);
-  }, [recentlyViewedIds]);
-
-  const recentlyViewedProducts = React.useMemo(() => {
-    return recentlyViewedIds
-      .map((id) => products.find((p) => p.id === id))
-      .filter((p): p is Product => Boolean(p));
-  }, [recentlyViewedIds, products]);
-
-  const addToRecentlyViewed = (productId: string) => {
-    setRecentlyViewedIds((prev) => {
-      const filtered = prev.filter((id) => id !== productId);
-      return [productId, ...filtered].slice(0, 8);
-    });
-  };
-
-  const clearRecentlyViewed = () => {
-    setRecentlyViewedIds([]);
-  };
 
   // Interceptador para registrar em vistos recentemente
   const handleSetSelectedProduct = (product: Product | null) => {
@@ -406,6 +242,12 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const removeToast = (id: string) => {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   };
+
+  // Fatias de estado (hooks em src/context/slices)
+  const { addToComparison, clearComparison, comparedProductIds, comparedProducts, isComparisonModalOpen, isProductInComparison, removeFromComparison, setComparedProductIds, setIsComparisonModalOpen, toggleProductComparison } = useComparison(products, addToast);
+  const { clearWishlist, isInWishlist, isWishlistOpen, setIsWishlistOpen, setWishlistProductIds, toggleWishlist, wishlistProductIds, wishlistProducts } = useWishlist(products, addToast);
+  const { addReview, getProductRating, getProductReviews, reviews, setReviews } = useReviews(addToast);
+  const { addToRecentlyViewed, clearRecentlyViewed, recentlyViewedIds, recentlyViewedProducts, setRecentlyViewedIds } = useRecentlyViewed(products);
 
   // Cross-Tab & Device Event Listener for Real-Time Client/Staff Notifications
   useEffect(() => {
