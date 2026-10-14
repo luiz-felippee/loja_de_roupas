@@ -46,10 +46,10 @@ export const RecentlyViewedSection: React.FC = () => {
             <div
               key={product.id}
               onClick={() => setSelectedProduct(product)}
-              className="w-36 sm:w-44 bg-[#141724] hover:bg-[#181c2b] border border-zinc-800/80 hover:border-amber-400/50 rounded-2xl p-2.5 shrink-0 cursor-pointer transition-all group flex flex-col justify-between"
+              className="w-36 sm:w-44 bg-[#0f1d3b] hover:bg-[#0f1d3b] border border-zinc-800/80 hover:border-amber-400/50 rounded-2xl p-2.5 shrink-0 cursor-pointer transition-all group flex flex-col justify-between"
             >
               <div>
-                <div className="aspect-[4/3] rounded-xl bg-zinc-950 overflow-hidden mb-2 relative">
+                <div className="aspect-[4/3] rounded-xl bg-[#0a1528] overflow-hidden mb-2 relative">
                   <img
                     src={product.image}
                     alt={product.name}
@@ -72,7 +72,7 @@ export const RecentlyViewedSection: React.FC = () => {
                 <span className="text-xs font-black text-amber-400 tabular-nums">
                   R$ {effectivePrice.toFixed(2).replace('.', ',')}
                 </span>
-                <span className="w-6 h-6 rounded-lg bg-zinc-900 group-hover:bg-amber-400 group-hover:text-black flex items-center justify-center text-zinc-400 transition-colors">
+                <span className="w-6 h-6 rounded-lg bg-[#0f1d3b] group-hover:bg-amber-400 group-hover:text-black flex items-center justify-center text-zinc-400 transition-colors">
                   <Eye className="w-3 h-3" />
                 </span>
               </div>

@@ -242,11 +242,11 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
       <div
-        className="relative w-full max-w-xl bg-[#141620] border border-zinc-800 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 my-auto max-h-[92vh] flex flex-col"
+        className="relative w-full max-w-xl bg-[#0f1d3b] border border-zinc-800 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 my-auto max-h-[92vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="p-4 sm:p-5 border-b border-zinc-800 flex items-center justify-between bg-[#161925] shrink-0">
+        <div className="p-4 sm:p-5 border-b border-zinc-800 flex items-center justify-between bg-[#0f1d3b] shrink-0">
           <div>
             <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
               Finalizar Pedido
@@ -271,7 +271,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
         </div>
 
         {/* Step Indicator Bar */}
-        <div className="grid grid-cols-3 bg-zinc-900 border-b border-zinc-800 text-[10px] sm:text-[11px] font-semibold text-center py-2 shrink-0">
+        <div className="grid grid-cols-3 bg-[#0f1d3b] border-b border-zinc-800 text-[10px] sm:text-[11px] font-semibold text-center py-2 shrink-0">
           <div className={step >= 1 ? 'text-amber-400' : 'text-zinc-500'}>
             1. Seus Dados
           </div>
@@ -297,7 +297,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Ex: João da Silva"
-                  className="w-full bg-[#1b1e2b] border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none"
+                  className="w-full bg-[#142a52] border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none"
                   required
                 />
               </div>
@@ -311,7 +311,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="Ex: (11) 99876-5432"
-                  className="w-full bg-[#1b1e2b] border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none"
+                  className="w-full bg-[#142a52] border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none"
                   required
                 />
                 <span className="text-[10px] text-zinc-500 mt-1 block">
@@ -328,7 +328,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   placeholder="Ex: Rua São Paulo, 250 - Casa 2"
-                  className="w-full bg-[#1b1e2b] border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none"
+                  className="w-full bg-[#142a52] border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none"
                 />
               </div>
 
@@ -342,7 +342,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                     value={neighborhood}
                     onChange={(e) => setNeighborhood(e.target.value)}
                     placeholder="Ex: Centro"
-                    className="w-full bg-[#1b1e2b] border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none"
+                    className="w-full bg-[#142a52] border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none"
                   />
                 </div>
                 <div>
@@ -354,7 +354,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                     value={reference}
                     onChange={(e) => setReference(e.target.value)}
                     placeholder="Ex: Próximo à praça central"
-                    className="w-full bg-[#1b1e2b] border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none"
+                    className="w-full bg-[#142a52] border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none"
                   />
                 </div>
               </div>
@@ -373,8 +373,8 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                 onClick={() => setDeliveryType('retirada')}
                 className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-start gap-3.5 ${
                   deliveryType === 'retirada'
-                    ? 'bg-[#1e2230] border-amber-400 shadow-md shadow-amber-500/10'
-                    : 'bg-[#181b26] border-zinc-800 hover:border-zinc-700'
+                    ? 'bg-[#142a52] border-amber-400 shadow-md shadow-amber-500/10'
+                    : 'bg-[#0f1d3b] border-zinc-800 hover:border-zinc-700'
                 }`}
               >
                 <div className={`p-2.5 rounded-xl ${deliveryType === 'retirada' ? 'bg-amber-400 text-black' : 'bg-zinc-800 text-zinc-400'}`}>
@@ -396,8 +396,8 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                 onClick={() => setDeliveryType('entrega_loja')}
                 className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-start gap-3.5 ${
                   deliveryType === 'entrega_loja'
-                    ? 'bg-[#1e2230] border-amber-400 shadow-md shadow-amber-500/10'
-                    : 'bg-[#181b26] border-zinc-800 hover:border-zinc-700'
+                    ? 'bg-[#142a52] border-amber-400 shadow-md shadow-amber-500/10'
+                    : 'bg-[#0f1d3b] border-zinc-800 hover:border-zinc-700'
                 }`}
               >
                 <div className={`p-2.5 rounded-xl ${deliveryType === 'entrega_loja' ? 'bg-amber-400 text-black' : 'bg-zinc-800 text-zinc-400'}`}>
@@ -421,8 +421,8 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                 onClick={() => setDeliveryType('motoqueiro_cliente')}
                 className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-start gap-3.5 ${
                   deliveryType === 'motoqueiro_cliente'
-                    ? 'bg-[#1e2230] border-amber-400 shadow-md shadow-amber-500/10'
-                    : 'bg-[#181b26] border-zinc-800 hover:border-zinc-700'
+                    ? 'bg-[#142a52] border-amber-400 shadow-md shadow-amber-500/10'
+                    : 'bg-[#0f1d3b] border-zinc-800 hover:border-zinc-700'
                 }`}
               >
                 <div className={`p-2.5 rounded-xl ${deliveryType === 'motoqueiro_cliente' ? 'bg-amber-400 text-black' : 'bg-zinc-800 text-zinc-400'}`}>
@@ -455,8 +455,8 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                   onClick={() => setPaymentMethod('pix')}
                   className={`p-3 rounded-2xl border text-center transition-all flex flex-col items-center gap-1.5 ${
                     paymentMethod === 'pix'
-                      ? 'bg-[#1e2230] border-amber-400 text-amber-300'
-                      : 'bg-[#181b26] border-zinc-800 text-zinc-400 hover:text-white'
+                      ? 'bg-[#142a52] border-amber-400 text-amber-300'
+                      : 'bg-[#0f1d3b] border-zinc-800 text-zinc-400 hover:text-white'
                   }`}
                 >
                   <QrCode className="w-5 h-5" />
@@ -469,8 +469,8 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                   onClick={() => setPaymentMethod('cartao')}
                   className={`p-3 rounded-2xl border text-center transition-all flex flex-col items-center gap-1.5 ${
                     paymentMethod === 'cartao'
-                      ? 'bg-[#1e2230] border-amber-400 text-amber-300'
-                      : 'bg-[#181b26] border-zinc-800 text-zinc-400 hover:text-white'
+                      ? 'bg-[#142a52] border-amber-400 text-amber-300'
+                      : 'bg-[#0f1d3b] border-zinc-800 text-zinc-400 hover:text-white'
                   }`}
                 >
                   <CreditCard className="w-5 h-5" />
@@ -483,8 +483,8 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                   onClick={() => setPaymentMethod('dinheiro')}
                   className={`p-3 rounded-2xl border text-center transition-all flex flex-col items-center gap-1.5 ${
                     paymentMethod === 'dinheiro'
-                      ? 'bg-[#1e2230] border-amber-400 text-amber-300'
-                      : 'bg-[#181b26] border-zinc-800 text-zinc-400 hover:text-white'
+                      ? 'bg-[#142a52] border-amber-400 text-amber-300'
+                      : 'bg-[#0f1d3b] border-zinc-800 text-zinc-400 hover:text-white'
                   }`}
                 >
                   <Banknote className="w-5 h-5" />
@@ -494,7 +494,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
 
               {/* Payment Details: PIX DINÂMICO COM QR CODE E COPIA E COLA */}
               {paymentMethod === 'pix' && (
-                <div className="p-4 sm:p-5 rounded-2xl bg-[#191d2c] border border-amber-500/40 space-y-4 shadow-xl shadow-amber-500/5">
+                <div className="p-4 sm:p-5 rounded-2xl bg-[#142a52] border border-amber-500/40 space-y-4 shadow-xl shadow-amber-500/5">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <div className="w-7 h-7 rounded-lg bg-amber-400 text-black flex items-center justify-center font-bold">
@@ -518,7 +518,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                   </div>
 
                   {/* QR Code Container */}
-                  <div className="flex flex-col sm:flex-row items-center gap-4 bg-[#11131c] p-4 rounded-2xl border border-zinc-800">
+                  <div className="flex flex-col sm:flex-row items-center gap-4 bg-[#0a1528] p-4 rounded-2xl border border-zinc-800">
                     <div className="relative bg-white p-2.5 rounded-2xl shrink-0 shadow-lg border border-amber-400/30">
                       {isGeneratingPix ? (
                         <div className="w-36 h-36 flex flex-col items-center justify-center text-zinc-800 gap-2">
@@ -613,7 +613,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
               )}
 
               {paymentMethod === 'cartao' && (
-                <div className="p-4 rounded-2xl bg-[#1b1f2b] border border-zinc-800 text-xs text-zinc-300 space-y-1">
+                <div className="p-4 rounded-2xl bg-[#142a52] border border-zinc-800 text-xs text-zinc-300 space-y-1">
                   <div className="font-bold text-white flex items-center gap-1.5">
                     <CreditCard className="w-4 h-4 text-amber-400" />
                     Maquininha Presencial
@@ -625,14 +625,14 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
               )}
 
               {paymentMethod === 'dinheiro' && (
-                <div className="p-4 rounded-2xl bg-[#1b1f2b] border border-zinc-800 space-y-2 text-xs">
+                <div className="p-4 rounded-2xl bg-[#142a52] border border-zinc-800 space-y-2 text-xs">
                   <div className="flex items-center gap-2">
                     <input
                       type="checkbox"
                       id="changeCheckbox"
                       checked={needChange}
                       onChange={(e) => setNeedChange(e.target.checked)}
-                      className="rounded border-zinc-700 bg-zinc-900 text-amber-500 focus:ring-0"
+                      className="rounded border-zinc-700 bg-[#0f1d3b] text-amber-500 focus:ring-0"
                     />
                     <label htmlFor="changeCheckbox" className="font-semibold text-zinc-200">
                       Vou precisar de troco em dinheiro
@@ -681,7 +681,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                       value={couponInput}
                       onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
                       placeholder="Cupom de desconto"
-                      className="flex-1 bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400/60"
+                      className="flex-1 bg-[#0f1d3b] border border-zinc-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400/60"
                       aria-label="Código do cupom"
                     />
                     <button
@@ -724,12 +724,12 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
         </div>
 
         {/* Modal Footer Controls */}
-        <div className="p-3.5 sm:p-5 border-t border-zinc-800 bg-[#161925] flex items-center justify-between gap-2 shrink-0">
+        <div className="p-3.5 sm:p-5 border-t border-zinc-800 bg-[#0f1d3b] flex items-center justify-between gap-2 shrink-0">
           {step > 1 ? (
             <button
               type="button"
               onClick={() => setStep((s) => (s - 1) as 1 | 2)}
-              className="px-3 sm:px-4 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 text-xs font-semibold rounded-xl border border-zinc-800 transition-colors flex items-center gap-1.5 shrink-0"
+              className="px-3 sm:px-4 py-2.5 bg-[#0f1d3b] hover:bg-zinc-800 text-zinc-300 text-xs font-semibold rounded-xl border border-zinc-800 transition-colors flex items-center gap-1.5 shrink-0"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Voltar</span>

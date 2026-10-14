@@ -181,7 +181,7 @@ export const OrderTrackingView: React.FC = () => {
       </div>
 
       {/* Search Order by Code Card */}
-      <div className="bg-[#141722] border border-zinc-800 rounded-2xl p-4 sm:p-5 mb-6 sm:mb-8 shadow-lg">
+      <div className="bg-[#0f1d3b] border border-zinc-800 rounded-2xl p-4 sm:p-5 mb-6 sm:mb-8 shadow-lg">
         <h2 className="text-sm sm:text-base font-bold text-white mb-1.5">
           Consultar Pedido por Código
         </h2>
@@ -197,7 +197,7 @@ export const OrderTrackingView: React.FC = () => {
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value.toUpperCase())}
               placeholder="Digite o código (ex: HM-1082)"
-              className="w-full bg-[#1b1f2e] border border-zinc-800 focus:border-amber-500 rounded-xl pl-10 pr-4 py-2.5 text-xs text-white uppercase placeholder-zinc-500 focus:outline-none"
+              className="w-full bg-[#142a52] border border-zinc-800 focus:border-amber-500 rounded-xl pl-10 pr-4 py-2.5 text-xs text-white uppercase placeholder-zinc-500 focus:outline-none"
             />
           </div>
           <button
@@ -215,7 +215,7 @@ export const OrderTrackingView: React.FC = () => {
       {currentOrder ? (
         <div className="space-y-6">
           {/* Main Status Timeline Card */}
-          <div className="bg-[#151824] border border-zinc-800 rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-xl">
+          <div className="bg-[#0f1d3b] border border-zinc-800 rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-xl">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 sm:pb-6 border-b border-zinc-800">
               <div>
                 <div className="flex items-center gap-2">
@@ -297,7 +297,7 @@ export const OrderTrackingView: React.FC = () => {
             </div>
 
             {/* Current Stage Guidance Message */}
-            <div className="p-4 rounded-2xl bg-[#1b1f2e] border border-amber-500/20 flex items-start gap-3">
+            <div className="p-4 rounded-2xl bg-[#142a52] border border-amber-500/20 flex items-start gap-3">
               <div className="w-8 h-8 rounded-lg bg-amber-400/10 flex items-center justify-center text-amber-400 shrink-0 mt-0.5">
                 <Sparkles className="w-4 h-4" />
               </div>
@@ -322,7 +322,7 @@ export const OrderTrackingView: React.FC = () => {
           {/* Order Details & Summary */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Items Purchased */}
-            <div className="bg-[#151824] border border-zinc-800 rounded-3xl p-6 space-y-4">
+            <div className="bg-[#0f1d3b] border border-zinc-800 rounded-3xl p-6 space-y-4">
               <h3 className="text-sm font-bold text-white flex items-center gap-2">
                 <ShoppingBag className="w-4 h-4 text-amber-400" />
                 Peças Compradas ({currentOrder.items.length})
@@ -338,7 +338,7 @@ export const OrderTrackingView: React.FC = () => {
                       src={item.image}
                       alt={item.name}
                       referrerPolicy="no-referrer"
-                      className="w-14 h-14 rounded-lg object-cover bg-zinc-950 shrink-0"
+                      className="w-14 h-14 rounded-lg object-cover bg-[#0a1528] shrink-0"
                     />
                     <div className="flex-1 min-w-0">
                       <h4 className="text-xs font-bold text-white truncate">
@@ -380,7 +380,7 @@ export const OrderTrackingView: React.FC = () => {
             </div>
 
             {/* Delivery & Payment Info */}
-            <div className="bg-[#151824] border border-zinc-800 rounded-3xl p-6 space-y-5">
+            <div className="bg-[#0f1d3b] border border-zinc-800 rounded-3xl p-6 space-y-5">
               {/* Delivery mode */}
               <div>
                 <h3 className="text-sm font-bold text-white flex items-center gap-2 mb-2">
@@ -444,7 +444,7 @@ export const OrderTrackingView: React.FC = () => {
 
                   {/* Detalhes do Pix se selecionado */}
                   {currentOrder.paymentMethod === 'pix' && showPixDetails && trackingPixQR && (
-                    <div className="mt-3 pt-3 border-t border-zinc-800/80 space-y-3 bg-[#11131c] p-3 rounded-xl">
+                    <div className="mt-3 pt-3 border-t border-zinc-800/80 space-y-3 bg-[#0a1528] p-3 rounded-xl">
                       <div className="flex items-center gap-3">
                         <div className="bg-white p-1.5 rounded-xl shrink-0 shadow">
                           <img
@@ -504,8 +504,8 @@ export const OrderTrackingView: React.FC = () => {
           </div>
         </div>
       ) : (
-        <div className="bg-[#141722] border border-zinc-800 rounded-3xl p-12 text-center space-y-4">
-          <div className="w-16 h-16 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center mx-auto text-zinc-600">
+        <div className="bg-[#0f1d3b] border border-zinc-800 rounded-3xl p-12 text-center space-y-4">
+          <div className="w-16 h-16 rounded-2xl bg-[#0f1d3b] border border-zinc-800 flex items-center justify-center mx-auto text-zinc-600">
             <Package className="w-8 h-8" />
           </div>
           <h3 className="text-base font-bold text-white">Nenhum pedido selecionado</h3>

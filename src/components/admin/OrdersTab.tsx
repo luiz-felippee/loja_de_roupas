@@ -9,7 +9,7 @@ export function OrdersTab({ a }: { a: AdminState }) {
     <>
       <div className="space-y-6">
         {/* Order Search & Stage Filter Bar */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 bg-[#131622] p-3.5 rounded-2xl border border-zinc-800">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 bg-[#0f1d3b] p-3.5 rounded-2xl border border-zinc-800">
           {/* Stage filter buttons */}
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 scrollbar-none">
             {[
@@ -25,7 +25,7 @@ export function OrdersTab({ a }: { a: AdminState }) {
                 className={`px-3 py-1.5 text-xs font-semibold rounded-xl border transition-all flex items-center gap-1.5 whitespace-nowrap ${
                   orderStatusFilter === f.id
                     ? 'bg-amber-400 text-black border-amber-300 font-bold shadow'
-                    : 'bg-zinc-900 text-zinc-400 border-zinc-800 hover:text-zinc-200'
+                    : 'bg-[#0f1d3b] text-zinc-400 border-zinc-800 hover:text-zinc-200'
                 }`}
               >
                 <span>{f.label}</span>
@@ -50,7 +50,7 @@ export function OrdersTab({ a }: { a: AdminState }) {
                 value={orderSearchQuery}
                 onChange={(e) => setOrderSearchQuery(e.target.value)}
                 placeholder="Buscar por #código, nome..."
-                className="w-full bg-[#191d2c] border border-zinc-800 focus:border-amber-500 rounded-xl px-3 py-1.5 text-xs text-white placeholder-zinc-500 focus:outline-none"
+                className="w-full bg-[#142a52] border border-zinc-800 focus:border-amber-500 rounded-xl px-3 py-1.5 text-xs text-white placeholder-zinc-500 focus:outline-none"
               />
               {orderSearchQuery && (
                 <button
@@ -75,7 +75,7 @@ export function OrdersTab({ a }: { a: AdminState }) {
 
         {/* Orders Cards Grid */}
         {filteredOrders.length === 0 ? (
-          <div className="bg-[#141724] border border-zinc-800 rounded-3xl p-12 text-center text-zinc-400 space-y-2">
+          <div className="bg-[#0f1d3b] border border-zinc-800 rounded-3xl p-12 text-center text-zinc-400 space-y-2">
             <ShoppingBag className="w-10 h-10 mx-auto text-zinc-600 mb-2" />
             <p className="text-sm font-bold text-white">Nenhum pedido nesta etapa</p>
             <p className="text-xs">Os pedidos feitos pelos clientes aparecem aqui instantaneamente.</p>
@@ -91,9 +91,9 @@ export function OrdersTab({ a }: { a: AdminState }) {
               return (
                 <div
                   key={order.id}
-                  className={`bg-[#151824] rounded-3xl border p-6 transition-all shadow-xl space-y-5 ${
+                  className={`bg-[#0f1d3b] rounded-2xl border p-5 transition-colors shadow-lg space-y-4 ${
                     isNovo
-                      ? 'border-amber-400 ring-2 ring-amber-400/20'
+                      ? 'border-amber-400/50'
                       : isSeparacao
                       ? 'border-blue-500/40'
                       : isPronto
@@ -149,7 +149,7 @@ export function OrdersTab({ a }: { a: AdminState }) {
                   </div>
 
                   {/* Customer Private Data (Visible only to the store context) */}
-                  <div className="bg-[#1a1e2d] border border-zinc-800/80 rounded-2xl p-4 text-xs space-y-2">
+                  <div className="bg-[#0f1d3b] border border-zinc-800/80 rounded-2xl p-4 text-xs space-y-2">
                     <div className="flex items-center justify-between">
                       <span className="font-bold text-white text-sm">
                         {order.customer.name}
@@ -203,12 +203,19 @@ export function OrdersTab({ a }: { a: AdminState }) {
                           className="flex items-center justify-between bg-zinc-900/60 border border-zinc-800/80 p-2.5 rounded-xl text-xs"
                         >
                           <div className="flex items-center gap-3">
-                            <img
-                              src={item.image}
-                              alt={item.name}
-                              referrerPolicy="no-referrer"
-                              className="w-10 h-10 rounded-lg object-cover bg-zinc-950 shrink-0"
-                            />
+                            {item.image ? (
+                              <img
+                                src={item.image}
+                                alt={item.name}
+                                loading="lazy"
+                                referrerPolicy="no-referrer"
+                                className="w-10 h-10 rounded-lg object-cover bg-[#0a1528] shrink-0"
+                              />
+                            ) : (
+                              <div className="w-10 h-10 rounded-lg bg-[#0a1528] shrink-0 flex items-center justify-center text-[8px] font-bold uppercase text-zinc-600">
+                                Sem foto
+                              </div>
+                            )}
                             <div>
                               <span className="font-bold text-white block">{item.name}</span>
                               <span className="text-[11px] text-amber-300">
@@ -232,9 +239,9 @@ export function OrdersTab({ a }: { a: AdminState }) {
                         href={linkWhatsappCliente(order)!}
                         target="_blank"
                         rel="noreferrer"
-                        className="w-full py-2 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 text-xs font-bold rounded-xl text-center border border-emerald-500/30"
+                        className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-300 hover:text-emerald-200 hover:underline underline-offset-4"
                       >
-                        Avisar cliente no WhatsApp (etapa atual)
+                        Avisar cliente no WhatsApp
                       </a>
                     )}
                     <div className="flex items-center gap-2">
@@ -282,7 +289,7 @@ export function OrdersTab({ a }: { a: AdminState }) {
                       <select
                         value={order.status}
                         onChange={(e) => updateOrderStatus(order.id, e.target.value as OrderStatus)}
-                        className="bg-zinc-900 border border-zinc-800 rounded-lg px-2 py-1 text-[11px] text-zinc-300 focus:outline-none focus:border-amber-400"
+                        className="bg-[#0f1d3b] border border-zinc-800 rounded-lg px-2 py-1 text-[11px] text-zinc-300 focus:outline-none focus:border-amber-400"
                       >
                         <option value="novo">Novo Pedido</option>
                         <option value="separacao">Em Separação</option>

@@ -174,7 +174,7 @@ export const CustomerReviewsSection: React.FC<CustomerReviewsSectionProps> = ({ 
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
                 placeholder="Ex: Carlos Andrade"
-                className="w-full px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-xl text-xs text-white focus:outline-none focus:border-amber-400"
+                className="w-full px-3 py-2 bg-[#0a1528] border border-zinc-800 rounded-xl text-xs text-white focus:outline-none focus:border-amber-400"
               />
             </div>
 
@@ -185,7 +185,7 @@ export const CustomerReviewsSection: React.FC<CustomerReviewsSectionProps> = ({ 
               <select
                 value={purchasedSize}
                 onChange={(e) => setPurchasedSize(e.target.value as ProductSize)}
-                className="w-full px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-xl text-xs text-white focus:outline-none focus:border-amber-400"
+                className="w-full px-3 py-2 bg-[#0a1528] border border-zinc-800 rounded-xl text-xs text-white focus:outline-none focus:border-amber-400"
               >
                 {product.sizes.map((s) => (
                   <option key={s} value={s}>
@@ -206,7 +206,7 @@ export const CustomerReviewsSection: React.FC<CustomerReviewsSectionProps> = ({ 
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Ex: Caimento perfeito e tecido muito confortável"
-              className="w-full px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-xl text-xs text-white focus:outline-none focus:border-amber-400"
+              className="w-full px-3 py-2 bg-[#0a1528] border border-zinc-800 rounded-xl text-xs text-white focus:outline-none focus:border-amber-400"
             />
           </div>
 
@@ -220,7 +220,7 @@ export const CustomerReviewsSection: React.FC<CustomerReviewsSectionProps> = ({ 
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               placeholder="Conte como a peça ficou no corpo, acabamento dos tecidos e sua experiência com a entrega..."
-              className="w-full px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-xl text-xs text-white focus:outline-none focus:border-amber-400 resize-none"
+              className="w-full px-3 py-2 bg-[#0a1528] border border-zinc-800 rounded-xl text-xs text-white focus:outline-none focus:border-amber-400 resize-none"
             />
           </div>
 

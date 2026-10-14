@@ -26,7 +26,7 @@ export const PromoSlider: React.FC = () => {
             <button
               key={p.id}
               onClick={() => setSelectedProduct(p)}
-              className="snap-start shrink-0 w-[70%] sm:w-72 text-left bg-[#141620] border border-zinc-800 hover:border-zinc-600 rounded-2xl overflow-hidden transition-colors group"
+              className="snap-start shrink-0 w-[70%] sm:w-72 text-left bg-[#0f1d3b] border border-zinc-800 hover:border-zinc-600 rounded-2xl overflow-hidden transition-colors group"
             >
               <div className="relative aspect-[4/3] bg-[#0f1118]">
                 <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300" loading="lazy" />

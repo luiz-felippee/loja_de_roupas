@@ -41,7 +41,7 @@ const PRESET_DEMO_SAMPLES = [
   {
     title: 'Polo Preta com Ouro',
     category: 'polo' as ProductCategory,
-    hex: '#18181b',
+    hex: '#0f1d3b',
     image: '/src/assets/images/polo_shirt_black_gold_1791857251704.jpg'
   },
   {
@@ -268,7 +268,7 @@ export const VisualSearchModal: React.FC = () => {
         <div className="relative w-full max-w-3xl bg-[#12141e] border border-zinc-800 rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
           
           {/* Header */}
-          <div className="p-4 sm:p-5 border-b border-zinc-800/80 bg-[#161925] flex items-center justify-between">
+          <div className="p-4 sm:p-5 border-b border-zinc-800/80 bg-[#0f1d3b] flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-md shadow-amber-500/10">
                 <Camera className="w-5 h-5" />
@@ -304,7 +304,7 @@ export const VisualSearchModal: React.FC = () => {
             {!capturedImageUri ? (
               <div className="space-y-4">
                 {/* Live Camera Viewfinder */}
-                <div className="relative w-full h-80 sm:h-96 rounded-2xl overflow-hidden bg-black border border-zinc-800 flex items-center justify-center group shadow-inner">
+                <div className="relative w-full h-80 sm:h-96 rounded-2xl overflow-hidden bg-[#050b1a] border border-zinc-800 flex items-center justify-center group shadow-inner">
                   {cameraActive ? (
                     <>
                       <video
@@ -374,7 +374,7 @@ export const VisualSearchModal: React.FC = () => {
                   ) : (
                     /* Fallback when camera is not ready or blocked */
                     <div className="text-center p-6 space-y-3">
-                      <div className="w-14 h-14 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center mx-auto text-amber-400">
+                      <div className="w-14 h-14 rounded-2xl bg-[#0f1d3b] border border-zinc-800 flex items-center justify-center mx-auto text-amber-400">
                         <Camera className="w-7 h-7" />
                       </div>
                       <h4 className="text-sm font-bold text-white">
@@ -415,7 +415,7 @@ export const VisualSearchModal: React.FC = () => {
                 />
 
                 {/* Amostras Rápidas de Demonstração */}
-                <div className="bg-[#151824] rounded-2xl p-4 border border-zinc-800/80 space-y-2.5">
+                <div className="bg-[#0f1d3b] rounded-2xl p-4 border border-zinc-800/80 space-y-2.5">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-zinc-300 flex items-center gap-1.5">
                       <Sparkles className="w-3.5 h-3.5 text-amber-400" />
@@ -431,13 +431,13 @@ export const VisualSearchModal: React.FC = () => {
                       <button
                         key={idx}
                         onClick={() => handleSelectSample(sample)}
-                        className="flex items-center gap-2.5 p-2 bg-[#1b1f2e] hover:bg-[#22273b] border border-zinc-800 hover:border-amber-500/50 rounded-xl transition-all text-left group"
+                        className="flex items-center gap-2.5 p-2 bg-[#142a52] hover:bg-[#22273b] border border-zinc-800 hover:border-amber-500/50 rounded-xl transition-all text-left group"
                       >
                         <img
                           src={sample.image}
                           alt={sample.title}
                           referrerPolicy="no-referrer"
-                          className="w-10 h-10 rounded-lg object-cover bg-black shrink-0"
+                          className="w-10 h-10 rounded-lg object-cover bg-[#050b1a] shrink-0"
                         />
                         <div className="min-w-0 flex-1">
                           <span className="block text-[11px] font-bold text-white truncate group-hover:text-amber-400 transition-colors">
@@ -467,7 +467,7 @@ export const VisualSearchModal: React.FC = () => {
                   
                   <div className="flex items-center gap-4">
                     {/* Thumbnail of Captured Photo */}
-                    <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border border-zinc-700/80 shrink-0 bg-black shadow-lg">
+                    <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border border-zinc-700/80 shrink-0 bg-[#050b1a] shadow-lg">
                       <img
                         src={capturedImageUri}
                         alt="Foto capturada"
@@ -496,7 +496,7 @@ export const VisualSearchModal: React.FC = () => {
                         <div className="space-y-1 text-xs text-zinc-300">
                           <div className="flex items-center gap-2 flex-wrap">
                             <span>Tom Predominante:</span>
-                            <div className="flex items-center gap-1.5 bg-zinc-900 border border-zinc-800 px-2 py-0.5 rounded-lg">
+                            <div className="flex items-center gap-1.5 bg-[#0f1d3b] border border-zinc-800 px-2 py-0.5 rounded-lg">
                               <span
                                 className="w-3.5 h-3.5 rounded-md shadow-sm border border-white/20"
                                 style={{ backgroundColor: analysisResult.primaryHex }}
@@ -562,7 +562,7 @@ export const VisualSearchModal: React.FC = () => {
                         className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${
                           filterCategory === tab.id
                             ? 'bg-amber-400 text-black shadow-md shadow-amber-500/20'
-                            : 'bg-zinc-900 text-zinc-400 hover:text-white hover:bg-zinc-800 border border-zinc-800'
+                            : 'bg-[#0f1d3b] text-zinc-400 hover:text-white hover:bg-zinc-800 border border-zinc-800'
                         }`}
                       >
                         {tab.label}
@@ -579,7 +579,7 @@ export const VisualSearchModal: React.FC = () => {
                     <p className="text-xs text-zinc-400">Cruzando a peça com o estoque da Henrique Multimarcas.</p>
                   </div>
                 ) : matches.length === 0 ? (
-                  <div className="text-center py-12 space-y-2 bg-[#151824] rounded-2xl border border-zinc-800 p-6">
+                  <div className="text-center py-12 space-y-2 bg-[#0f1d3b] rounded-2xl border border-zinc-800 p-6">
                     <AlertCircle className="w-10 h-10 mx-auto text-zinc-500 mb-2" />
                     <h4 className="text-sm font-bold text-white">Nenhuma peça encontrada nessa categoria</h4>
                     <p className="text-xs text-zinc-400 max-w-sm mx-auto">
@@ -610,7 +610,7 @@ export const VisualSearchModal: React.FC = () => {
                             className="bg-[#171a28] hover:bg-[#1b1f30] border border-zinc-800 hover:border-amber-500/40 rounded-2xl p-3.5 flex gap-3.5 transition-all group relative"
                           >
                             {/* Product Image */}
-                            <div className="relative w-24 h-28 rounded-xl overflow-hidden bg-black shrink-0 border border-zinc-800">
+                            <div className="relative w-24 h-28 rounded-xl overflow-hidden bg-[#050b1a] shrink-0 border border-zinc-800">
                               <img
                                 src={product.image}
                                 alt={product.name}
@@ -670,7 +670,7 @@ export const VisualSearchModal: React.FC = () => {
                                     className={`p-1.5 rounded-lg border text-xs transition-colors ${
                                       inComparison
                                         ? 'bg-amber-400 text-black border-amber-400'
-                                        : 'bg-zinc-900 text-zinc-400 hover:text-white border-zinc-800'
+                                        : 'bg-[#0f1d3b] text-zinc-400 hover:text-white border-zinc-800'
                                     }`}
                                     title={inComparison ? 'Remover da comparação' : 'Comparar'}
                                   >
@@ -702,7 +702,7 @@ export const VisualSearchModal: React.FC = () => {
           </div>
 
           {/* Footer Info */}
-          <div className="p-3.5 bg-[#141724] border-t border-zinc-800 text-[11px] text-zinc-400 flex items-center justify-between">
+          <div className="p-3.5 bg-[#0f1d3b] border-t border-zinc-800 text-[11px] text-zinc-400 flex items-center justify-between">
             <span className="flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5 text-amber-400" />
               Processamento instantâneo via HTML5 Canvas & Visão Computacional.

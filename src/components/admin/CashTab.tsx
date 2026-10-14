@@ -20,8 +20,8 @@ export const CashTab: React.FC = () => {
   const resumo = atual ? resumoCaixa(atual, pedidosReais) : null;
   const historico = cashSessions.filter((s) => s.closedAt);
 
-  const card = 'bg-[#131622] border border-zinc-800 rounded-2xl p-5';
-  const campo = 'w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400/60';
+  const card = 'bg-[#0f1d3b] border border-zinc-800 rounded-2xl p-5';
+  const campo = 'w-full bg-[#0f1d3b] border border-zinc-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400/60';
 
   if (!atual) {
     return (
@@ -129,7 +129,7 @@ const Historico: React.FC<{ sessoes: CashSession[]; pedidos: Order[] }> = ({ ses
         const r = resumoCaixa(s, pedidos);
         const dif = r.diferenca ?? 0;
         return (
-          <div key={s.id} className="bg-[#131622] border border-zinc-800 rounded-xl p-4 text-xs flex flex-wrap gap-x-6 gap-y-1 justify-between">
+          <div key={s.id} className="bg-[#0f1d3b] border border-zinc-800 rounded-xl p-4 text-xs flex flex-wrap gap-x-6 gap-y-1 justify-between">
             <span className="text-zinc-300">{new Date(s.openedAt).toLocaleDateString('pt-BR')}</span>
             <span className="text-zinc-400">Esperado {brl(r.esperado)}</span>
             <span className="text-zinc-400">Contado {brl(r.contado ?? 0)}</span>

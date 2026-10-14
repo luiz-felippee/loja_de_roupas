@@ -6,7 +6,7 @@ export function ProductModal({ a }: { a: AdminState }) {
   return (
     <>
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
-        <div className="relative w-full max-w-xl bg-[#141620] border border-zinc-800 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-5 my-6 animate-in fade-in">
+        <div className="relative w-full max-w-xl bg-[#0f1d3b] border border-zinc-800 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-5 my-6 animate-in fade-in">
           <div className="flex items-center justify-between pb-3 border-b border-zinc-800">
             <h3 className="text-base font-bold text-white">
               {editingProduct ? 'Editar Produto' : 'Cadastrar Novo Produto'}
@@ -29,7 +29,7 @@ export function ProductModal({ a }: { a: AdminState }) {
                 value={pName}
                 onChange={(e) => setPName(e.target.value)}
                 placeholder="Ex: Camisa de Time Dry Pro"
-                className="w-full bg-[#1b1f2e] border border-zinc-800 rounded-xl px-3.5 py-2.5 text-xs text-white"
+                className="w-full bg-[#142a52] border border-zinc-800 rounded-xl px-3.5 py-2.5 text-xs text-white"
                 required
               />
             </div>
@@ -42,7 +42,7 @@ export function ProductModal({ a }: { a: AdminState }) {
                 <select
                   value={pCategory}
                   onChange={(e) => setPCategory(e.target.value as ProductCategory)}
-                  className="w-full bg-[#1b1f2e] border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-white"
+                  className="w-full bg-[#142a52] border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-white"
                 >
                   <option value="times">Camisas de Times</option>
                   <option value="polo">Camisas Polo</option>
@@ -59,7 +59,7 @@ export function ProductModal({ a }: { a: AdminState }) {
                   type="number"
                   value={pStock}
                   onChange={(e) => setPStock(e.target.value)}
-                  className="w-full bg-[#1b1f2e] border border-zinc-800 rounded-xl px-3.5 py-2.5 text-xs text-white"
+                  className="w-full bg-[#142a52] border border-zinc-800 rounded-xl px-3.5 py-2.5 text-xs text-white"
                   required
                 />
               </div>
@@ -76,7 +76,7 @@ export function ProductModal({ a }: { a: AdminState }) {
                   value={pPrice}
                   onChange={(e) => setPPrice(e.target.value)}
                   placeholder="130.00"
-                  className="w-full bg-[#1b1f2e] border border-zinc-800 rounded-xl px-3.5 py-2.5 text-xs text-white"
+                  className="w-full bg-[#142a52] border border-zinc-800 rounded-xl px-3.5 py-2.5 text-xs text-white"
                   required
                 />
               </div>
@@ -91,7 +91,7 @@ export function ProductModal({ a }: { a: AdminState }) {
                   value={pPromoPrice}
                   onChange={(e) => setPPromoPrice(e.target.value)}
                   placeholder="115.00"
-                  className="w-full bg-[#1b1f2e] border border-zinc-800 rounded-xl px-3.5 py-2.5 text-xs text-white"
+                  className="w-full bg-[#142a52] border border-zinc-800 rounded-xl px-3.5 py-2.5 text-xs text-white"
                 />
               </div>
             </div>
@@ -103,7 +103,7 @@ export function ProductModal({ a }: { a: AdminState }) {
                 id="promoCheck"
                 checked={pIsPromo}
                 onChange={(e) => setPIsPromo(e.target.checked)}
-                className="rounded border-zinc-700 bg-zinc-900 text-amber-500"
+                className="rounded border-zinc-700 bg-[#0f1d3b] text-amber-500"
               />
               <label htmlFor="promoCheck" className="text-xs font-semibold text-amber-400">
                 Ativar no Carrossel de Promoções da Semana
@@ -121,13 +121,13 @@ export function ProductModal({ a }: { a: AdminState }) {
                   value={pImage}
                   onChange={(e) => setPImage(e.target.value)}
                   placeholder="/src/assets/images/..."
-                  className="flex-1 bg-[#1b1f2e] border border-zinc-800 rounded-xl px-3.5 py-2 text-xs text-white font-mono"
+                  className="flex-1 bg-[#142a52] border border-zinc-800 rounded-xl px-3.5 py-2 text-xs text-white font-mono"
                 />
                 <img
                   src={pImage || '/src/assets/images/polo_shirt_black_gold_1791857251704.jpg'}
                   alt="Preview"
                   referrerPolicy="no-referrer"
-                  className="w-9 h-9 rounded-lg object-cover bg-zinc-900 shrink-0 border border-zinc-700"
+                  className="w-9 h-9 rounded-lg object-cover bg-[#0f1d3b] shrink-0 border border-zinc-700"
                 />
               </div>
             </div>
@@ -141,7 +141,7 @@ export function ProductModal({ a }: { a: AdminState }) {
                 {pColors.map((c, i) => (
                   <span
                     key={i}
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-zinc-900 border border-zinc-800 text-xs text-zinc-200"
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#0f1d3b] border border-zinc-800 text-xs text-zinc-200"
                   >
                     <span className="w-3 h-3 rounded-full" style={{ backgroundColor: c.hex }} />
                     <span>{c.name}</span>
@@ -162,7 +162,7 @@ export function ProductModal({ a }: { a: AdminState }) {
                   value={newColorName}
                   onChange={(e) => setNewColorName(e.target.value)}
                   placeholder="Nome da cor (ex: Rosa Choque)"
-                  className="flex-1 bg-[#1b1f2e] border border-zinc-800 rounded-xl px-3 py-1.5 text-xs text-white"
+                  className="flex-1 bg-[#142a52] border border-zinc-800 rounded-xl px-3 py-1.5 text-xs text-white"
                 />
                 <input
                   type="color"
@@ -207,7 +207,7 @@ export function ProductModal({ a }: { a: AdminState }) {
                       className={`w-10 h-9 rounded-xl text-xs font-bold border transition-colors ${
                         isIncluded
                           ? 'bg-amber-400 text-black border-amber-300'
-                          : 'bg-zinc-900 text-zinc-500 border-zinc-800'
+                          : 'bg-[#0f1d3b] text-zinc-500 border-zinc-800'
                       }`}
                     >
                       {sz}
@@ -227,7 +227,7 @@ export function ProductModal({ a }: { a: AdminState }) {
                 onChange={(e) => setPDescription(e.target.value)}
                 rows={2}
                 placeholder="Informações sobre tecido, acabamento ou caimento..."
-                className="w-full bg-[#1b1f2e] border border-zinc-800 rounded-xl p-3 text-xs text-white"
+                className="w-full bg-[#142a52] border border-zinc-800 rounded-xl p-3 text-xs text-white"
               />
             </div>
 
@@ -235,7 +235,7 @@ export function ProductModal({ a }: { a: AdminState }) {
               <button
                 type="button"
                 onClick={() => setIsProductModalOpen(false)}
-                className="px-4 py-2 bg-zinc-900 text-zinc-400 text-xs font-semibold rounded-xl"
+                className="px-4 py-2 bg-[#0f1d3b] text-zinc-400 text-xs font-semibold rounded-xl"
               >
                 Cancelar
               </button>

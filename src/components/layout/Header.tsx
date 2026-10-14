@@ -25,7 +25,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenPromo }) => {
   } = useStore();
 
   return (
-    <header className="sticky top-0 z-40 bg-[#0f1117]/95 backdrop-blur-md border-b border-zinc-800/80">
+    <header className="sticky top-0 z-40 bg-[#0a1528]/95 backdrop-blur-md border-b border-zinc-800/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-18 gap-6 md:gap-8">
           
@@ -50,7 +50,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenPromo }) => {
               }}
               className="flex items-center gap-2 sm:gap-2.5 text-left group sm:whitespace-nowrap shrink min-w-0 sm:shrink-0 focus:outline-none"
             >
-              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center font-extrabold text-[#0c0e12] text-lg shadow-md shadow-amber-500/10 group-hover:scale-105 transition-transform">
+              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center font-extrabold text-[#0a1528] text-lg shadow-md shadow-amber-500/10 group-hover:scale-105 transition-transform">
                 H
               </div>
               <div className="flex flex-col">
@@ -142,7 +142,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenPromo }) => {
             {/* Visual Search button */}
             <button
               onClick={() => setIsVisualSearchOpen(true)}
-              className="p-2 text-xs font-semibold text-zinc-300 hover:text-amber-400 bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 hover:border-amber-400/50 rounded-lg shadow-sm flex items-center gap-1"
+              className="p-2 text-xs font-semibold text-zinc-300 hover:text-amber-400 bg-[#0f1d3b] hover:bg-zinc-850 border border-zinc-800 hover:border-amber-400/50 rounded-lg shadow-sm flex items-center gap-1"
               title="Buscar por Foto / Câmera (IA Color & Shape)"
               aria-label="Buscar por Foto / Câmera"
             >
@@ -153,7 +153,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenPromo }) => {
             {/* Wishlist button */}
             <button
               onClick={() => setIsWishlistOpen(true)}
-              className="hidden sm:block relative p-2 text-xs font-semibold text-zinc-300 hover:text-rose-400 bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 hover:border-rose-500/50 rounded-lg shadow-sm flex items-center gap-1"
+              className="hidden sm:block relative p-2 text-xs font-semibold text-zinc-300 hover:text-rose-400 bg-[#0f1d3b] hover:bg-zinc-850 border border-zinc-800 hover:border-rose-500/50 rounded-lg shadow-sm flex items-center gap-1"
               title="Abrir Favoritos"
               aria-label="Abrir Favoritos"
             >
@@ -169,7 +169,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenPromo }) => {
             {comparedProducts.length > 0 && (
               <button
                 onClick={() => setIsComparisonModalOpen(true)}
-                className="relative p-2 text-xs font-semibold text-amber-400 bg-zinc-900 hover:bg-zinc-850 border border-amber-400/50 rounded-lg shadow-sm flex items-center gap-1"
+                className="relative p-2 text-xs font-semibold text-amber-400 bg-[#0f1d3b] hover:bg-zinc-850 border border-amber-400/50 rounded-lg shadow-sm flex items-center gap-1"
                 title="Abrir Comparativo"
                 aria-label="Abrir Comparativo"
               >
@@ -210,13 +210,13 @@ export const Header: React.FC<HeaderProps> = ({ onOpenPromo }) => {
             {/* Cart Button with Counter */}
             <button
               onClick={() => setIsCartOpen(true)}
-              className="relative px-3 sm:px-3.5 py-2 text-xs font-semibold text-[#0c0e12] bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 rounded-lg shadow-md shadow-amber-500/10 transition-all flex items-center gap-2 whitespace-nowrap shrink-0 active:scale-95"
+              className="relative px-3 sm:px-3.5 py-2 text-xs font-semibold text-[#0a1528] bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 rounded-lg shadow-md shadow-amber-500/10 transition-all flex items-center gap-2 whitespace-nowrap shrink-0 active:scale-95"
               aria-label="Abrir carrinho de compras"
             >
               <ShoppingBag className="w-4 h-4 text-zinc-950" />
               <span className="hidden md:inline font-bold">Carrinho</span>
               {cartCount > 0 && (
-                <span className="px-1.5 py-0.5 text-[11px] font-extrabold bg-black text-amber-300 rounded-md">
+                <span className="px-1.5 py-0.5 text-[11px] font-extrabold bg-[#050b1a] text-amber-300 rounded-md">
                   {cartCount}
                 </span>
               )}

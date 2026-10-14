@@ -66,7 +66,7 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({
   return (
     <div className="space-y-4">
       {/* Busca */}
-      <div className="flex items-center gap-2 bg-[#141620] border border-zinc-800 rounded-2xl pl-4 pr-2 py-1.5 focus-within:border-amber-400/60 transition-colors">
+      <div className="flex items-center gap-2 bg-[#0f1d3b] border border-zinc-800 rounded-2xl pl-4 pr-2 py-1.5 focus-within:border-amber-400/60 transition-colors">
         <Search className={`w-4 h-4 shrink-0 ${isListening ? 'text-amber-400' : 'text-zinc-500'}`} />
         <input
           type="search"
@@ -160,7 +160,7 @@ export const CatalogFilters: React.FC<CatalogFiltersProps> = ({
             <select
               value={sortBy}
               onChange={(e) => onSortChange(e.target.value as SortOption)}
-              className="bg-[#141620] border border-zinc-800 rounded-lg px-2.5 py-1.5 text-xs text-zinc-200 focus:outline-none focus:border-amber-400"
+              className="bg-[#0f1d3b] border border-zinc-800 rounded-lg px-2.5 py-1.5 text-xs text-zinc-200 focus:outline-none focus:border-amber-400"
             >
               <option value="recentes">Destaques</option>
               <option value="menor_preco">Menor preço</option>

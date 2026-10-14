@@ -140,7 +140,7 @@ export const ProductDetailModal: React.FC = () => {
         </div>
 
         {/* Left Column: Image with color overlay preview */}
-        <div className="w-full md:w-5/12 bg-zinc-950 flex flex-col items-center justify-center relative overflow-hidden shrink-0 min-h-[260px] md:min-h-full">
+        <div className="w-full md:w-5/12 bg-[#0a1528] flex flex-col items-center justify-center relative overflow-hidden shrink-0 min-h-[260px] md:min-h-full">
           <img
             src={selectedProduct.image}
             alt={selectedProduct.name}
@@ -300,7 +300,7 @@ export const ProductDetailModal: React.FC = () => {
                       className={`py-2 rounded-xl font-extrabold text-xs transition-all border ${
                         isSelected
                           ? 'bg-amber-400 text-black border-amber-300 shadow-md shadow-amber-500/20 scale-105'
-                          : 'bg-zinc-900 text-zinc-300 border-zinc-800 hover:border-zinc-700 hover:text-white'
+                          : 'bg-[#0f1d3b] text-zinc-300 border-zinc-800 hover:border-zinc-700 hover:text-white'
                       }`}
                     >
                       {size}
@@ -329,7 +329,7 @@ export const ProductDetailModal: React.FC = () => {
               </span>
 
               {!isOutOfStock && (
-                <div className="flex items-center gap-2 bg-zinc-900 border border-zinc-800 rounded-lg p-1">
+                <div className="flex items-center gap-2 bg-[#0f1d3b] border border-zinc-800 rounded-lg p-1">
                   <button
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                     className="w-6 h-6 rounded flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
@@ -422,7 +422,7 @@ export const ProductDetailModal: React.FC = () => {
                       className={`w-full py-2 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 border transition-all ${
                         isInComparison
                           ? 'bg-amber-400/15 border-amber-400 text-amber-300'
-                          : 'bg-zinc-900 hover:bg-zinc-850 border-zinc-800 text-zinc-300 hover:border-amber-400/50'
+                          : 'bg-[#0f1d3b] hover:bg-zinc-850 border-zinc-800 text-zinc-300 hover:border-amber-400/50'
                       }`}
                     >
                       <Scale className="w-3.5 h-3.5 text-amber-400" />
@@ -469,7 +469,7 @@ export const ProductDetailModal: React.FC = () => {
                     ? 'bg-zinc-800 text-zinc-600 cursor-not-allowed'
                     : addedSuccess
                     ? 'bg-emerald-600 text-white'
-                    : 'bg-zinc-900 hover:bg-zinc-850 text-amber-400 border border-amber-500/40 hover:border-amber-400'
+                    : 'bg-[#0f1d3b] hover:bg-zinc-850 text-amber-400 border border-amber-500/40 hover:border-amber-400'
                 }`}
               >
                 {addedSuccess ? (

@@ -58,7 +58,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onOpenCheckout }) => {
           <div className="flex-1 overflow-y-auto p-5 space-y-4">
             {cart.length === 0 ? (
               <div className="text-center py-16 space-y-3">
-                <div className="w-16 h-16 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center mx-auto text-zinc-600">
+                <div className="w-16 h-16 rounded-2xl bg-[#0f1d3b] border border-zinc-800 flex items-center justify-center mx-auto text-zinc-600">
                   <ShoppingBag className="w-8 h-8" />
                 </div>
                 <h4 className="text-sm font-bold text-white">Seu carrinho está vazio</h4>
@@ -76,14 +76,14 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onOpenCheckout }) => {
               cart.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-[#181b26] border border-zinc-800/80 rounded-2xl p-3.5 flex gap-3.5 relative group"
+                  className="bg-[#0f1d3b] border border-zinc-800/80 rounded-2xl p-3.5 flex gap-3.5 relative group"
                 >
                   {/* Photo */}
                   <img
                     src={item.image}
                     alt={item.name}
                     referrerPolicy="no-referrer"
-                    className="w-20 h-20 rounded-xl object-cover bg-zinc-950 shrink-0"
+                    className="w-20 h-20 rounded-xl object-cover bg-[#0a1528] shrink-0"
                   />
 
                   {/* Info */}
@@ -106,7 +106,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onOpenCheckout }) => {
                       </span>
 
                       {/* Stepper */}
-                      <div className="flex items-center gap-1.5 bg-zinc-900 border border-zinc-800 rounded-lg p-0.5">
+                      <div className="flex items-center gap-1.5 bg-[#0f1d3b] border border-zinc-800 rounded-lg p-0.5">
                         <button
                           onClick={() => updateCartQuantity(item.id, item.quantity - 1)}
                           className="w-5 h-5 flex items-center justify-center text-zinc-400 hover:text-white rounded hover:bg-zinc-800 text-xs"
@@ -158,7 +158,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onOpenCheckout }) => {
               <div className="flex gap-2 pt-2">
                 <button
                   onClick={() => setIsCartOpen(false)}
-                  className="flex-1 py-3 px-3 bg-zinc-900 hover:bg-zinc-850 text-zinc-300 text-xs font-semibold rounded-xl border border-zinc-800 transition-colors"
+                  className="flex-1 py-3 px-3 bg-[#0f1d3b] hover:bg-zinc-850 text-zinc-300 text-xs font-semibold rounded-xl border border-zinc-800 transition-colors"
                 >
                   Continuar Comprando
                 </button>

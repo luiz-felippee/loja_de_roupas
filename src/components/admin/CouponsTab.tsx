@@ -32,11 +32,11 @@ export const CouponsTab: React.FC = () => {
     if (criado) setForm(vazio);
   };
 
-  const campo = 'w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400/60';
+  const campo = 'w-full bg-[#0f1d3b] border border-zinc-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400/60';
 
   return (
     <div className="space-y-6">
-      <form onSubmit={salvar} className="bg-[#131622] border border-zinc-800 rounded-2xl p-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <form onSubmit={salvar} className="bg-[#0f1d3b] border border-zinc-800 rounded-2xl p-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
         <h3 className="sm:col-span-2 text-sm font-extrabold text-white">Novo cupom</h3>
         <input className={campo} placeholder="Código (ex.: BEMVINDO10)" value={form.code} onChange={(e) => setForm({ ...form, code: e.target.value.toUpperCase() })} />
         <select className={campo} value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value as CouponType })}>
@@ -56,7 +56,7 @@ export const CouponsTab: React.FC = () => {
         <h3 className="text-sm font-extrabold text-white">Cupons cadastrados</h3>
         {coupons.length === 0 && <p className="text-xs text-zinc-500">Nenhum cupom ainda.</p>}
         {coupons.map((c) => (
-          <div key={c.id} className="bg-[#131622] border border-zinc-800 rounded-xl p-4 flex flex-wrap items-center gap-3 justify-between">
+          <div key={c.id} className="bg-[#0f1d3b] border border-zinc-800 rounded-xl p-4 flex flex-wrap items-center gap-3 justify-between">
             <div className="min-w-0">
               <p className="font-mono font-bold text-amber-300">{c.code}</p>
               <p className="text-[11px] text-zinc-400">
